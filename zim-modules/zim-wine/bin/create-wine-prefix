@@ -1,0 +1,31 @@
+#!/usr/bin/env zsh
+
+__generate_dotenv() {
+  local prefix_name="$1"
+  local prefix_path="$2"
+  touch .env
+  echo '#!/usr/bin/env zsh' >>.env
+  echo "export WINEPREFIX_NAME=\"$prefix_name\"" >>.env
+  echo "export WINEPREFIX=\"$prefix_path\"" >>.env
+  echo 'export WINEARCH="win64"' >>.env
+  echo 'export WINEDLLOVERRIDES="dxgi,d3d11,d3d10core=n,b;"' >>.env
+}
+
+create-wine-prefix() {
+  local wine_prefix_path="${WINE_HOME:-/opt/wine}"
+  local prefix_name="$1"
+  local prefix_path="$wine_prefix_path/$prefix_name"
+
+  if [[ -d "$prefix_path" ]]; then
+    echo " cannot create wine prefix $prefix_name in: $prefix_path"
+    return 1
+  fi
+
+  echo "creating wine prefix $prefix_name in $prefix_path...."
+  # generate prefix
+  mkdir "$prefix_path"
+  pushd "$prefix_path"
+  __generate_dotenv $prefix_name $prefix_path
+  # finished
+  popd
+}

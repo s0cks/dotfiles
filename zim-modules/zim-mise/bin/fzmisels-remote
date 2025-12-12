@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+fzmisels-remote() {
+  pkg=$(mise ls-remote "$1" | sort -Vr | fzf)
+  if [[ -n "$pkg" ]]; then
+    echo "$pkg" | cb cp
+  fi
+}

@@ -1,0 +1,182 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """\
+$directory\
+$os \
+$character"""
+
+right_format = """ \
+$git_branch\
+$git_status\
+$c\
+$rust\
+$golang\
+$nodejs\
+$php\
+$java\
+$kotlin\
+$haskell\
+$python\
+"""
+
+palette = 'flexoki_dark'
+
+add_newline = true
+
+[os]
+disabled = false
+style = "fg:tx"
+
+[os.symbols]
+Windows = ""
+Ubuntu = "󰕈"
+SUSE = ""
+Raspbian = "󰐿"
+Mint = "󰣭"
+Macos = "󰀵"
+Manjaro = ""
+Linux = "󰌽"
+Gentoo = "󰣨"
+Fedora = "󰣛"
+Alpine = ""
+Amazon = ""
+Android = ""
+Arch = "󰣇"
+Artix = "󰣇"
+CentOS = ""
+Debian = "󰣚"
+Redhat = "󱄛"
+RedHatEnterprise = "󱄛"
+
+[username]
+disabled = false
+show_always = false
+
+[directory]
+style = "fg:tx"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = "󰝚 "
+"Pictures" = " "
+"Developer" = "󰲋 "
+
+[git_branch]
+symbol = ""
+style = "bg:ye"
+format = '[[ $symbol $branch ](fg:ye)]($style)'
+
+[git_status]
+style = "bg:ye"
+format = '[[($all_status$ahead_behind )](fg:ye)]($style)'
+
+[nodejs]
+symbol = ""
+style = "bg:gr"
+format = '[[ $symbol( $version) ](fg:gr)]($style)'
+
+[c]
+symbol = " "
+style = "bg:gr"
+format = '[[ $symbol( $version) ](fg:gr)]($style)'
+
+[rust]
+symbol = ""
+style = "bg:gr"
+format = '[[ $symbol( $version) ](fg:gr)]($style)'
+
+[golang]
+symbol = ""
+style = "bg:gr"
+format = '[[ $symbol( $version) ](fg:gr)]($style)'
+
+[php]
+symbol = ""
+style = "bg:gr"
+format = '[[ $symbol( $version) ](fg:gr)]($style)'
+
+[java]
+symbol = " "
+style = "bg:gr"
+format = '[[ $symbol( $version) ](fg:gr)]($style)'
+
+[kotlin]
+symbol = ""
+style = "bg:gr"
+format = '[[ $symbol( $version) ](fg:gr)]($style)'
+
+[haskell]
+symbol = ""
+style = "bg:gr"
+format = '[[ $symbol( $version) ](fg:gr)]($style)'
+
+[python]
+symbol = ""
+style = "bg:gr"
+format = '[[ $symbol( $version)(\(#$virtualenv\)) ](fg:gr)]($style)'
+
+[docker_context]
+symbol = ""
+style = "bg:bl"
+format = '[[ $symbol( $context) ](fg:bl)]($style)'
+
+[conda]
+symbol = "  "
+style = "fg:bl"
+format = '[$symbol$environment ]($style)'
+ignore_base = false
+
+[time]
+disabled = true
+time_format = "%R"
+format = '[[  $time ](fg:tx)]($style)'
+
+[line_break]
+disabled = false
+
+[character]
+disabled = false
+success_symbol = '[](bold fg:gr)'
+error_symbol = '[](bold fg:red)'
+vimcmd_symbol = '[](bold fg:gr)'
+vimcmd_replace_one_symbol = '[](bold fg:tx)'
+vimcmd_replace_symbol = '[](bold fg:tx)'
+vimcmd_visual_symbol = '[](bold fg:ye)'
+
+[cmd_duration]
+show_milliseconds = true
+format = " in $duration "
+style = "fg:tx3"
+disabled = false
+show_notifications = true
+min_time_to_notify = 45000
+
+[palettes.flexoki_dark]
+bg = "#100F0F"
+bg2 = "#1C1B1A"
+ui = "#282726"
+ui2 = "#343331"
+ui3 = "#403E3C"
+tx3 = "#575653"
+tx2 = "#878580"
+tx = "#CECDC3"
+re = "#D14D41"
+re2 = "#AF3029"
+or = "#DA702C"
+or2 = "#BC5215"
+ye = "#D0A215"
+ye2 = "#AD8301"
+gr = "#879A39"
+gr2 = "#66800B"
+cy = "#3AA99F"
+cy2 = "#24837B"
+bl = "#4385BE"
+bl2 = "#205EA6"
+pu = "#8B7EC8"
+pu2 = "#5E409D"
+ma = "#CE5D97"
+ma2 = "#A02F6F"

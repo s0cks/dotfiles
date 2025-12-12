@@ -1,0 +1,17 @@
+---
+version: '3'
+tasks:
+  enable:
+    cmds:
+    - launchctl enable {{.DOMAIN}}/{{.SERVICE}}
+  disable:
+    cmds:
+    - launchctl disable {{.DOMAIN}}/{{.SERVICE}}
+  bootstrap:
+    cmds:
+    - launchctl load -w {{.SERVICE}}.plist
+    - launchctl enable {{.DOMAIN}}/{{.SERVICE}}
+  bootout:
+    cmds:
+    - launchctl disable {{.DOMAIN}}/{{.SERVICE}}
+    - launchctl unload -w {{.SERVICE}}.plist

@@ -1,0 +1,5 @@
+flavors/*
+!flavors/.git*
+
+plugins/*
+!plugins/.git*

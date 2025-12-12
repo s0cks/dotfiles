@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+
+fzmisels() {
+  pkg=$(mise ls "$@" | sort -Vr | fzf)
+  if [[ -n "$pkg" ]]; then
+    echo "$pkg" | cb cp
+  fi
+}

@@ -1,0 +1,62 @@
+- plugins:
+  - .dotbot/plugins/dotbot-brew/
+  - .dotbot/plugins/dotbot-git/
+  - .dotbot/plugins/dotbot-template/
+  - .dotbot/plugins/dotbot-include
+  - .dotbot/plugins/dotbot-includes
+  - .dotbot/plugins/dotbot-ifplatform
+  - .dotbot/plugins/dotbot-if
+- defaults:
+    link:
+      create: true
+      relink: true
+- create:
+  - ~/Projects/
+  - ~/.config/bitwarden-cli/
+  - /usr/local/share/aria2/
+  - /usr/local/share/zsh/functions/
+  - /usr/local/share/zsh/completions/
+- git:
+    /usr/local/share/vcpkg/:
+      url: "https://github.com/microsoft/vcpkg.git"
+      description: "Install vcpkg"
+      recursive: true
+    /usr/local/share/cheats/s0cks__cheats:
+      url: "https://github.com/s0cks/cheats.git"
+      description: "Install @s0cks/cheats from GitHub"
+      recursive: true
+- link:
+    /usr/local/share/toolchains/:
+      glob: true
+      path: toolchains/out/*
+    /usr/local/share/zsh/functions/:
+      glob: true
+      path: bin/*
+    ~/.config/:
+      glob: true
+      path: conf/*
+      exclude: [ conf/ripgrep, conf/aria2, conf/git ]
+    ~/.ssh/config: dotssh/config
+    ~/.zim/modules/:
+      glob: true
+      path: zim-modules/*
+    ~/:
+      glob: true
+      path: "dotconf/*"
+      prefix: '.'
+    ~/.config/ripgrep/config: conf/ripgrep/config
+    ~/.config/aria2/aria2.conf: conf/aria2/generated/aria2.conf
+    ~/.config/git/: 
+      glob: true
+      path: conf/git/generated/*
+    /usr/local/share/user-agent: ./user-agent
+- ifmacos:
+  - link:
+      ~/Library/LaunchAgents/:
+        glob: true
+        path: macos/LaunchAgents/generated/*.plist
+      /usr/local/share/zsh/functions/:
+        glob: true
+        path: macos/bin/*
+- shell:
+  - bundle

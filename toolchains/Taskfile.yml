@@ -1,0 +1,19 @@
+---
+version: '3'
+tasks:
+  generate:
+    label: "Generate toolchain files."
+    desc: "Generate toolchain files using Jsonnet."
+    dir: "{{.TASKFILE_DIR}}"
+    cmds:
+    - jsonnet -S -m "generated/" toolchains.jsonnet
+    - chmod +x generated/*
+    sources:
+    - toolchains.jsonnet
+    generates:
+    - generated/llvm*
+  clean:
+    label: "Clean toolchains generated/ dir"
+    dir: "{{.TASKFILE_DIR}}/generated/"
+    cmds:
+    - rm -rf *

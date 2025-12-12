@@ -1,0 +1,39 @@
+min_version = "2025.7.27"
+
+[settings]
+idiomatic_version_file_enable_tools = []
+
+[env]
+NODE_ENV="dev"
+BUILD_ENVIRONMENT = "dev"
+
+[tools]
+# Languages
+go = [ "latest", "1.25.4"]
+java = [ "latest", "25.0.1" ]
+clojure = "latest"
+lua = [ "latest", "5.4.8", "5.2" ]
+node = [ "latest", "lts" ]
+python = [ "latest", "3.14" ]
+ruby = [ "latest", "3.4.7"]
+go-jsonnet = [ "latest" ]
+dotnet = [ "latest", "10.0.100" ]
+rust = [ "latest", "1.91.1" ]
+perl = [ "latest", "5.42.0.0" ]
+nasm = [ "latest", "3.01" ]
+# Tools
+#TODO(@s0cks): dont need make on OSX?
+# make = [ "latest", "4.4.1"]
+cmake = [ "latest", "4.2" ]
+bazel = [ "latest", "8.4.2" ]
+gradle = [ "latest", "9.2.1" ]
+maven = [ "latest", "3.9.11" ]
+ninja = [ "latest", "1.13.2" ]
+pipx = [ "latest", "1.8.0" ]
+tflint = [ "latest", "0.60.0" ]
+vale = [ "latest", "3.13.0" ]
+terraform = [ "latest", "1.14.1" ]
+shfmt = [ "latest", "3.12.0" ]
+yamlfmt = [ "latest", "0.20.0" ]
+marksman = [ "latest", "2025-11-30" ]
+typos = [ "latest", "1.40.0" ]

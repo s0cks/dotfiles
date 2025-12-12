@@ -1,0 +1,137 @@
+#!/usr/bin/env zsh
+
+# ┌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┐
+# ╎                      zimfw Pre-Init                       ╎
+# └╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┘
+
+# colors 
+autoload -Uz colors && colors
+
+# Homebrew
+HOMEBREW_PREFIX=""
+if [ "$(arch)" = "arm64" ]; then
+	HOMEBREW_PREFIX="/opt"
+elif [[ "$(arch)" = "x86_64" || "$(arch)" = "i386" ]]; then
+  HOMEBREW_PREFIX="/usr/local"
+else
+  echo "invalid archiecture: $(arch)"
+fi
+HOMEBREW_PREFIX="$HOMEBREW_PREFIX/homebrew"
+
+if [[ ! -d "$HOMEBREW_PREFIX/" ]]; then
+  echo "installing $fg_bold[white]Homebrew${reset_color} in $HOMEBREW_PREFIX...."
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+
+export PATH="$HOMEBREW_PREFIX/bin:$PATH"
+eval "$(brew shellenv)"
+
+# autoload Functions
+autoload -Uz show-path
+autoload -Uz show-fpath
+autoload -Uz zsecrets-edit
+autoload -Uz zsecrets-view
+autoload -Uz caf
+autoload -Uz clean-mac
+autoload -Uz nvimz
+autoload -Uz fznpmig
+autoload -Uz kt-vim-session
+autoload -Uz kt-yazi-session
+autoload -Uz conf
+autoload -Uz e
+autoload -Uz o
+autoload -Uz rm-cwd
+autoload -Uz fzvimft
+autoload -Uz fzbrewI
+autoload -Uz fzbrewx
+autoload -Uz fzbrews
+autoload -Uz activate-llvm-mingw
+autoload -Uz activate-llvm
+autoload -Uz create-wine-prefix
+autoload -Uz start-steam
+autoload -Uz update-vcpkg
+autoload -Uz fzktsessions
+
+if [[ $(uname) == "Darwin" ]]; then
+  autoload -Uz macos-is-dark
+  autoload -Uz macos-is-light
+  if macos-is-dark; then
+    export TERM_THEME="dark"
+  else
+    export TERM_THEME="light"
+  fi
+fi
+
+# Apply zsh styles
+source "$HOME/.zstyles"
+#
+# do more?
+#
+# ──────────────────────────────────────────────────────────────────────
+
+
+# ┌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┐
+# ╎                        zimfw Init                         ╎
+# └╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┘
+ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
+# Download zimfw plugin manager if missing.
+if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
+  if (( ${+commands[curl]} )); then
+    curl -fsSL --create-dirs -o "$ZIM_HOME/zimfw.zsh" "https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh"
+  else
+    mkdir -p ${ZIM_HOME} && wget -nv -O ${ZIM_HOME}/zimfw.zsh https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+  fi
+fi
+# Install missing modules, and update ${ZIM_HOME}/init.zsh if missing or outdated.
+if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZIM_CONFIG_FILE:-${ZDOTDIR:-${HOME}}/.zimrc} ]]; then
+  source ${ZIM_HOME}/zimfw.zsh init
+fi
+# zim init
+source ${ZIM_HOME}/init.zsh
+
+# ┌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┐
+# ╎                      zimfw Post-Init                      ╎
+# └╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┘
+zmodload -F zsh/terminfo +p:terminfo
+
+source "$HOME/.zsh_custom/fz.sh"
+source "$HOME/.zkeys"
+source "$HOME/.zaliases"
+
+if [[ $+command[atuin] ]]; then
+  source <(atuin init zsh)
+else
+  echo "Atuin is not installed  "
+  return 1
+fi
+
+if (( $+command[docker] )); then
+  fpath=("$HOME/.docker/completions" $fpath)
+fi
+
+start-skyrim-steam() {
+  activate-wine-prefix Skyrim
+  wine $WINEPREFIX/drive_c/Program\ Files\ \(x86\)/Steam/steam.exe \
+    -noverifyfiles \
+    -nobootstrapupdate \
+    -skipinitialbootstrap \
+    -norepairfiles \
+    -overridepackageurl
+}
+
+tre() {
+  command tre "$@" -e && source "/tmp/tre_aliases_$USER" 2>/dev/null;
+}
+
+if (( $+commands[bison] )); then
+  export PATH="$(brew --prefix bison)/bin:$PATH"
+fi
+
+# set fast-zsh-highlighting theme to flexoki-dark/light based on MacOS theme
+if [[ $(uname) == "Darwin" ]]; then
+  if macos-is-dark; then
+    fast-theme -q XDG:flexoki-dark
+  else
+    fast-theme -q XDG:flexoki-light
+  fi
+fi

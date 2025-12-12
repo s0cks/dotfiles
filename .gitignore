@@ -1,0 +1,8 @@
+**.sh.zwc
+**/.DS_Store
+**/.task/
+**/*.pyc
+**/generated/**/*
+!**/generated/**/.git*
+
+Gemfile.lock

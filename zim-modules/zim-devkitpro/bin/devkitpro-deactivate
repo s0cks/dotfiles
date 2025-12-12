@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+devkitpro-deactivate() {
+  if [[ -n "$DEVKITPRO_DEACTIVATED_PATH" ]]; then
+    printf "\n\t\033[0;31m \033[0mDevkitPro is already deactivated!\n"
+    return 1
+  fi
+
+  export PATH="$DEVKITPRO_DEACTIVATED_PATH"
+  DEVKITPRO_DEACTIVATED_PATH=""
+  fpath=("${DEVKITPRO_DEACTIVATED_FPATH[@]}")
+  printf "\n\t\033[0;32m \033[0mDevkitPro deactivated!\n"
+}

@@ -1,0 +1,11 @@
+# vim: filetype=sshconfig
+AddKeysToAgent yes
+# ╭────────╮
+# │ GitHub │
+# ╰────────╯
+Host github.com
+  Hostname github.com
+  User git
+  PreferredAuthentications publickey
+  IdentityFile ~/.ssh/gh_id_rsa
+  UseKeychain yes

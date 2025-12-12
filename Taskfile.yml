@@ -1,0 +1,95 @@
+---
+version: '3'
+includes:
+  toolchains:
+    taskfile: ./toolchains/
+    internal: true
+  launchagents:
+    taskfile: ./macos/LaunchAgents/
+  gitconfig:
+    taskfile: ./conf/git/
+  ripgrep-conf:
+    taskfile: ./conf/ripgrep/
+    internal: true
+  aria2-conf:
+    taskfile: ./conf/aria2/
+    internal: true
+tasks:
+  update:submodules:
+    label: " Update submodules"
+    desc: "Update all git submodules for this repository."
+    cmds:
+    - git submodule update --init --recursive --remote --quiet
+  generate:
+    deps: [ update:submodules ]
+    cmds:
+    - task: toolchains:generate
+    - platforms: [darwin]
+      task: launchagents:generate
+    - task: gitconfig:generate
+    - task: ripgrep-conf:generate
+    - task: aria2-conf:generate
+  install:dry-run:
+    label: "󰚩 Install (dry-run)"
+    desc: "Install dotfiles using Dotbot using dry-run mode."
+    cmds:
+    - dotbot -d "$(pwd)" -c "$(pwd)/install.yml" --exit-on-failure --dry-run
+    sources:
+    - install.yml
+  install:brewfile:
+    label: "Install Brewfile"
+    desc: "Install brew packages from Brewfile"
+    dir: "{{.ROOT_DIR}}"
+    cmds:
+    - brew bundle 
+    sources:
+    - Brewfile
+  install:mise-tools:
+    label: "Install mise tools"
+    desc: "Install tools using: mise install"
+    cmds:
+    - mise install
+    sources:
+    - conf/mise/config.toml
+  install:yazi-plugins:
+    label: "Install yazi plugins"
+    cmds:
+    - ./scripts/install-yazi-plugins.sh
+  install:macos:defaults:
+    label: "Install macos defaults"
+    cmds:
+    - ./defaults.sh
+    dir: "{{.ROOT_DIR}}/macos/"
+    sources:
+    - defaults.sh
+    - "*.defaults.sh"
+
+  reinstall:
+    label: "󰚩 Reinstall"
+    desc: "Reinstall dotfiles using Dotbot"
+    cmds:
+    - dotbot -d "$(pwd)" -c "$(pwd)/install.yml" --exit-on-failure --verbose
+    - task: launchagents:install
+    - task: install:mise-tools
+    # - task: install:brewfile
+    - task: install:yazi-plugins
+    - task: install:macos:defaults
+  install:
+    label: "󰚩 Install"
+    desc: "Install dotfiles using Dotbot"
+    deps: [ generate ] 
+    cmds:
+    - dotbot -d "$(pwd)" -c "$(pwd)/install.yml" --exit-on-failure
+    - task: launchagents:install
+    - task: install:mise-tools
+    # - task: install:brewfile
+    - task: install:yazi-plugins
+    - task: install:macos:defaults
+  clean:
+    label: "Clean"
+    desc: "Clean generated files"
+    cmds:
+    - task: toolchains:clean
+    - task: gitconfig:clean
+    - platforms: [darwin]
+      task: launchagents:clean

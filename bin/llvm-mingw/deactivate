@@ -1,0 +1,6 @@
+#!/usr/bin/env zsh
+deactivate() {
+  #TODO: check if llvm-mingw is activated
+  #TODO: better deactivation method?
+  echo "deactivating llvm-mingw..."
+}

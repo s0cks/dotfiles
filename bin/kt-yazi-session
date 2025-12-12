@@ -1,0 +1,20 @@
+#!/usr/bin/env zsh
+kt-yazi-session() {
+  if [[ $# -eq 0 ]]; then
+    TARGET_DIR="$PWD/"
+  else
+    if [[ ! -d "$1/" ]]; then
+      echo "invalid project directory: $1/"
+      return 1
+    fi
+    TARGET_DIR="$1/"
+  fi
+  export TARGET_DIR
+
+  local KITTY_SESSION_CONF="$KITTY_SESSION_DIR/yazi_in_dir.conf"
+  local KITTY_INSTANCE_GROUP="yazi"
+
+  cd "$TARGET_DIR"
+  /Applications/kitty.app/Contents/MacOS/kitty --session "$KITTY_SESSION_CONF" --detach
+  unset TARGET_DIR
+}

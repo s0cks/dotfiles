@@ -1,0 +1,9 @@
+#!/usr/bin/env zsh
+
+capi() {
+  local tool="${SCREENCAPTURE_TOOL:-screencapture}"
+  local out_dir="${SCREENCAPTURE_OUT_DIR:-"$HOME/Screen Captures"}"
+  local timestamp="$(date ${SCREENCAPTURE_TIMESTAMP_PATTERN:-'+%Y%m%d_%H%M%S'})"
+
+  $tool -i "$out_dir/$timestamp.png"
+}

@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+activate-wine-prefix() {
+  local prefix_name="$1"
+  local prefix_path="/opt/wine/$prefix_name/"
+
+  if [[ ! -d "$prefix_path" || ! -f "$prefix_path/.env" ]]; then
+    echo "no wine prefix named $prefix_name found at $prefix_path."
+    return 1
+  fi
+
+  echo "activating wine prefix $prefix_name ($prefix_path)..."
+  source "$prefix_path/.env"
+  fpath=("$HOME/.zbin/wine/" "$fpath[@]")
+  autoload -Uz deactivate
+}

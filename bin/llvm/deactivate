@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+deactivate() {
+  local llvm_version="$(brew info llvm --json | jq -r '(.[] | .installed[].version)')"
+  local llvm_path="$(brew --prefix llvm)"
+  echo "deaactivating llvm v$llvm_version...."
+  export PATH=$(echo "$PATH" | sed -e "s|:$llvm_path/bin||g" -e "s|$llvm_path/bin:||g" -e "s|^$llvm_path/bin$||g")
+  local llvm_fpath="$HOME/.zbin/llvm"
+  fpath[${fpath[(Ie)$llvm_fpath]}]=()
+  unfunction deactivate
+}

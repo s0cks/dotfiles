@@ -1,0 +1,11 @@
+#!/usr/bin/env zsh
+macos-is-dark() {
+  defaults read -g AppleInterfaceStyle &>/dev/null
+  if [ $? -eq 0 ]; then
+    # The value is "Dark", so dark mode is active
+    return 0
+  else
+    # The value is not "Dark" (unset or "Light"), so light mode is active
+    return 1
+  fi
+}

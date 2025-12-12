@@ -1,0 +1,16 @@
+#!/usr/bin/env zsh
+
+fzbrewx() {
+  local pkg
+  pkg=$(
+    brew leaves |
+      fzf \
+        --query="$@" \
+        --preview="brew info {}" \
+        --bind="ctrl-x:execute-silent(brew home {})"
+  )
+
+  if [[ -n "$pkg" ]]; then
+    brew uninstall "$pkg"
+  fi
+}

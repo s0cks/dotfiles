@@ -1,0 +1,24 @@
+---
+version: '3'
+includes:
+  jsonnet:
+    taskfile: ../../taskfiles/jsonnet.yml
+    internal: true
+tasks:
+  generate:
+    label: "Generate git config"
+    desc: "Generate git configuration using Jsonnet"
+    dir: "{{.TASKFILE_DIR}}"
+    cmds:
+    - task: jsonnet:generate
+      vars:
+        JSONNET_SOURCES: generate.jsonnet
+    sources:
+    - generate.jsonnet
+    generates:
+    - generated/config
+    - generated/tazz.gitconfig
+  clean:
+    dir: "{{.TASKFILE_DIR}}/generated/"
+    cmds:
+    - rm -rf *

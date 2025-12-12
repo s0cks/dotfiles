@@ -1,0 +1,11 @@
+---
+style:
+  tag:
+    color: "white"
+    width_percentage: 20
+  comment:
+    color: "white"
+    width_percentage: 40
+  snippet:
+    color: "white"
+    width_percentage: 40

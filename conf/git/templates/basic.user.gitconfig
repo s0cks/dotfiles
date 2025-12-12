@@ -1,0 +1,3 @@
+[user]
+  name = %(name)s
+  email = %(email)s

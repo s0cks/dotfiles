@@ -1,0 +1,4 @@
+#!/usr/bin/env zsh
+show-fpath() {
+  <<<${(F)fpath}
+}

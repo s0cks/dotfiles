@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+fzktsessions() {
+  fselect filename from "$KITTY_SESSION_DIR" where extension = 'conf' |
+    fzf \
+      --preview "cat $KITTY_SESSION_DIR/{}.conf" \
+      --bind="enter:become(kitty @ goto_session $KITTY_SESSION_DIR/{}.conf)"
+}

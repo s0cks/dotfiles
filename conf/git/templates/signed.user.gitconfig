@@ -1,0 +1,8 @@
+[user]
+  name = %(name)s
+  email = %(email)s
+  signingkey = %(key)s
+[commit]
+  gpgsign = true
+[gpg]
+  program = %(gpg_exec)s

@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+
+rm-cwd() {
+	local TMP=$(pwd -P)
+	echo "\nDelete \"$TMP\"? [y/N]"
+	read CONFIRM
+
+	if [ "$CONFIRM" = "y" ]; then
+		cd "$(dirname $TMP)" && rm -rf "./$(basename $TMP)"
+	fi
+}
+

@@ -1,0 +1,72 @@
+#!/usr/bin/env zsh
+
+# organize
+alias organize-test="organize sim --tags=debug --skip-tags=slow --working-dir=$HOME"
+alias afk="open /System/Library/CoreServices/ScreenSaverEngine.app"
+alias home="cd ~"
+alias chrome="open -a /Applications/Google\ Chrome.app"
+alias drive="open -a /Applications/Google\ Drive.app"
+alias sheets="open -a /Applications/Google\ Sheets.app"
+alias task-dry="task --dry"
+alias emoji='emoji_fzf'
+alias tetris='tetrs_tui'
+alias tail='btail'
+alias neofetch="fastfetch"
+alias port-scan="rustscan"
+
+alias weather="https -b 'wttr.in?format=3'"
+
+alias cpwd="pwd | cb"
+
+# npm
+alias npmug='npm uninstall --global'
+alias npmig="npm i -g"
+alias npmR='npm run'
+
+# git
+alias gbw='git browse-web'
+
+# git + commitizen
+alias gcz='git cz'
+alias gacz='git add-all && git cz'
+alias gaczp='gacz && git push'
+
+
+# neovim
+alias vi=nvimz
+alias vim=nvimz
+
+# cat
+alias cat='bat --paging=never'
+
+# bw
+alias bwl="bw login --passwordenv BITWARDENCLI_PASS"
+
+# yazi
+alias yazi="yz"
+
+# vtop
+alias vtop="vtop --theme catppuccin-mocha-lavender"
+
+alias top="btm"
+
+# gpg
+alias gpgep="gpg -r $GPG_ID --armor --export"
+alias gpglk="gpg --list-keys --keyid-format LONG"
+alias gpglsk="gpg --list-secret-keys --keyid-format LONG"
+alias gpgepcb="gpgep | cb"
+
+# eza
+local eza_params=(
+  '--git' '--icons' '--group' '--group-directories-first'
+  '--time-style=long-iso' '--color-scale=all' '--color'
+)
+[[ ! -z $_EZA_PARAMS ]] && eza_params=($_EZA_PARAMS)
+
+alias ls="eza --group-directories-first ${(j: :)_EZA_PARAMS} $@"
+alias l="eza --git-ignore --group-directories-first ${(j: :)_EZA_PARAMS}"
+alias ll="eza --all --header --long --group-directories-first ${EZA_PARAMS}"
+alias llm="eza --all --header --long --sort=modified --group-directories-first ${_EZA_PARAMS}"
+alias la='eza -lbhHigUmuSa'
+alias lx='eza -lbhHigUmuSa@'
+alias lt='eza --tree $eza_params'

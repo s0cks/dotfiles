@@ -1,0 +1,51 @@
+[includeIf "gitdir:~/Projects/"]
+  path = "~/.config/git/tazz.gitconfig"
+[init]
+  defaultBranch = main
+[pull]
+  rebase = false
+[push]
+  autoSetupRemote = true
+[advice]
+  addIgnoredFile = false
+[core]
+  pager = less
+[credential]
+  helper = 
+  helper = /usr/local/share/gcm-core/git-credential-manager
+[credential "https://dev.azure.com"]
+  useHttpPath = true
+[alias]
+  logs = !serie
+  add-all = "add -A ."
+  uncommit = reset HEAD~1
+  uncommits = "!git reset HEAD~$1 #"
+  browse-web = !gh repo view --web 
+
+[include]
+  path = "~/.catppuccin/delta/catppuccin.gitconfig"
+[interactive]
+  diffFilter = delta --color-only --features=interactive
+[delta]
+  features = decorations line-numbers side-by-side gruvbox-dark
+  navigate = true
+  hyperlinks = true
+  hyperlinks-file-link-format = "vscode://file/{path}:{line}"
+  minus-style = syntax "#3f0001"
+  plus-style = syntax "#003800"
+[delta "decorations"]
+  commit-decoration-style = bold yellow box ul
+  file-style = bold yellow ul
+  file-decoration-style = none
+  hunk-header-decoration-style = cyan box ul
+[delta "line-numbers"]
+      line-numbers-left-style = cyan
+      line-numbers-right-style = cyan
+      line-numbers-minus-style = 124
+      line-numbers-plus-style = 28
+[merge]
+  conflictstyle = diff3
+[diff]
+  colormoved = default
+[color "diff"]
+  frag = magenta bold

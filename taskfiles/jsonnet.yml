@@ -1,0 +1,6 @@
+---
+version: '3'
+tasks:
+  generate:
+    cmds:
+    - jsonnet -S -m "{{.JSONNET_BIN | default "generated"}}/" {{.JSONNET_SOURCES}} {{.JSONNET_EXTRAS | default ""}}

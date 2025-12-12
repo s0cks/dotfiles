@@ -1,0 +1,97 @@
+downloads: &Downloads "~/Downloads/"
+docs: &Documents "~/Documents/"
+books: &Books "~/Books/"
+
+image_exts: &ImageExtensions
+- jpg
+- jpeg
+- png
+- svg
+- webp
+video_exts: &VideoExtensions
+- mp4
+- vid
+- mov
+- webm
+- mkv
+- m4v
+
+rules:
+- name: "echo rule"
+  actions:
+  - echo: "Hello World"
+  tags:
+  - debug
+  - fast
+
+#                            ╭───────────────────────╮
+#                            │ Media, Images & Video │
+#                            ╰───────────────────────╯
+- name: Organize Images 
+  locations: *Downloads
+  subfolders: true
+  tags:
+  - documents
+  - downloads
+  - images
+  - photos
+  filters:
+  - extension: *ImageExtensions
+  actions:
+  - move:
+      dest: ~/Photos/
+      on_conflict: rename_new
+      rename_template: "{name} ({counter}){extension}"
+- name: Organize Videos
+  locations:
+  - *Downloads
+  subfolders: true
+  tags:
+  - media
+  - movies
+  - videos
+  - downloads
+  filters:
+  - extension: *VideoExtensions
+  actions:
+  - move:
+      dest: ~/Movies/
+      on_conflict: rename_new
+      rename_template: "{name} ({counter}){extension}"
+
+#                             ╭────────────────────╮
+#                             │ EBooks & Documents │
+#                             ╰────────────────────╯
+- name: Organize EBooks
+  locations:
+  - *Downloads
+  - *Documents
+  subfolders: true
+  tags:
+  - docs
+  - books
+  - downloads
+  filters:
+  - extension:
+    - epub
+  actions:
+  - move:
+      dest: *Books
+      on_conflict: rename_new
+      rename_template: "{name} ({counter}){extension}"
+- name: Organize PDFs
+  locations: 
+  - *Downloads
+  subfolders: true
+  tags:
+  - documents
+  - downloads
+  - pdfs
+  filters:
+  - extension:
+    - pdf
+  actions:
+  - move:
+      dest: *Documents 
+      on_conflict: rename_new
+      rename_template: "{name} ({counter}){extension}"

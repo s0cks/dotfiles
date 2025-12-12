@@ -1,0 +1,88 @@
+#!/usr/bin/env zsh
+# Start configuration added by Zim install {{{
+#
+# This is not sourced during shell startup, and it's only used to configure the
+# zimfw plugin manager.
+#
+
+#
+# zimfw Modules
+#
+zmodule environment
+zmodule git
+zmodule input
+zmodule termtitle
+zmodule utility
+zmodule archive
+zmodule decayofmind/zsh-fast-alias-tips
+zmodule fzf
+zmodule git-info
+
+# AutoPair
+# https://github.com/hlissner/zsh-autopair
+zmodule hlissner/zsh-autopair
+
+# DotUp
+# https://github.com/toku-sa-n/zsh-dot-up
+zmodule toku-sa-n/zsh-dot-up
+
+# OpenAI
+# https://github.com/antonjs/zsh-gpt
+zmodule antonjs/zsh-gpt
+
+# fzf-tab completion
+# https://github.com/Aloxaf/fzf-tab
+zmodule Aloxaf/fzf-tab
+
+#Forgit
+# https://github.com/wfxr/forgit
+[ -f $HOMEBREW_PREFIX/share/forgit/forgit.plugin.zsh ] && source $HOMEBREW_PREFIX/share/forgit/forgit.plugin.zsh
+if [[ -f "${FORGIT_INSTALL_DIR}" ]]; then
+  export PATH="${FORGIT_INSTALL_DIR}/bin:${PATH}"
+fi
+
+# Load Custom Modules
+# TODO(@s0cks): #8 add thefuck back
+# zmodule $ZIM_HOME/modules/zim-thefuck/
+zmodule $ZIM_HOME/modules/zim-starship/
+zmodule $ZIM_HOME/modules/zim-yeoman/
+zmodule $ZIM_HOME/modules/zim-zoxide/
+zmodule $ZIM_HOME/modules/zim-atuin/
+zmodule $ZIM_HOME/modules/zim-autoenv/
+zmodule $ZIM_HOME/modules/zim-devkitpro/
+zmodule $ZIM_HOME/modules/zim-screencapture/
+zmodule $ZIM_HOME/modules/zim-fz-finder/
+zmodule $ZIM_HOME/modules/zim-procs/
+zmodule $ZIM_HOME/modules/zim-mise/
+zmodule $ZIM_HOME/modules/zim-fz-expanders/
+zmodule $ZIM_HOME/modules/zim-wine/
+
+#
+# Completion
+#
+
+# Additional completion definitions for Zsh.
+# Enables and configures smart and extensive tab completion.
+# completion must be sourced after all modules that add completion definitions.
+zmodule zsh-users/zsh-completions --fpath src
+zmodule completion
+
+#
+# Modules that must be initialized last
+#
+zmodule zdharma-continuum/fast-syntax-highlighting
+zmodule zsh-users/zsh-history-substring-search
+zmodule zsh-users/zsh-autosuggestions
+# }}} End configuration added by Zim install
+
+# Bitwarden CLI
+zmodule Game4Move78/zsh-bitwarden
+# TODO: implement fzf + bitwarden integration:
+# https://github.com/kalsowerus/zsh-bitwarden
+
+# TODO:
+# NPM Completion
+# https://github.com/lukechilds/zsh-better-npm-completion
+# zmodule lukechilds/zsh-better-npm-completion
+
+zmodule $ZIM_HOME/modules/zim-vcpkg
