@@ -16,6 +16,7 @@
   - /usr/local/share/aria2/
   - /usr/local/share/zsh/functions/
   - /usr/local/share/zsh/completions/
+  - ~/.config/yazi/
 - git:
     /usr/local/share/vcpkg/:
       url: "https://github.com/microsoft/vcpkg.git"
@@ -35,7 +36,7 @@
     ~/.config/:
       glob: true
       path: conf/*
-      exclude: [ conf/ripgrep, conf/aria2, conf/git ]
+      exclude: [ conf/ripgrep, conf/aria2, conf/git, conf/yazi ]
     ~/.ssh/config: dotssh/config
     ~/.zim/modules/:
       glob: true
@@ -50,6 +51,7 @@
       glob: true
       path: conf/git/generated/*
     /usr/local/share/user-agent: ./user-agent
+    ~/.config/yazi/theme.toml: conf/yazi/theme.toml
 - ifmacos:
   - link:
       ~/Library/LaunchAgents/:
