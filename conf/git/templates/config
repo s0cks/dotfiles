@@ -21,6 +21,8 @@
   uncommit = reset HEAD~1
   uncommits = "!git reset HEAD~$1 #"
   browse-web = !gh repo view --web 
+  squash-all = "!f(){ git reset $(git commit-tree \"HEAD^{tree}\" \"$@\");};f"
+
 
 [include]
   path = "~/.catppuccin/delta/catppuccin.gitconfig"

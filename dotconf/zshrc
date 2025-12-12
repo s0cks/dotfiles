@@ -127,6 +127,7 @@ if (( $+commands[bison] )); then
   export PATH="$(brew --prefix bison)/bin:$PATH"
 fi
 
+
 # set fast-zsh-highlighting theme to flexoki-dark/light based on MacOS theme
 if [[ $(uname) == "Darwin" ]]; then
   if macos-is-dark; then
