@@ -43,6 +43,8 @@
     # Generate and install ssh config
     "~/.ssh/":
       source: dotssh/config.jsonnet
+    "~/.config/ripgrep/":
+      source: conf/ripgrep/config.jsonnet
 
 #                      ╭──────────────────────────────────╮
 #                      │ Clone necessary git repositories │
@@ -85,8 +87,6 @@
       glob: true
       path: "dotconf/*"
       prefix: '.'
-    # Install ripgrep config
-    ~/.config/ripgrep/config: conf/ripgrep/config #TODO(@s0cks): move to Jsonnet dotbot plugin
     # Install aria2 config
     ~/.config/aria2/aria2.conf: conf/aria2/generated/aria2.conf #TODO(@s0cks): move to Jsonnet dotbot plugin
     # Install system-wide user-agent
