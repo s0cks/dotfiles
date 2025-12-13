@@ -96,13 +96,16 @@
 #                      ╭───────────────────────────────────╮
 #                      │ Install & Configure Yazi Theme(s) │
 #                      ╰───────────────────────────────────╯
+# install yazi packages using ya 
 - ya:
+  # starship prompt in Yazi windows
   - Rolv-Apneseth/starship
+  # flexoki theme
   - gosxrgxx/flexoki-dark
   - gosxrgxx/flexoki-light
+# create symlink for yazi theme config
 - link:
-    # Install yazi themes
-    ~/.config/yazi/theme.toml: conf/yazi/theme.toml #TODO(@s0cks): probably should make this a dotbot plugin too
+    ~/.config/yazi/theme.toml: conf/yazi/theme.toml
 
 #                     ╭─────────────────────────────────────╮
 #                     │ Apply MacOS Specific Customizations │
