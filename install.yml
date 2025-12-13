@@ -17,9 +17,9 @@
       create: true
       relink: true
 
-#                       ╭─────────────────────────────────╮
-#                       │ Create some default directories │
-#                       ╰─────────────────────────────────╯
+#             ╭────────────────────────────────────────────────────╮
+#             │ Create some default directories and configurations │
+#             ╰────────────────────────────────────────────────────╯
 - create:
   - ~/Projects/
   - ~/.config/bitwarden-cli/
@@ -27,6 +27,9 @@
   - /usr/local/share/zsh/functions/
   - /usr/local/share/zsh/completions/
   - ~/.config/yazi/
+- link:
+      # Install system-wide user-agent
+    /usr/local/share/user-agent: ./user-agent
 
 #                       ╭─────────────────────────────────╮
 #                       │ Install system tools using mise │
@@ -89,8 +92,6 @@
       prefix: '.'
     # Install aria2 config
     ~/.config/aria2/aria2.conf: conf/aria2/generated/aria2.conf #TODO(@s0cks): move to Jsonnet dotbot plugin
-    # Install system-wide user-agent
-    /usr/local/share/user-agent: ./user-agent
     # Install yazi themes
     ~/.config/yazi/theme.toml: conf/yazi/theme.toml #TODO(@s0cks): probably should make this a dotbot plugin too
 
