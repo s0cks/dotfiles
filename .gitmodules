@@ -10,9 +10,6 @@
 [submodule ".dotbot/plugins/dotbot-brew"]
 	path = .dotbot/plugins/dotbot-brew
 	url = https://github.com/wren/dotbot-brew.git
-[submodule ".dotbot/plugins/dotbot-template"]
-	path = .dotbot/plugins/dotbot-template
-	url = https://github.com/ssbanerje/dotbot-template
 [submodule ".dotbot/plugins/dotbot-include"]
 	path = .dotbot/plugins/dotbot-include
 	url = https://gitlab.com/gnfzdz/dotbot-include.git
