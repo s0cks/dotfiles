@@ -41,14 +41,16 @@
 #                  │ Generate global git config using Jsonnet │
 #                  ╰──────────────────────────────────────────╯
 - jsonnet:
-    # Generate and install git config
+    # generate git config
     "~/.config/git/":
       source: conf/git/generate.jsonnet
-    # Generate and install ssh config
+    # generate ssh config
     "~/.ssh/":
       source: dotssh/config.jsonnet
+    # generate ripgrep config
     "~/.config/ripgrep/":
       source: conf/ripgrep/config.jsonnet
+    # generate aria2 config
     "~/.config/aria2/":
       source: conf/aria2/aria2.jsonnet
       vars_from_env:
@@ -59,12 +61,12 @@
 #                      │ Clone necessary git repositories │
 #                      ╰──────────────────────────────────╯
 - git:
-    # Install vcpkg from Microsoft GitHub
+    # install vcpkg from Microsoft GitHub
     /usr/local/share/vcpkg/:
       url: "https://github.com/microsoft/vcpkg.git"
       description: "Install @microsoft/vcpkg from GitHub"
       recursive: true
-    # Install personal cheatsheet from GitHub
+    # install personal cheatsheet from GitHub
     /usr/local/share/cheats/s0cks__cheats:
       url: "https://github.com/s0cks/cheats.git"
       description: "Install @s0cks/cheats from GitHub"
@@ -74,20 +76,20 @@
 #                           │ Create various symlinks │
 #                           ╰─────────────────────────╯
 - link:
-    # Install various shell scripts into user-local fpath bin
+    # install various shell scripts into user-local fpath bin
     /usr/local/share/zsh/functions/:
       glob: true
       path: bin/*
-    # Install system-wide configs for various tools and apps
+    # install system-wide configs for various tools and apps
     ~/.config/:
       glob: true
       path: conf/*
       exclude: [ conf/ripgrep, conf/aria2, conf/git, conf/yazi ]
-    # Install custom local zimfw modules
+    # install custom local zimfw modules
     ~/.zim/modules/:
       glob: true
       path: zim-modules/*
-    # Install various dotfiles
+    # install various dotfiles
     ~/:
       glob: true
       path: "dotconf/*"
@@ -108,7 +110,7 @@
     ~/.config/yazi/theme.toml: conf/yazi/theme.toml
 
 #                     ╭─────────────────────────────────────╮
-#                     │ Apply MacOS Specific Customizations │
+#                     │ Apply OS Specific Customizations    │
 #                     ╰─────────────────────────────────────╯
 - ifmacos:
   - link:
