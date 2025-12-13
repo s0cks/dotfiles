@@ -8,6 +8,7 @@
   - .dotbot/plugins/dotbot-if
   - .dotbot/plugins/dotbot-mise
   - .dotbot/plugins/dotbot-jsonnet
+  - .dotbot/plugins/dotbot-ya
 
 #                                  ╭──────────╮
 #                                  │ Defaults │
@@ -91,6 +92,15 @@
       glob: true
       path: "dotconf/*"
       prefix: '.'
+
+#                      ╭───────────────────────────────────╮
+#                      │ Install & Configure Yazi Theme(s) │
+#                      ╰───────────────────────────────────╯
+- ya:
+  - Rolv-Apneseth/starship
+  - gosxrgxx/flexoki-dark
+  - gosxrgxx/flexoki-light
+- link:
     # Install yazi themes
     ~/.config/yazi/theme.toml: conf/yazi/theme.toml #TODO(@s0cks): probably should make this a dotbot plugin too
 
