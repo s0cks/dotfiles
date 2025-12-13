@@ -6,6 +6,7 @@
   - .dotbot/plugins/dotbot-includes
   - .dotbot/plugins/dotbot-ifplatform
   - .dotbot/plugins/dotbot-if
+  - .dotbot/plugins/dotbot-mise
 - defaults:
     link:
       create: true
@@ -17,10 +18,11 @@
   - /usr/local/share/zsh/functions/
   - /usr/local/share/zsh/completions/
   - ~/.config/yazi/
+- mise: {}
 - git:
     /usr/local/share/vcpkg/:
       url: "https://github.com/microsoft/vcpkg.git"
-      description: "Install vcpkg"
+      description: "Install @microsoft/vcpkg from GitHub"
       recursive: true
     /usr/local/share/cheats/s0cks__cheats:
       url: "https://github.com/s0cks/cheats.git"
