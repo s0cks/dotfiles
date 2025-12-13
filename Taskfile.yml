@@ -35,19 +35,42 @@ tasks:
     - defaults.sh
     - "*.defaults.sh"
 
+  dotbot:install:
+    # TODO(@s0cks): uncomment this
+    # internal: true
+    vars:
+      PLUGINS_DIR: ".dotbot/plugins"
+    cmds: 
+    - |
+      dotbot \
+        --verbose \
+        -p {{.PLUGINS_DIR}}/dotbot-mise \
+        -p {{.PLUGINS_DIR}}/dotbot-brew \
+        -p {{.PLUGINS_DIR}}/dotbot-git \
+        -p {{.PLUGINS_DIR}}/dotbot-if \
+        -p {{.PLUGINS_DIR}}/dotbot-ifplatform \
+        -p {{.PLUGINS_DIR}}/dotbot-ya \
+        -p {{.PLUGINS_DIR}}/dotbot-jsonnet \
+        -p {{.PLUGINS_DIR}}/dotbot-gh-extension \
+        -p {{.PLUGINS_DIR}}/dotbot-include \
+        -p {{.PLUGINS_DIR}}/dotbot-includes \
+        --exit-on-failure \
+        -d "$(pwd)" \
+        -c "$(pwd)/install.yml"
+
   reinstall:
     label: "󰚩 Reinstall"
     desc: "Reinstall dotfiles using Dotbot"
     cmds:
-    - dotbot -d "$(pwd)" -c "$(pwd)/install.yml" --exit-on-failure --verbose
+    - task: dotbot:install
     - task: launchagents:install
     - task: install:macos:defaults
   install:
     label: "󰚩 Install"
     desc: "Install dotfiles using Dotbot"
-    deps: [ generate ] 
+    deps: [ generate ]
     cmds:
-    - dotbot -d "$(pwd)" -c "$(pwd)/install.yml" --exit-on-failure
+    - task: dotbot:install
     - task: launchagents:install
     - task: install:macos:defaults
   clean:

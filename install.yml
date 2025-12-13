@@ -1,16 +1,3 @@
-- plugins:
-  - .dotbot/plugins/dotbot-brew/
-  - .dotbot/plugins/dotbot-git/
-  - .dotbot/plugins/dotbot-template/
-  - .dotbot/plugins/dotbot-include
-  - .dotbot/plugins/dotbot-includes
-  - .dotbot/plugins/dotbot-ifplatform
-  - .dotbot/plugins/dotbot-if
-  - .dotbot/plugins/dotbot-mise
-  - .dotbot/plugins/dotbot-jsonnet
-  - .dotbot/plugins/dotbot-ya
-  - .dotbot/plugins/dotbot-gh-extension
-
 #                                  ╭──────────╮
 #                                  │ Defaults │
 #                                  ╰──────────╯
