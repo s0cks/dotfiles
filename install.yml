@@ -28,6 +28,11 @@
   - /usr/local/share/zsh/completions/
   - ~/.config/yazi/
 
+#                       ╭─────────────────────────────────╮
+#                       │ Install system tools using mise │
+#                       ╰─────────────────────────────────╯
+- mise: {}
+
 #                  ╭──────────────────────────────────────────╮
 #                  │ Generate global git config using Jsonnet │
 #                  ╰──────────────────────────────────────────╯
@@ -38,11 +43,6 @@
     # Generate and install ssh config
     "~/.ssh/":
       source: dotssh/config.jsonnet
-
-#                       ╭─────────────────────────────────╮
-#                       │ Install system tools using mise │
-#                       ╰─────────────────────────────────╯
-- mise: {}
 
 #                      ╭──────────────────────────────────╮
 #                      │ Clone necessary git repositories │
