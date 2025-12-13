@@ -1,0 +1,8 @@
+
+# vim: filetype=sshconfig
+
+# Base Config
+AddKeysToAgent yes
+
+# Hosts
+%(hosts)s

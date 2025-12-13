@@ -34,6 +34,8 @@
 - jsonnet:
     "~/.config/git/":
       source: conf/git/generate.jsonnet
+    "~/.ssh/":
+      source: dotssh/config.jsonnet
 
 #                       ╭─────────────────────────────────╮
 #                       │ Install system tools using mise │
@@ -72,8 +74,6 @@
       glob: true
       path: conf/*
       exclude: [ conf/ripgrep, conf/aria2, conf/git, conf/yazi ]
-    # Install ssh config
-    ~/.ssh/config: dotssh/config
     # Install custom local zimfw modules
     ~/.zim/modules/:
       glob: true
