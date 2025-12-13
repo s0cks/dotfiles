@@ -1,9 +1,6 @@
 ---
 version: '3'
 includes:
-  toolchains:
-    taskfile: ./toolchains/
-    internal: true
   launchagents:
     taskfile: ./macos/LaunchAgents/
   gitconfig:
@@ -23,7 +20,6 @@ tasks:
   generate:
     deps: [ update:submodules ]
     cmds:
-    - task: toolchains:generate
     - platforms: [darwin]
       task: launchagents:generate
     - task: gitconfig:generate
@@ -89,7 +85,6 @@ tasks:
     label: "Clean"
     desc: "Clean generated files"
     cmds:
-    - task: toolchains:clean
     - task: gitconfig:clean
     - platforms: [darwin]
       task: launchagents:clean

@@ -73,10 +73,6 @@
 #                           │ Create various symlinks │
 #                           ╰─────────────────────────╯
 - link:
-    # Install various scripts to make working w/ toolchains like clang or gcc easier
-    /usr/local/share/toolchains/: #TODO(@s0cks): probably should remove this. I think mise solves this use-case more elegantly
-      glob: true
-      path: toolchains/out/*
     # Install various shell scripts into user-local fpath bin
     /usr/local/share/zsh/functions/:
       glob: true
