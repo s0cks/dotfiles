@@ -32,8 +32,10 @@
 #                  │ Generate global git config using Jsonnet │
 #                  ╰──────────────────────────────────────────╯
 - jsonnet:
+    # Generate and install git config
     "~/.config/git/":
       source: conf/git/generate.jsonnet
+    # Generate and install ssh config
     "~/.ssh/":
       source: dotssh/config.jsonnet
 
