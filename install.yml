@@ -9,6 +9,7 @@
   - .dotbot/plugins/dotbot-mise
   - .dotbot/plugins/dotbot-jsonnet
   - .dotbot/plugins/dotbot-ya
+  - .dotbot/plugins/dotbot-gh-extension
 
 #                                  ╭──────────╮
 #                                  │ Defaults │
@@ -109,6 +110,12 @@
 - link:
     ~/.config/yazi/theme.toml: conf/yazi/theme.toml
 
+#                      ╭──────────────────────────────────╮
+#                      │ Download & Install gh Extensions │
+#                      ╰──────────────────────────────────╯
+- ghe:
+  - dlvhdr/gh-dash
+
 #                     ╭─────────────────────────────────────╮
 #                     │ Apply OS Specific Customizations    │
 #                     ╰─────────────────────────────────────╯
@@ -120,7 +127,3 @@
       /usr/local/share/zsh/functions/:
         glob: true
         path: macos/bin/*
-
-# TODO(@s0cks): sort this? probably should conver this to a dotbot plugin
-- shell:
-  - bundle

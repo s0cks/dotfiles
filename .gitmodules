@@ -34,3 +34,6 @@
 [submodule ".dotbot/plugins/dotbot-ya"]
 	path = .dotbot/plugins/dotbot-ya
 	url = git@github.com:s0cks/dotbot-ya.git
+[submodule ".dotbot/plugins/dotbot-gh-extension"]
+	path = .dotbot/plugins/dotbot-gh-extension
+	url = git@github.com:fundor333/dotbot-gh-extension.git
