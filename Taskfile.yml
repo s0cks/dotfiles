@@ -8,9 +8,6 @@ includes:
   ripgrep-conf:
     taskfile: ./conf/ripgrep/
     internal: true
-  aria2-conf:
-    taskfile: ./conf/aria2/
-    internal: true
 tasks:
   update:submodules:
     label: " Update submodules"
@@ -22,9 +19,6 @@ tasks:
     cmds:
     - platforms: [darwin]
       task: launchagents:generate
-    - task: gitconfig:generate
-    - task: ripgrep-conf:generate
-    - task: aria2-conf:generate
   install:dry-run:
     label: "󰚩 Install (dry-run)"
     desc: "Install dotfiles using Dotbot using dry-run mode."
@@ -32,25 +26,6 @@ tasks:
     - dotbot -d "$(pwd)" -c "$(pwd)/install.yml" --exit-on-failure --dry-run
     sources:
     - install.yml
-  install:brewfile:
-    label: "Install Brewfile"
-    desc: "Install brew packages from Brewfile"
-    dir: "{{.ROOT_DIR}}"
-    cmds:
-    - brew bundle 
-    sources:
-    - Brewfile
-  install:mise-tools:
-    label: "Install mise tools"
-    desc: "Install tools using: mise install"
-    cmds:
-    - mise install
-    sources:
-    - conf/mise/config.toml
-  install:yazi-plugins:
-    label: "Install yazi plugins"
-    cmds:
-    - ./scripts/install-yazi-plugins.sh
   install:macos:defaults:
     label: "Install macos defaults"
     cmds:
@@ -66,9 +41,6 @@ tasks:
     cmds:
     - dotbot -d "$(pwd)" -c "$(pwd)/install.yml" --exit-on-failure --verbose
     - task: launchagents:install
-    - task: install:mise-tools
-    # - task: install:brewfile
-    - task: install:yazi-plugins
     - task: install:macos:defaults
   install:
     label: "󰚩 Install"
@@ -77,9 +49,6 @@ tasks:
     cmds:
     - dotbot -d "$(pwd)" -c "$(pwd)/install.yml" --exit-on-failure
     - task: launchagents:install
-    - task: install:mise-tools
-    # - task: install:brewfile
-    - task: install:yazi-plugins
     - task: install:macos:defaults
   clean:
     label: "Clean"

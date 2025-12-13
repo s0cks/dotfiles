@@ -101,8 +101,6 @@ export PATH="$PATH:$CARGO_HOME/bin"
 export NAVI_CONFIG="$XDG_CONFIG_HOME/navi/config.yaml"
 export NAVI_PATH="$XDG_DATA_HOME/navi/cheats/:/usr/local/share/cheats/"
 
-export MISE_PYTHON_DEFAULT_PACKAGES_FILE=${XDG_CONFIG_HOME}/mise/.default-python-packages
-
 # ┌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┐
 # ╎                        Environment                        ╎
 # └╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┘

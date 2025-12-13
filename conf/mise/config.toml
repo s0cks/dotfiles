@@ -2,6 +2,8 @@ min_version = "2025.7.27"
 
 [settings]
 idiomatic_version_file_enable_tools = []
+python.default_packages_file        = "{{env.XDG_CONFIG_HOME}}/mise/.default-python-packages"
+ruby.default_packages_file          = "{{env.XDG_CONFIG_HOME}}/mise/.default-gems"
 
 [env]
 NODE_ENV="dev"
