@@ -48,6 +48,11 @@
       source: dotssh/config.jsonnet
     "~/.config/ripgrep/":
       source: conf/ripgrep/config.jsonnet
+    "~/.config/aria2/":
+      source: conf/aria2/aria2.jsonnet
+      vars_from_env:
+      - ARIA2_SECRET
+      - ARIA2_USER_AGENT
 
 #                      ╭──────────────────────────────────╮
 #                      │ Clone necessary git repositories │
