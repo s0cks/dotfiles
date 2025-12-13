@@ -90,8 +90,6 @@
       glob: true
       path: "dotconf/*"
       prefix: '.'
-    # Install aria2 config
-    ~/.config/aria2/aria2.conf: conf/aria2/generated/aria2.conf #TODO(@s0cks): move to Jsonnet dotbot plugin
     # Install yazi themes
     ~/.config/yazi/theme.toml: conf/yazi/theme.toml #TODO(@s0cks): probably should make this a dotbot plugin too
 
