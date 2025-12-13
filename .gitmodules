@@ -31,3 +31,6 @@
 [submodule ".dotbot/plugins/dotbot-mise"]
 	path = .dotbot/plugins/dotbot-mise
 	url = git@github.com:s0cks/dotbot-mise.git
+[submodule ".dotbot/plugins/dotbot-jsonnet"]
+	path = .dotbot/plugins/dotbot-jsonnet
+	url = git@github.com:s0cks/dotbot-jsonnet.git

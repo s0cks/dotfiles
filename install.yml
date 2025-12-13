@@ -7,10 +7,19 @@
   - .dotbot/plugins/dotbot-ifplatform
   - .dotbot/plugins/dotbot-if
   - .dotbot/plugins/dotbot-mise
+  - .dotbot/plugins/dotbot-jsonnet
+
+#                                  ╭──────────╮
+#                                  │ Defaults │
+#                                  ╰──────────╯
 - defaults:
     link:
       create: true
       relink: true
+
+#                       ╭─────────────────────────────────╮
+#                       │ Create some default directories │
+#                       ╰─────────────────────────────────╯
 - create:
   - ~/Projects/
   - ~/.config/bitwarden-cli/
@@ -18,42 +27,74 @@
   - /usr/local/share/zsh/functions/
   - /usr/local/share/zsh/completions/
   - ~/.config/yazi/
+
+#                  ╭──────────────────────────────────────────╮
+#                  │ Generate global git config using Jsonnet │
+#                  ╰──────────────────────────────────────────╯
+- jsonnet:
+    "~/.config/git/":
+      source: conf/git/generate.jsonnet
+
+#                       ╭─────────────────────────────────╮
+#                       │ Install system tools using mise │
+#                       ╰─────────────────────────────────╯
 - mise: {}
+
+#                      ╭──────────────────────────────────╮
+#                      │ Clone necessary git repositories │
+#                      ╰──────────────────────────────────╯
 - git:
+    # Install vcpkg from Microsoft GitHub
     /usr/local/share/vcpkg/:
       url: "https://github.com/microsoft/vcpkg.git"
       description: "Install @microsoft/vcpkg from GitHub"
       recursive: true
+    # Install personal cheatsheet from GitHub
     /usr/local/share/cheats/s0cks__cheats:
       url: "https://github.com/s0cks/cheats.git"
       description: "Install @s0cks/cheats from GitHub"
       recursive: true
+
+#                           ╭─────────────────────────╮
+#                           │ Create various symlinks │
+#                           ╰─────────────────────────╯
 - link:
-    /usr/local/share/toolchains/:
+    # Install various scripts to make working w/ toolchains like clang or gcc easier
+    /usr/local/share/toolchains/: #TODO(@s0cks): probably should remove this. I think mise solves this use-case more elegantly
       glob: true
       path: toolchains/out/*
+    # Install various shell scripts into user-local fpath bin
     /usr/local/share/zsh/functions/:
       glob: true
       path: bin/*
+    # Install system-wide configs for various tools and apps
     ~/.config/:
       glob: true
       path: conf/*
       exclude: [ conf/ripgrep, conf/aria2, conf/git, conf/yazi ]
+    # Install ssh config
     ~/.ssh/config: dotssh/config
+    # Install custom local zimfw modules
     ~/.zim/modules/:
       glob: true
       path: zim-modules/*
+    # Install various dotfiles
     ~/:
       glob: true
       path: "dotconf/*"
       prefix: '.'
-    ~/.config/ripgrep/config: conf/ripgrep/config
-    ~/.config/aria2/aria2.conf: conf/aria2/generated/aria2.conf
-    ~/.config/git/: 
-      glob: true
-      path: conf/git/generated/*
+    # Install ripgrep config
+    ~/.config/ripgrep/config: conf/ripgrep/config #TODO(@s0cks): move to Jsonnet dotbot plugin
+    # Install aria2 config
+    ~/.config/aria2/aria2.conf: conf/aria2/generated/aria2.conf #TODO(@s0cks): move to Jsonnet dotbot plugin
+    # Install system-wide user-agent
     /usr/local/share/user-agent: ./user-agent
-    ~/.config/yazi/theme.toml: conf/yazi/theme.toml
+    # Install yazi themes
+    ~/.config/yazi/theme.toml: conf/yazi/theme.toml #TODO(@s0cks): probably should make this a dotbot plugin too
+
+#                     ╭─────────────────────────────────────╮
+#                     │ Apply MacOS Specific Customizations │
+#                     ╰─────────────────────────────────────╯
 - ifmacos:
   - link:
       ~/Library/LaunchAgents/:
@@ -62,5 +103,7 @@
       /usr/local/share/zsh/functions/:
         glob: true
         path: macos/bin/*
+
+# TODO(@s0cks): sort this? probably should conver this to a dotbot plugin
 - shell:
   - bundle
