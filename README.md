@@ -30,8 +30,8 @@ Once dotbot is ran it will do the following things:
 3. Generate the following configurations using Jsonnet:
     - git
     - ssh
-    - ripgrep
-    - aria2
+    - [ripgrep](https://github.com/BurntSushi/ripgrep)
+    - [aria2](https://github.com/aria2/aria2)
 4. Clone the following git repositories:
     - [@microsoft/vcpkg](https://github.com/microsoft/vcpkg)
     - [@s0cks/cheats](https://github.com/s0cks/cheats)
