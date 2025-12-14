@@ -27,6 +27,7 @@ export PATH="$HOMEBREW_PREFIX/bin:$PATH"
 eval "$(brew shellenv)"
 
 # autoload Functions
+#TODO(@s0cks): figure out how to automate this
 autoload -Uz show-path
 autoload -Uz show-fpath
 autoload -Uz zsecrets-edit
@@ -61,6 +62,7 @@ if [[ $(uname) == "Darwin" ]]; then
     export TERM_THEME="light"
   fi
 fi
+#------------------------------------------
 
 # Apply zsh styles
 source "$HOME/.zstyles"
@@ -97,13 +99,7 @@ zmodload -F zsh/terminfo +p:terminfo
 source "$HOME/.zsh_custom/fz.sh"
 source "$HOME/.zkeys"
 source "$HOME/.zaliases"
-
-if [[ $+command[atuin] ]]; then
-  source <(atuin init zsh)
-else
-  echo "Atuin is not installed  "
-  return 1
-fi
+source <(atuin init zsh)
 
 if (( $+command[docker] )); then
   fpath=("$HOME/.docker/completions" $fpath)
@@ -126,7 +122,6 @@ tre() {
 if (( $+commands[bison] )); then
   export PATH="$(brew --prefix bison)/bin:$PATH"
 fi
-
 
 # set fast-zsh-highlighting theme to flexoki-dark/light based on MacOS theme
 if [[ $(uname) == "Darwin" ]]; then
