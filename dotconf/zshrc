@@ -52,6 +52,7 @@ autoload -Uz create-wine-prefix
 autoload -Uz start-steam
 autoload -Uz update-vcpkg
 autoload -Uz fzktsessions
+autoload -Uz get-aria2-rpc-secret
 
 if [[ $(uname) == "Darwin" ]]; then
   autoload -Uz macos-is-dark

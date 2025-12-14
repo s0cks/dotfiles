@@ -28,6 +28,8 @@
 #                  ╭──────────────────────────────────────────╮
 #                  │ Generate global git config using Jsonnet │
 #                  ╰──────────────────────────────────────────╯
+- shell:
+  - echo "$(./conf/aria2/bin/generate-rpc-secret)" > /usr/local/share/aria2/secret
 - jsonnet:
     # generate git config
     "~/.config/git/":
@@ -41,10 +43,9 @@
     # generate aria2 config
     "~/.config/aria2/":
       source: conf/aria2/aria2.jsonnet
-      vars_from_env:
-      - ARIA2_SECRET
-      - ARIA2_USER_AGENT
-
+      vars_from_file:
+        ARIA2_SECRET: /usr/local/share/aria2/secret
+        ARIA2_USER_AGENT: /usr/local/share/user-agent
 #                      ╭──────────────────────────────────╮
 #                      │ Clone necessary git repositories │
 #                      ╰──────────────────────────────────╯
