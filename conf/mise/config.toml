@@ -25,7 +25,7 @@ perl = [ "latest", "5.42.0.0" ]
 nasm = [ "latest", "3.01" ]
 # Tools
 #TODO(@s0cks): dont need make on OSX?
-# make = [ "latest", "4.4.1"]
+make = [ "latest", "4.4.1"]
 cmake = [ "latest", "4.2" ]
 bazel = [ "latest", "8.4.2" ]
 gradle = [ "latest", "9.2.1" ]
