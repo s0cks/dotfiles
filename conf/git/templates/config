@@ -1,5 +1,7 @@
 [includeIf "gitdir:~/Projects/"]
   path = "~/.config/git/tazz.gitconfig"
+[includeIf "gitdir:/usr/local/share/dotfiles/"]
+  path = "~/.config/git/tazz.gitconfig"
 [init]
   defaultBranch = main
 [pull]

@@ -1,4 +1,6 @@
 #!/usr/bin/env zsh
+autoload -Uz colors && colors
+
 s0cks() {
   local VERSION="0.0.1"
   local USAGE=(
@@ -9,14 +11,21 @@ s0cks() {
     "Commands:"
     "  update-dotfiles      # Update the installed dotfiles"
   )
+  local dotfiles_home="${DOTFILES_HOME:-/usr/local/share/dotfiles}"
 
   local show_version() {
     printf "s0cks %s\n" "$VERSION"
   }
 
   local update_dotfiles() {
-    #TODO(@s0cks): implement
-    echo "not implemented!"
+    cd "$dotfiles_home/"
+    echo "updating $fg[bold]@s0cks/$fg[magenta]dotfiles$reset_color...."
+    git pull --recursive &>/dev/null
+    if (( "$?" == 0 )); then
+      echo "$fg[green]${reset_color} done."
+    else
+      echo "$fg[red] ${reset_color} failed."
+    fi
   }
 
 
