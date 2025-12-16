@@ -8,7 +8,18 @@ pre-commit:
     "mark scripts as executable":
       files: git diff --name-only --diff-filter=d --staged
       exclude: "**/*.*"
-      run: ./scripts/mark-executable {files}
+      run: |
+        #!/usr/bin/env zsh
+        for file in "$@"; do
+          shebangs=$(head -n 1 "$file")
+          if [[ "$shebangs" == "#!/"* ]]; then
+            if [[ ! -x "$file" ]]; then
+              echo "marking $file executable"
+              chmod +x "$file"
+              git add "$file"
+            fi
+          fi
+        done
     "detect secrets":
       files: git diff --name-only --diff-filter=d --staged
       run: gitleaks protect --no-banner --staged --redact --verbose 
