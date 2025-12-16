@@ -20,7 +20,7 @@ s0cks() {
   local update_dotfiles() {
     cd "$dotfiles_home/"
     echo "updating $fg[bold]@s0cks/$fg[magenta]dotfiles$reset_color...."
-    git pull --recursive &>/dev/null
+    git pull --recurse-submodules &>/dev/null
     if (( "$?" == 0 )); then
       echo "$fg[green]${reset_color} done."
     else
