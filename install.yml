@@ -126,6 +126,13 @@
   - HaywardMorihara/gh-tidy
   - korosuke613/gh-user-stars 
 
+- watchman:
+    "~/Projects":
+      projects:
+        path: "/"
+        pattern: "**/*.txt"
+        command: "zip projects.zip"
+
 #                     ╭─────────────────────────────────────╮
 #                     │ Apply OS Specific Customizations    │
 #                     ╰─────────────────────────────────────╯
