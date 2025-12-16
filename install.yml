@@ -74,11 +74,6 @@
       url: "https://github.com/s0cks/dot-hammerspoon.git"
       description: "@s0cks/dot-hammerspoon from GitHub"
       recursive: true
-    # install tmux-sessionizer
-    ~/.zim/modules/zsh-tmux-sessionizer/:
-      url: "https://github.com/s0cks/zsh-tmux-sessionizer.git"
-      description: "@s0cks/zsh-tmux-sessionizer from GitHub"
-      recursive: true
 
 #                           ╭─────────────────────────╮
 #                           │ Create various symlinks │
