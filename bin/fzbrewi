@@ -1,0 +1,16 @@
+#!/usr/bin/env zsh
+
+fzbrewI() {
+  local pkg
+  pkg=$(
+    brew formulae |
+      fzf \
+        --query "$1" \
+        --preview="brew info {}" \
+        --bind="ctrl-x:execute-silent(brew home {})"
+  )
+
+  if [[ -n "$pkg" ]]; then
+    brew install "$pkg"
+  fi
+}

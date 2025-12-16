@@ -1,0 +1,15 @@
+- defaults:
+    link:
+      relink: True
+    shell:
+      quiet: True
+      stdout: True
+- shell:
+  - command: echo "installing MacOS config...."
+- link:
+    ~/Library/LaunchAgents/:
+      glob: true
+      path: LaunchAgents/generated/*.plist
+    /usr/local/share/zsh/functions/:
+      glob: true
+      path: bin/*

@@ -1,0 +1,50 @@
+#!/usr/bin/env zsh
+s0cks() {
+  local VERSION="0.0.1"
+  local USAGE=(
+    "Usage: s0cks [-h|--help] [<command>]"
+    "General Options:"
+    "  -h|--help        # Print help and usage info"
+    ""
+    "Commands:"
+    "  update-dotfiles      # Update the installed dotfiles"
+  )
+
+  local show_version() {
+    printf "s0cks %s\n" "$VERSION"
+  }
+
+  local update_dotfiles() {
+    #TODO(@s0cks): implement
+    echo "not implemented!"
+  }
+
+
+  local command=()
+  # local flag_verbose=false
+  # local filename=myfile
+
+  opterr() {
+    echo >&2 "optparsing_demo: Unknown option '$1'"
+  }
+
+  while (( $# )); do
+    case $1 in
+      --)                 shift; command+=("${@[@]}"); break      ;;
+      -h|--help)          printf "%s\n" $USAGE && return          ;;
+      -v|--version)       show_version && return                  ;;
+      # -v|--verbose)       flag_verbose=true                     ;;
+      # -f|--filename)      shift; filename=$1                    ;;
+      # -f=*|--filename=*)  filename="${1#*=}"                    ;;
+      -*)                 opterr $1 && return 2                   ;;
+      *)                  command+=("${@[@]}"); break             ;;
+    esac
+    shift
+  done
+
+  case "$command" in
+    version)                  show_version && return                ;;
+    update-dotfiles)          update_dotfiles && return             ;;
+    *)                        opterr "$@" && return 2               ;;
+  esac
+}

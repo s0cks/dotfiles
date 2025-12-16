@@ -1,0 +1,58 @@
+#!/usr/bin/env zsh
+setopt HIST_IGNORE_ALL_DUPS
+setopt SHARE_HISTORY
+setopt HIST_VERIFY
+setopt HIST_FIND_NO_DUPS
+setopt HIST_IGNORE_SPACE
+setopt INTERACTIVE_COMMENTS
+bindkey -v
+
+if macos-is-light; then
+  export TERM_THEME="light"
+  export FZF_DEFAULT_OPTS="
+    --color=fg:#B7B5AC,bg:#FFFCF0,hl:#100F0F
+    --color=fg+:#B7B5AC,bg+:#F2F0E5,hl+:#100F0F
+    --color=border:#AF3029,header:#100F0F,gutter:#FFFCF0
+    --color=spinner:#3AA99F,info:#3AA99F,separator:#F2F0E5
+    --color=pointer:#D0A215,marker:#D14D41,prompt:#D0A215"
+else
+  export TERM_THEME="dark"
+  export FZF_DEFAULT_OPTS="
+		--color=fg:#878580,bg:#100F0F,hl:#CECDC3
+		--color=fg+:#878580,bg+:#1C1B1A,hl+:#CECDC3
+		--color=border:#AF3029,header:#CECDC3,gutter:#100F0F
+		--color=spinner:#24837B,info:#24837B,separator:#1C1B1A
+		--color=pointer:#AD8301,marker:#AF3029,prompt:#AD8301"
+fi
+
+autoload colors && colors
+
+zstyle ':zim:zmodule' use 'degit'
+zstyle ':zim:input' double-dot-expand yes
+
+export LS_COLORS="$(vivid generate flexoki_dark)"
+export EZA_COLORS="$LS_COLORS"
+
+zstyle ':completion:*' file-list all
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/.zcompcache"
+# disable sort when completing `git checkout`
+zstyle ':completion:*:git-checkout:*' sort false
+# set descriptions format to enable group support
+# NOTE: don't use escape sequences (like '%F{red}%d%f') here, fzf-tab will ignore them
+zstyle ':completion:*:descriptions' format '[%d]'
+# set list-colors to enable filename colorizing
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
+zstyle ':completion:*' menu no
+# preview directory's content with eza when completing cd
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always --no-permissions --no-time --no-filesize --no-user $realpath'
+zstyle ':fzf-tab:complete:ls:*' fzf-preview 'eza -1 --color=always --no-permissions --no-time --no-filesize --no-user $realpath'
+# custom fzf flags
+# NOTE: fzf-tab does not follow FZF_DEFAULT_OPTS by default
+zstyle ':fzf-tab:*' fzf-flags --color=fg:1,fg+:2 --bind=tab:accept
+# To make fzf-tab follow FZF_DEFAULT_OPTS.
+# NOTE: This may lead to unexpected behavior since some flags break this plugin. See Aloxaf/fzf-tab#455.
+zstyle ':fzf-tab:*' use-fzf-default-opts yes
+# switch group using `<` and `>`
+zstyle ':fzf-tab:*' switch-group '<' '>'

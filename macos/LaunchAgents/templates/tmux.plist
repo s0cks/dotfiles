@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>%(label)s</string>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>KeepAlive</key>
+    <true/>
+
+    <key>StandardOutPath</key>
+    <string>/tmp/%(label)s.out.log</string>
+    
+    <key>StandardErrPath</key>
+    <string>/tmp/%(label)s.err.log</string>
+
+    <key>ProgramArguments</key>
+    <array>
+      <string>%(exec)s</string>
+      <string>new-session</string>
+      <string>-d</string>
+      <string>-s</string>
+      <string>%(session_name)s</string>
+    </array>
+  </dict>
+</plist>

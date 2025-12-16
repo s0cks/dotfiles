@@ -1,0 +1,140 @@
+#                                  ╭──────────╮
+#                                  │ Defaults │
+#                                  ╰──────────╯
+- defaults:
+    link:
+      create: True
+      relink: True
+    shell:
+      quiet: True
+      stdout: True
+
+#             ╭────────────────────────────────────────────────────╮
+#             │ Create some default directories and configurations │
+#             ╰────────────────────────────────────────────────────╯
+- create:
+  - ~/Projects/
+  - ~/.config/bitwarden-cli/
+  - /usr/local/share/aria2/
+  - /usr/local/share/zsh/functions/
+  - /usr/local/share/zsh/completions/
+  - ~/.config/yazi/
+- link:
+      # Install system-wide user-agent
+    /usr/local/share/user-agent: ./user-agent
+
+#                       ╭─────────────────────────────────╮
+#                       │ Install system tools using mise │
+#                       ╰─────────────────────────────────╯
+- mise: {}
+
+#                  ╭──────────────────────────────────────────╮
+#                  │ Generate global git config using Jsonnet │
+#                  ╰──────────────────────────────────────────╯
+- shell:
+  - echo "$(./conf/aria2/bin/generate-rpc-secret)" > /usr/local/share/aria2/secret
+- jsonnet:
+    # generate git config
+    "~/.config/git/":
+      source: conf/git/generate.jsonnet
+    # generate ssh config
+    "~/.ssh/":
+      source: dotssh/config.jsonnet
+    # generate ripgrep config
+    "~/.config/ripgrep/":
+      source: conf/ripgrep/config.jsonnet
+    # generate aria2 config
+    "~/.config/aria2/":
+      source: conf/aria2/aria2.jsonnet
+      vars_from_file:
+        ARIA2_SECRET: /usr/local/share/aria2/secret
+        ARIA2_USER_AGENT: /usr/local/share/user-agent
+
+#                      ╭──────────────────────────────────╮
+#                      │ Clone necessary git repositories │
+#                      ╰──────────────────────────────────╯
+- git:
+    # install vcpkg from Microsoft GitHub
+    /usr/local/share/vcpkg/:
+      url: "https://github.com/microsoft/vcpkg.git"
+      description: "@microsoft/vcpkg from GitHub"
+      recursive: true
+    # install personal cheatsheet from GitHub
+    /usr/local/share/cheats/s0cks__cheats/:
+      url: "https://github.com/s0cks/cheats.git"
+      description: "@s0cks/cheats from GitHub"
+      recursive: true
+    # install neovim config from GitHub
+    ~/.config/nvim/:
+      url: "https://github.com/s0cks/dot-nvim.git"
+      description: "@s0cks/dot-nvim from GitHub"
+      recursive: true
+    # install hammerspoon config from GitHub
+    ~/.config/hammerspoon/:
+      url: "https://github.com/s0cks/dot-hammerspoon.git"
+      description: "@s0cks/dot-hammerspoon from GitHub"
+      recursive: true
+    # install tmux-sessionizer
+    ~/.zim/modules/zsh-tmux-sessionizer/:
+      url: "https://github.com/s0cks/zsh-tmux-sessionizer.git"
+      description: "@s0cks/zsh-tmux-sessionizer from GitHub"
+      recursive: true
+
+#                           ╭─────────────────────────╮
+#                           │ Create various symlinks │
+#                           ╰─────────────────────────╯
+- link:
+    # install various shell scripts into user-local fpath bin
+    /usr/local/share/zsh/functions/:
+      glob: true
+      path: bin/*
+    # install system-wide configs for various tools and apps
+    ~/.config/:
+      glob: true
+      path: conf/*
+      exclude: [ conf/ripgrep, conf/aria2, conf/git, conf/yazi ]
+    # install custom local zimfw modules
+    ~/.zim/modules/:
+      glob: true
+      path: zim-modules/*
+    # install various dotfiles
+    ~/:
+      glob: true
+      path: "dotconf/*"
+      prefix: '.'
+
+#                      ╭───────────────────────────────────╮
+#                      │ Install & Configure Yazi Theme(s) │
+#                      ╰───────────────────────────────────╯
+# install yazi packages using ya 
+- ya:
+  # starship prompt in Yazi windows
+  - Rolv-Apneseth/starship
+  # flexoki theme
+  - gosxrgxx/flexoki-dark
+  - gosxrgxx/flexoki-light
+# create symlink for yazi theme config
+- link:
+    ~/.config/yazi/theme.toml: conf/yazi/theme.toml
+
+#                      ╭──────────────────────────────────╮
+#                      │ Download & Install gh Extensions │
+#                      ╰──────────────────────────────────╯
+- ghe:
+  - dlvhdr/gh-dash
+
+#                     ╭─────────────────────────────────────╮
+#                     │ Apply OS Specific Customizations    │
+#                     ╰─────────────────────────────────────╯
+- if:
+    cond: 'uname | grep -Eq "Darwin"'
+    unmet:
+    - shell:
+      - command: echo "skipping MacOS config"
+        quiet: True
+        stdout: True
+    met:
+    - shell:
+      - command: dotbot -d macos/ -c macos/install.yml
+        quiet: True
+        stdout: True

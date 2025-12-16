@@ -1,0 +1,11 @@
+---
+style:
+  tag:
+    color: "dark_magenta"
+    width_percentage: 10
+  comment:
+    color: "grey"
+    width_percentage: 50
+  snippet:
+    color: "dark_grey"
+    width_percentage: 40

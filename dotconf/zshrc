@@ -1,0 +1,85 @@
+#!/usr/bin/env zsh
+# ┌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┐
+# ╎                      zimfw Pre-Init                       ╎
+# └╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┘
+# autoloads
+autoload -Uz colors && colors
+autoload -Uz /usr/local/share/zsh/functions/*(:t)
+
+if [[ "$(arch)" == "arm64" ]]; then
+  source <(/opt/homebrew/bin/brew shellenv)
+elif [[ "$(arch)" == "x86_64" || "$(arch)" == "i386" ]]; then
+  source <(/usr/local/bin/brew shellenv)
+else
+  echo "invalid archiecture: $(arch)"
+  return 1
+fi
+
+# apply zsh styles
+source "$HOME/.zstyles"
+
+# Homebrew
+#TODO(@s0cks): move to dotbot
+# if [[ ! -d "$HOMEBREW_PREFIX/" ]]; then
+#   echo "installing $fg_bold[white]Homebrew${reset_color} in $HOMEBREW_PREFIX...."
+#   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# fi
+
+# ┌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┐
+# ╎                        zimfw Init                         ╎
+# └╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┘
+ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
+# Download zimfw plugin manager if missing.
+if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
+  if (( ${+commands[curl]} )); then
+    curl -fsSL --create-dirs -o "$ZIM_HOME/zimfw.zsh" "https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh"
+  else
+    mkdir -p ${ZIM_HOME} && wget -nv -O ${ZIM_HOME}/zimfw.zsh https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+  fi
+fi
+# Install missing modules, and update ${ZIM_HOME}/init.zsh if missing or outdated.
+if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZIM_CONFIG_FILE:-${ZDOTDIR:-${HOME}}/.zimrc} ]]; then
+  source ${ZIM_HOME}/zimfw.zsh init
+fi
+# zim init
+source ${ZIM_HOME}/init.zsh
+
+# ┌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┐
+# ╎                      zimfw Post-Init                      ╎
+# └╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┘
+zmodload -F zsh/terminfo +p:terminfo
+
+source "$HOME/.zsh_custom/fz.sh" #TODO(@s0cks): wtf is this?
+source "$HOME/.zkeys"
+source "$HOME/.zaliases"
+source <(pay-respects zsh)
+
+#TODO(@s0cks): is this necessary?
+if (( $+command[docker] )); then
+  fpath=("$HOME/.docker/completions" $fpath)
+fi
+
+# start-skyrim-steam() {
+#   activate-wine-prefix Skyrim
+#   wine $WINEPREFIX/drive_c/Program\ Files\ \(x86\)/Steam/steam.exe \
+#     -noverifyfiles \
+#     -nobootstrapupdate \
+#     -skipinitialbootstrap \
+#     -norepairfiles \
+#     -overridepackageurl
+# }
+
+#
+# if (( $+commands[bison] )); then
+#   export PATH="$(brew --prefix bison)/bin:$PATH"
+# fi
+
+# set fast-zsh-highlighting theme to flexoki-dark/light based on MacOS theme
+#TODO(@s0cks): figure out how to get this in zstyles?
+if [[ $(uname) == "Darwin" ]]; then
+  if macos-is-dark; then
+    fast-theme -q XDG:flexoki-dark
+  else
+    fast-theme -q XDG:flexoki-light
+  fi
+fi

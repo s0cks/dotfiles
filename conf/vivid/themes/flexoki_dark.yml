@@ -1,0 +1,102 @@
+# Flexoki Dark
+# https://stephango.com/flexoki
+colors:
+  re: 'D14D41'
+  or: 'DA702C'
+  ye: 'D0A215'
+  gr: '879A39'
+  cy: '3AA99F'
+  bl: '4385BE'
+  pu: '8B7EC8'
+  ma: 'CE5D97'
+  # 
+  re2: 'AF3029'
+  or2: 'BC5215'
+  ye2: 'AD8301'
+  gr2: '66800B'
+  cy2: '24837B'
+  bl2: '205EA6'
+  pu2: '5E409D'
+  ma2: 'A02F6F'
+  # utils
+  bg: '100F0F'
+  bg2: '1C1B1A'
+  ui: '282726'
+  ui2: '343331'
+  ui3: '403E3C'
+  tx: 'CECDC3'
+  tx2: '878580'
+  tx3: '575653'
+
+core:
+  normal_text: {}
+  regular_file: {}
+  reset_to_normal: {}
+  directory:
+    foreground: bl
+  symlink:
+    foreground: pu
+  multi_hard_link: {}
+  fifo:
+    foreground: tx
+    background: bl
+  socket:
+    foreground: tx
+    background: ma
+  door:
+    foreground: tx
+    background: ma
+  block_device:
+    foreground: bl
+    background: bg2
+  character_device:
+    foreground: ma
+    background: bg2
+  broken_symlink:
+    foreground: tx
+    background: re
+  missing_symlink_target:
+    foreground: re
+    background: re
+  setuid: {}
+  setgid: {}
+  file_with_capability: {}
+  sticky_other_writable: {}
+  other_writable: {}
+  sticky: {}
+  executable_file:
+    foreground: re
+    font-style: bold
+text:
+  special:
+    foreground: tx
+    background: ye
+  todo:
+    font-style: bold
+  licenses:
+    foreground: tx2
+  configuration:
+    foreground: ye
+  other:
+    foreground: ye
+markup:
+  foreground: ye
+programming:
+  source:
+    foreground: gr
+  tooling:
+    foreground: cy
+    continuous-integration:
+      foreground: gr
+media:
+  foreground: ma
+office:
+  foreground: re
+archives:
+  foreground: cy
+  font-style: underline
+executable:
+  foreground: re
+  font-style: bold
+unimportant:
+  foreground: tx3

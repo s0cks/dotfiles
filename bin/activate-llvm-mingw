@@ -1,0 +1,16 @@
+#!/usr/bin/env zsh
+toolkit_home_default="/opt/llvm-mingw"
+activate-llvm-mingw() {
+  local toolkit_home="${LLVM_MINGW_HOME:-$toolkit_home_default}"
+  if [[ ! -d "$toolkit_home" ]]; then
+    echo "LLVM_MINGW_HOME environment variable not set, or llvm-mingw is not found at $toolkit_home_default"
+    return 1
+  fi
+
+  echo "enabling llvm-mingw...."
+  fpath=("$HOME/.zbin/llvm-mingw" "${fpath[@]}")
+  export PATH="$toolkit_home/bin:$PATH"
+  autoload -Uz deactivate
+  export PKG_CONFIG_PATH=/path/to/pkgconfig
+  export CC="x86_64-w64-mingw32-clang"
+}

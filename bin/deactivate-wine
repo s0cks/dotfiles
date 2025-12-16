@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+deactivate-wine() {
+  local WINE_FPATH="$HOME/.zbin/wine/"
+  if (( ! ${+WINEPREFIX} )); then
+    echo "wine prefix is not activated"
+    return 1
+  fi
+
+  unset WINEPREFIX
+  unset WINEPREFIX_NAME
+  unset WINEARCH
+  unset WINEDLLOVERRIDES
+  fpath[${fpath[(Ie)$WINE_FPATH]}]=()
+  unfunction deactivate
+}

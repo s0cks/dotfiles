@@ -1,0 +1,11 @@
+#!/usr/bin/env zsh
+for file in "$@"; do
+  shebangs=$(head -n 1 "$file")
+  if [[ "$shebangs" == "#!/"* ]]; then
+    if [[ ! -x "$file" ]]; then
+      echo "marking $file executable"
+      chmod +x "$file"
+      git add "$file"
+    fi
+  fi
+done

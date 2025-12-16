@@ -1,0 +1,7 @@
+{
+  "GitHub": {
+    "hostname": "github.com",
+    "user": "git",
+    "ident": "~/.ssh/gh_id_rsa"
+  }
+}

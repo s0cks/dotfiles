@@ -1,0 +1,26 @@
+---
+version: '3'
+includes:
+  jsonnet:
+    taskfile: ../../taskfiles/jsonnet.yml
+    internal: true
+tasks:
+  generate:
+    label: "Generate rg config"
+    desc: "Generate ripgrep configuration using Jsonnet"
+    dir: "{{.TASKFILE_DIR}}"
+    cmds:
+    - task: jsonnet:generate
+      vars:
+        JSONNET_BIN:
+          ref: .TASKFILE_DIR
+        JSONNET_SOURCES: config.jsonnet
+    sources:
+    - custom_types.json
+    - config.jsonnet
+    generates:
+    - config
+  clean:
+    dir: "{{.TASKFILE_DIR}}"
+    cmds:
+    - rm -rf config

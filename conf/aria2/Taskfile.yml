@@ -1,0 +1,24 @@
+---
+version: '3'
+includes:
+  jsonnet:
+    taskfile: ../../taskfiles/jsonnet.yml
+    internal: true
+tasks:
+  generate:
+    label: "Generate aria2.conf"
+    desc: "Generate aria2 configuration using Jsonnet"
+    dir: "{{.TASKFILE_DIR}}"
+    cmds:
+    - task: jsonnet:generate
+      vars:
+        JSONNET_SOURCES: aria2.jsonnet
+        JSONNET_EXTRAS: --ext-str ARIA2_SECRET --ext-str ARIA2_USER_AGENT
+    sources:
+    - aria2.jsonnet
+    generates:
+    - generated/aria2.conf
+  clean:
+    dir: "{{.TASKFILE_DIR}}/generated/"
+    cmds:
+    - rm -rf *

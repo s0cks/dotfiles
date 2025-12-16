@@ -1,0 +1,21 @@
+# https://lefthook.dev/configuration/index.html
+prepare-commit-msg:
+  commands:
+    commitizen:
+      interactive: true
+      run: koji
+      env:
+        LEFTHOOK: 0
+commit-msg:
+  commands:
+    "lint commit message":
+      run: cog verify --file {1}
+pre-commit:
+  commands:
+    "mark scripts as executable":
+      files: git diff --name-only --diff-filter=d --staged
+      exclude: "**/*.*"
+      run: ./scripts/mark-executable {files}
+    "detect secrets":
+      files: git diff --name-only --diff-filter=d --staged
+      run: gitleaks protect --no-banner --staged --redact --verbose 

@@ -1,0 +1,6 @@
+#!/usr/bin/env zsh
+
+fzvimft() {
+  (cd $(/usr/bin/vim -Nesc '!echo $VIMRUNTIME' -c qa) && \
+    find syntax ftplugin -iname '*.vim' -exec basename -s .vim {} + | sort -u | fzf)
+}
