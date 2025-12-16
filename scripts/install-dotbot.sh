@@ -16,6 +16,7 @@ DOTBOT_PLUGINS=(
   "https://github.com/s0cks/dotbot-jsonnet.git"
   "https://github.com/s0cks/dotbot-mise.git"
   "https://github.com/s0cks/dotbot-ya.git"
+  "https://github.com/s0cks/dotbot-watchman.git"
 )
 DOTBOT_EXEC="$DOTBOT_DIR/bin/dotbot"
 DOTBOT_EXEC_WRAPPER="$INSTALL_PREFIX/bin/dotbot"
@@ -59,6 +60,7 @@ $DOTBOT_EXEC \
   -p "${DOTBOT_PLUGIN_INSTALL_DIR}/dotbot-jsonnet" \
   -p "${DOTBOT_PLUGIN_INSTALL_DIR}/dotbot-gh-extension" \
   -p "${DOTBOT_PLUGIN_INSTALL_DIR}/dotbot-includes" \
+  -p "${DOTBOT_PLUGIN_INSTALL_DIR}/dotbot-watchman" \
   --exit-on-failure \
   "\$@"
 EOF
