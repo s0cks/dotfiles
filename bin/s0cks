@@ -20,12 +20,17 @@ s0cks() {
   local update_dotfiles() {
     cd "$dotfiles_home/"
     echo "updating $fg[bold]@s0cks/$fg[magenta]dotfiles$reset_color...."
-    git pull --recurse-submodules &>/dev/null
-    if (( "$?" == 0 )); then
-      echo "$fg[green]${reset_color} done."
-    else
-      echo "$fg[red] ${reset_color} failed."
+    if (( $(git pull --recurse-submodules &>/dev/null) != 0)); then
+      echo "$fg[red] failed to pull $(git rev-parse --abbrev-ref HEAD) changes from remote: $(git remote get-url origin)"
+      return 1
     fi
+
+    if (( $(task install &>/dev/null) != 0)); then
+      echo "$fg[red]${reset_color} failed to install dotfiles"
+      return 1
+    fi
+
+    echo "$fg[green]${reset_color} done."
   }
 
 
