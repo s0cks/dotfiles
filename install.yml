@@ -122,6 +122,14 @@
 #                      ╰──────────────────────────────────╯
 - ghe:
   - dlvhdr/gh-dash
+  - davidraviv/gh-clean-branches
+  - mislav/gh-cp
+  - vilmibm/gh-contribute
+  - gennaro-tedesco/gh-f
+  - meiji163/gh-notify
+  - github/gh-skyline
+  - HaywardMorihara/gh-tidy
+  - korosuke613/gh-user-stars 
 
 #                     ╭─────────────────────────────────────╮
 #                     │ Apply OS Specific Customizations    │
