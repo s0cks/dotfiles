@@ -7,10 +7,9 @@ pre-commit:
   commands:
     "mark scripts as executable":
       files: git diff --name-only --diff-filter=d --staged
-      exclude: "**/*.*"
       run: |
         #!/usr/bin/env zsh
-        for file in "$@"; do
+        for file in "{staged_files}"; do
           shebangs=$(head -n 1 "$file")
           if [[ "$shebangs" == "#!/"* ]]; then
             if [[ ! -x "$file" ]]; then
