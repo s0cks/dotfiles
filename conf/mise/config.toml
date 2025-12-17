@@ -24,8 +24,6 @@ rust = [ "latest", "1.91.1" ]
 perl = [ "latest", "5.42.0.0" ]
 nasm = [ "latest", "3.01" ]
 # Tools
-#TODO(@s0cks): dont need make on OSX?
-make = [ "latest", "4.4.1"]
 cmake = [ "latest", "4.2" ]
 bazel = [ "latest", "8.4.2" ]
 gradle = [ "latest", "9.2.1" ]
@@ -41,3 +39,4 @@ marksman = [ "latest", "2025-11-30" ]
 typos = [ "latest", "1.40.0" ]
 ruff = [ "latest", "0.14.9" ]
 cocogitto = [ "latest", "6.5.0" ]
+make = { version = "4.4.1", os = [ "linux" ] }
