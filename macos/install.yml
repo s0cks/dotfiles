@@ -6,18 +6,17 @@
       stdout: True
 - shell:
   - command: echo "installing MacOS config...."
-- shell:
   - command: echo "generating plists...."
-  - command: >
-      cd LaunchAgents && jsonnet -S -m generated/ launch_agents.jsonnet \
-        --ext-str COMPANY=io.github.s0cks \
-        --ext-str USER_HOME="$HOME" \
-        --ext-str ARIA2_HOME \
-        --ext-str XDG_CONFIG_HOME \
-        --ext-str HOMEBREW_REPOSITORY
+  # - command: |
+  #     jsonnet -S -m macos/LaunchAgents/generated/ macos/LaunchAgents/launch_agents.jsonnet \
+  #       --ext-str COMPANY=io.github.s0cks \
+  #       --ext-str USER_HOME="$HOME" \
+  #       --ext-str ARIA2_HOME \
+  #       --ext-str XDG_CONFIG_HOME \
+  #       --ext-str HOMEBREW_REPOSITORY
   - command: echo "formatting plists....."
   - command: >
-      fselect abspath from LaunchAgents/generated where is_file and extension eq "plist" | xargs -I {} xmlformat --overwrite {}
+      fselect abspath from macos/LaunchAgents/generated where is_file and extension eq "plist" | xargs -I {} xmlformat --overwrite {}
 - link:
     ~/Library/LaunchAgents/:
       glob: true
