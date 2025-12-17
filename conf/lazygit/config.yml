@@ -1,5 +1,23 @@
+notARepository: quit
+git:
+  overrideGpg: true
+  paging:
+    colorArg: always
+    pager: delta --dark --paging=never
 os:
   terminal: true
+  editPreset: nvim
+gui:
+  showBottomLine: false
+  theme:
+    activeBorderColor:
+    - magenta
+    selectedLineBgColor:
+    - black
+    unstagedChangesColor:
+    - yellow
+  border: rounded
+  nerdFontsVersion: '3'
 customCommands:
 - key: C
   command: koji
