@@ -74,6 +74,10 @@
       url: "https://github.com/s0cks/dot-hammerspoon.git"
       description: "@s0cks/dot-hammerspoon from GitHub"
       recursive: true
+    ~/.config/wezterm/:
+      url: "https://github.com/s0cks/dot-wezterm.git"
+      description: "@s0cks/dot-wezterm from GitHub"
+      recursive: true
 
 #                           ╭─────────────────────────╮
 #                           │ Create various symlinks │

@@ -2,7 +2,7 @@
   "stdout": true,
   "stderr": true,
   "env": {
-    "TERM": "xterm-256color"
+    "TERM": "wezterm"
   },
   "args": [
     "%(homebrew_dir)s/bin/zellij",

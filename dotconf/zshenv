@@ -101,4 +101,5 @@ export NAVI_PATH="$XDG_DATA_HOME/navi/cheats/:/usr/local/share/cheats/"
 # ┌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┐
 # ╎                        Environment                        ╎
 # └╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┘
+export PATH="/usr/local/bin:$PATH"
 export fpath=("$ZSH_HOME/functions/" "$ZSH_HOME/completions/" "${fpath[@]}")

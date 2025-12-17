@@ -132,6 +132,5 @@ local GenZellijPlist() = GenPlist('zellij', zellij, GetArgs(zellij));
 
 {
   [GetPlistFilename("aria2")]: GenAria2Plist(), 
-  [GetPlistFilename("wezterm")]: GenWeztermPlist(),
-  [GetPlistFilename("zellij")]: GenZellijPlist(),
+  [GetPlistFilename("wezterm")]: GenWeztermPlist()
 }
