@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>%(label)s</string>
+
+    <key>RunAtLoad</key>
+    <%(run_at_load)s/>
+
+    <key>KeepAlive</key>
+    <%(keep_alive)s/>
+
+    <key>WorkingDirectory</key>
+    <string>%(cwd)s</string>
+
+    <key>StandardOutPath</key>
+    <string>%(stdout_path)s</string>
+
+    <key>StandardErrPath</key>
+    <string>%(stderr_path)s</string>
+
+    %(args)s
+  </dict>
+</plist>

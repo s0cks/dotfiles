@@ -1,0 +1,6 @@
+{
+  "args": [
+    "/Applications/kitty.app/Contents/MacOS/kitty",
+    "--listen-on=unix:/tmp/my-kitty"
+  ]
+}

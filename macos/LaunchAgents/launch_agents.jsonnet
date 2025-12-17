@@ -1,42 +1,116 @@
 local COMPANY = std.extVar('COMPANY');
 local USER_HOME = std.extVar('USER_HOME');
-local ARIA2_HOME = std.extVar('ARIA2_HOME'); 
-local HOMEBREW_BIN = std.extVar('HOMEBREW_BIN');
+local HOMEBREW_REPOSITORY = std.extVar('HOMEBREW_REPOSITORY');
 local XDG_CONFIG_HOME = std.extVar('XDG_CONFIG_HOME');
 
-local ARIA2_CONFIG_DIR = XDG_CONFIG_HOME + '/aria2';
-local ARIA2_CONFIG_FILE = ARIA2_CONFIG_DIR + '/aria2.conf';
-local ARIA2_EXEC = HOMEBREW_BIN + '/aria2c';
-local GenAria2Plist() = (importstr './templates/aria2.plist') % { 
-  label: "%(company)s.aria2" % { company: COMPANY },
-  aria2_exec: ARIA2_EXEC,
-  aria2_home: ARIA2_HOME,
-  aria2_conf: ARIA2_CONFIG_FILE,
+local GetAppLabel(name) = 
+  '%(company)s.%(name)s' % {
+    name: name,
+    company: COMPANY,
+  };
+
+local GetPlistFilename(app) = 
+  "%(label)s.plist" % {
+    label: GetAppLabel(app),
+  };
+
+local GetStdoutPath(app) =
+  "/tmp/%(app)s.out.log" % {
+    app: app
+  };
+
+local GetStderrPath(app) =
+  "/tmp/%(app)s.err.log" % {
+    app: app
+  };
+
+local JoinProgramArgs(args) = 
+  std.join(" ", [
+    "<string>%(arg)s</string>\n" % { arg: arg }
+    for arg in args
+  ]);
+
+local GenProgramArguments(args) = |||
+  <key>ProgramArguments</key>
+  <array>
+  %(args)s
+  </array>
+||| % {
+  args: JoinProgramArgs(args)
 };
 
-local KITTY_EXEC = "/Applications/kitty.app/Contents/MacOS/kitty";
-local GenKittyPlist() = (importstr './templates/kitty.plist') % {
-  label: "%(company)s.kitty" % { company: COMPANY },
-  exec: KITTY_EXEC,
-  home_dir: USER_HOME,
+
+local GetKeepAlive(config) = 
+  if "keep_alive" in config then
+    config.keep_alive
+  else
+    true;
+
+local GetRunAtLoad(config) =
+  if "run_at_load" in config then
+    config.run_at_load
+  else
+    true;
+
+local GenCwd(config) = 
+  if "cwd" in config then
+    |||
+      <key>WorkingDirectory</key>
+      <string>%(cwd)s</string>
+    ||| % { cwd: config.cwd % { xdg_config_dir: XDG_CONFIG_HOME } }
+  else
+    "";
+
+
+local GenStdout(app, config) =
+  if "stdout" in config then
+    |||
+      <key>StandardOutPath</key>
+      <string>%(path)s</string>
+    ||| % { path: GetStdoutPath(app) }
+  else
+    "";
+
+local GenStderr(app, config) =
+  if "stderr" in config then
+    |||
+      <key>StandardErrPath</key>
+      <string>%(path)s</string>
+    ||| % { path: GetStderrPath(app) }
+  else
+    "";
+
+local GetArgs(config) =
+  if "args" in config then
+    [
+      value % { xdg_config_dir: XDG_CONFIG_HOME, homebrew_dir: HOMEBREW_REPOSITORY }
+      for value in config.args
+    ]
+  else
+    [];
+
+local GenPlist(app, config, args) = (importstr './_default.plist') % {
+  app: app,
+  label: GetAppLabel(app),
+  keep_alive: GetKeepAlive(config),
+  run_at_load: GetRunAtLoad(config),
+  cwd: GenCwd(config),
+  stdout: GenStdout(app, config),
+  stderr: GenStderr(app, config),
+  args: GenProgramArguments(args),
 };
 
-local GetAppLabel(name) = '%(company)s.%(name)s' % {
-  name: name,
-  company: COMPANY,
-};
+local aria2 = (import './aria2.json');
+local GenAria2Plist() = GenPlist("aria2", aria2, GetArgs(aria2));
 
-local TMUX_EXEC = '/opt/homebrew/bin/tmux';
-local GenTmuxPlist() = (importstr './templates/tmux.plist') % {
-  label: "%(company)s.tmux" % { company: COMPANY },
-  exec: TMUX_EXEC,
-  session_name: "main",
-};
+local kitty = (import './kitty.json');
+local GenKittyPlist() = GenPlist("kitty", kitty, GetArgs(kitty));
 
-local plist(app) = "%(company)s.%(app)s.plist" % { company: COMPANY, app: app };
+local tmux = (import './tmux.json');
+local GenTmuxPlist() = GenPlist('tmux', tmux, GetArgs(tmux));
 
 {
-  [plist("aria2")]: GenAria2Plist(),
-  [plist("kitty")]: GenKittyPlist(),
-  [plist("tmux")]: GenTmuxPlist(),
+  [GetPlistFilename("aria2")]: GenAria2Plist(), 
+  [GetPlistFilename("kitty")]: GenKittyPlist(),
+  [GetPlistFilename("tmux")]: GenTmuxPlist(),
 }
