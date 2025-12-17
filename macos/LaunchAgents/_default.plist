@@ -11,6 +11,7 @@
     <key>KeepAlive</key>
     <%(keep_alive)s/>
 
+    %(env)s
     %(cwd)s
     %(stdout)s
     %(stderr)s

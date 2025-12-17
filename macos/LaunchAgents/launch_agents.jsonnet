@@ -39,6 +39,20 @@ local GenProgramArguments(args) = |||
   args: JoinProgramArgs(args)
 };
 
+local JoinEnvironmentVars(vars) = 
+  std.join(" ", [
+    "<key>%(key)s</key>\n<string>%(value)s</string>" % { key: field, value: vars[field] }
+    for field in std.objectFields(vars)
+  ]);
+
+local GenEnvironmentVars(vars) = |||
+  <key>EnvironmentVariables</key>
+  <dict>
+  %(vars)s
+  </dict>
+||| % {
+  vars: JoinEnvironmentVars(vars)
+};
 
 local GetKeepAlive(config) = 
   if "keep_alive" in config then
@@ -89,6 +103,12 @@ local GetArgs(config) =
   else
     [];
 
+local GetEnvironmentVars(config) =
+  if "env" in config then
+    GenEnvironmentVars(config.env)
+  else
+    {};
+
 local GenPlist(app, config, args) = (importstr './_default.plist') % {
   app: app,
   label: GetAppLabel(app),
@@ -98,6 +118,7 @@ local GenPlist(app, config, args) = (importstr './_default.plist') % {
   stdout: GenStdout(app, config),
   stderr: GenStderr(app, config),
   args: GenProgramArguments(args),
+  env: GetEnvironmentVars(config)
 };
 
 local aria2 = (import './aria2.json');
