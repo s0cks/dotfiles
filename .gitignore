@@ -6,3 +6,4 @@
 !**/generated/**/.git*
 
 Gemfile.lock
+*.kdl.*
