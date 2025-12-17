@@ -15,6 +15,9 @@ else
   return 1
 fi
 
+# apply llvm from homebrew
+export PATH="/usr/local/opt/llvm/bin:$PATH"
+
 # apply zsh styles
 source "$HOME/.zstyles"
 
