@@ -1,0 +1,8 @@
+os:
+  terminal: true
+customCommands:
+- key: C
+  command: koji
+  context: files
+  output: terminal
+  description: "Run koji"
