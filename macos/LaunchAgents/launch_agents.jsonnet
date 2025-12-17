@@ -106,11 +106,11 @@ local GenAria2Plist() = GenPlist("aria2", aria2, GetArgs(aria2));
 local kitty = (import './kitty.json');
 local GenKittyPlist() = GenPlist("kitty", kitty, GetArgs(kitty));
 
-local tmux = (import './tmux.json');
-local GenTmuxPlist() = GenPlist('tmux', tmux, GetArgs(tmux));
+local zellij = (import './zellij.json');
+local GenZellijPlist() = GenPlist('zellij', zellij, GetArgs(zellij));
 
 {
   [GetPlistFilename("aria2")]: GenAria2Plist(), 
   [GetPlistFilename("kitty")]: GenKittyPlist(),
-  [GetPlistFilename("tmux")]: GenTmuxPlist(),
+  [GetPlistFilename("zellij")]: GenZellijPlist(),
 }

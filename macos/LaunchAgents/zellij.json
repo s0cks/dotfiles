@@ -1,0 +1,9 @@
+{
+  "stdout": true,
+  "stderr": true,
+  "args": [
+    "%(homebrew_dir)s/bin/zellij",
+    "-s",
+    "main"
+  ]
+}
