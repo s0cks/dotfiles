@@ -3,7 +3,8 @@
   "stderr": true,
   "args": [
     "%(homebrew_dir)s/bin/zellij",
-    "-s",
+    "attach",
+    "--create",
     "main"
   ]
 }
