@@ -107,7 +107,7 @@ local GetEnvironmentVars(config) =
   if "env" in config then
     GenEnvironmentVars(config.env)
   else
-    {};
+    "";
 
 local GenPlist(app, config, args) = (importstr './_default.plist') % {
   app: app,
