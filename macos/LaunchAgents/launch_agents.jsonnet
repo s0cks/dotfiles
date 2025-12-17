@@ -124,14 +124,14 @@ local GenPlist(app, config, args) = (importstr './_default.plist') % {
 local aria2 = (import './aria2.json');
 local GenAria2Plist() = GenPlist("aria2", aria2, GetArgs(aria2));
 
-local kitty = (import './kitty.json');
-local GenKittyPlist() = GenPlist("kitty", kitty, GetArgs(kitty));
+local wezterm = (import './wezterm.json');
+local GenWeztermPlist() = GenPlist("wezterm", wezterm, GetArgs(wezterm));
 
 local zellij = (import './zellij.json');
 local GenZellijPlist() = GenPlist('zellij', zellij, GetArgs(zellij));
 
 {
   [GetPlistFilename("aria2")]: GenAria2Plist(), 
-  [GetPlistFilename("kitty")]: GenKittyPlist(),
+  [GetPlistFilename("wezterm")]: GenWeztermPlist(),
   [GetPlistFilename("zellij")]: GenZellijPlist(),
 }
