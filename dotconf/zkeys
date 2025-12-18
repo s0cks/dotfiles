@@ -26,11 +26,8 @@ bindkey '^\' yz
 
 # open lazygit
 function __open_lazygit() {
-  local -r input="${LBUFFER}"
-  echo "input: $input"
-
-
-  zle redisplay
+  lazygit
+  return "$?"
 }
 zle -N __open_lazygit 
 bindkey '^;' __open_lazygit 
