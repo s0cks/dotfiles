@@ -1,8 +1,17 @@
 #!/usr/bin/env zsh
 autoload -Uz colors && colors
 
+local DOTFILES_DIR="${DOTFILES_HOME:-/usr/local/share/dotfiles}"
+local NEOVIM_DIR="${NEOVIM_HOME:-$XDG_CONFIG_HOME/nvim}"
+local WEZTERM_DIR="${WEZTERM_HOME:-$XDG_CONFIG_HOME/wezterm}"
+
 local function __done() {
   echo "$fg[green]${reset_color} done."
+}
+
+local function __updated() {
+  local name="$1"
+  echo "$fg[green] $fg[bold]$fg[magenta]$name$reset_color updated to: $(git log -1 --pretty='%h %B')"
 }
 
 local function __updating() {
@@ -41,7 +50,7 @@ s0cks() {
     pushd "$XDG_CONFIG_HOME/nvim/"
     __pull_changes "Neovim"
     popd
-    __done
+    __updated "Neovim"
   }
 
   local update_dotfiles() {
@@ -55,7 +64,7 @@ s0cks() {
       return 1
     fi
     popd
-    __done
+    __updated "dotfiles"
   }
 
   local update_wezterm() {
@@ -63,7 +72,7 @@ s0cks() {
     pushd "$wezterm_dir/"
     __pull_changes "WezTerm"
     popd
-    __done
+    __updated "WezTerm"
   }
 
   local command=()
