@@ -46,16 +46,16 @@ s0cks() {
   }
 
   local update_neovim() {
-    __updating "Neovim"
     pushd "$XDG_CONFIG_HOME/nvim/"
+    __updating "Neovim"
     __pull_changes "Neovim"
-    popd
     __updated "Neovim"
+    popd
   }
 
   local update_dotfiles() {
-    __updating "dotfiles"
     pushd "$dotfiles_home/"
+    __updating "dotfiles"
     __pull_changes "dotfiles"
 
     task install &>/dev/null
@@ -63,16 +63,16 @@ s0cks() {
       echo "$fg[red]${reset_color} failed to install dotfiles"
       return 1
     fi
-    popd
     __updated "dotfiles"
+    popd
   }
 
   local update_wezterm() {
-    __updating "WezTerm"
     pushd "$wezterm_dir/"
+    __updating "WezTerm"
     __pull_changes "WezTerm"
-    popd
     __updated "WezTerm"
+    popd
   }
 
   local command=()
