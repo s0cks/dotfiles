@@ -32,6 +32,12 @@ function __open_lazygit() {
 zle -N __open_lazygit 
 bindkey '^]' __open_lazygit 
 
+function __open_nvim() {
+  nvim
+}
+zle -N __open_nvim 
+bindkey '^[' __open_nvim 
+
 # navi (^+n) / (ctrl+n)
 function __navi_wiget() {
   local -r input="${LBUFFER}"
