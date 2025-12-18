@@ -30,7 +30,7 @@ function __open_lazygit() {
   return "$?"
 }
 zle -N __open_lazygit 
-bindkey '^g' __open_lazygit 
+bindkey '^]' __open_lazygit 
 
 # navi (^+n) / (ctrl+n)
 function __navi_wiget() {
