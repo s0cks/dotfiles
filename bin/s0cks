@@ -1,6 +1,24 @@
 #!/usr/bin/env zsh
 autoload -Uz colors && colors
 
+local function __done() {
+  echo "$fg[green]${reset_color} done."
+}
+
+local function __updating() {
+  echo "updating $bold$fg[magenta]$1$reset_color...."
+}
+
+local function __pull_changes() {
+  local name="$1"
+  git pull --recurse-submodules &>/dev/null
+  if (( "$?" != 0 )); then
+    echo "$fg[red] failed. Can't update $name $(git rev-parse --abbrev-ref HEAD) from remote: $(git remote get-url origin)"
+    return 1
+  fi
+  return 0
+}
+
 s0cks() {
   local VERSION="0.0.1"
   local USAGE=(
@@ -18,35 +36,34 @@ s0cks() {
   }
 
   local update_neovim() {
-    echo "updating $bold$fg[magenta]Neovim$reset_color config...."
+    __updating "Neovim"
     pushd "$XDG_CONFIG_HOME/nvim/"
-    git pull --recurse-submodules &>/dev/null
-    if (( "$?" != 0)); then
-      echo "$fg[red] failed to pull $(git rev-parse --abbrev-ref HEAD) changes from remote: $(git remote get-url origin)"
-      return 1
-    fi
-    echo "$fg[green]$reset_color success!"
+    __pull_changes "Neovim"
     popd
+    __done
   }
 
   local update_dotfiles() {
+    __updating "dotfiles"
     pushd "$dotfiles_home/"
-    echo "updating $fg[bold]@s0cks/$fg[magenta]dotfiles$reset_color...."
-    git pull --recurse-submodules &>/dev/null
-    if (( "$?" != 0)); then
-      echo "$fg[red] failed to pull $(git rev-parse --abbrev-ref HEAD) changes from remote: $(git remote get-url origin)"
-      return 1
-    fi
+    __pull_changes "dotfiles"
 
     task install &>/dev/null
     if (( "$?" != 0)); then
       echo "$fg[red]${reset_color} failed to install dotfiles"
       return 1
     fi
-    popd 
-    echo "$fg[green]${reset_color} done."
+    popd
+    __done
   }
 
+  local update_wezterm() {
+    __updating "WezTerm"
+    pushd "$wezterm_dir/"
+    __pull_changes "WezTerm"
+    popd
+    __done
+  }
 
   local command=()
   # local flag_verbose=false
@@ -74,6 +91,7 @@ s0cks() {
     version)                  show_version && return                ;;
     update-dotfiles)          update_dotfiles && return             ;;
     update-neovim)            update_neovim && return               ;;
+    update-wezterm)           update_wezterm && return              ;;
     *)                        opterr "$@" && return 2               ;;
   esac
 }
