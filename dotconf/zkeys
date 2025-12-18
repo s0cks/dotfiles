@@ -22,7 +22,7 @@ function yz() {
 }
 
 zle -N yz
-bindkey '^y' yz
+bindkey '^\' yz
 
 # navi (^+n) / (ctrl+n)
 function __navi_wiget() {
