@@ -18,7 +18,7 @@ s0cks() {
   }
 
   local update_dotfiles() {
-    cd "$dotfiles_home/"
+    pushd "$dotfiles_home/"
     echo "updating $fg[bold]@s0cks/$fg[magenta]dotfiles$reset_color...."
     git pull --recurse-submodules &>/dev/null
     if (( "$?" != 0)); then
@@ -31,7 +31,7 @@ s0cks() {
       echo "$fg[red]${reset_color} failed to install dotfiles"
       return 1
     fi
-
+    popd 
     echo "$fg[green]${reset_color} done."
   }
 
