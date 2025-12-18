@@ -7,7 +7,9 @@ unset key
 
 unsetopt FLOW_CONTROL # disable C-s/C-q in the editor
 
-# yazi (^+y) / (ctrl+y)
+ # ╭──────╮
+ # │ Yazi │
+ # ╰──────╯
 function yz() {
   if [[ "$1" != "" ]]; then
     if [[ -d "$1" ]]; then
@@ -24,7 +26,9 @@ function yz() {
 zle -N yz
 bindkey '^\' yz
 
-# open lazygit
+ # ╭─────────╮
+ # │ Lazygit │
+ # ╰─────────╯
 function __open_lazygit() {
   lazygit
   return "$?"
@@ -32,13 +36,18 @@ function __open_lazygit() {
 zle -N __open_lazygit 
 bindkey '^]' __open_lazygit 
 
+ # ╭────────╮
+ # │ Neovim │
+ # ╰────────╯
 function __open_nvim() {
   nvim
 }
 zle -N __open_nvim 
 bindkey '^[' __open_nvim 
 
-# navi (^+n) / (ctrl+n)
+ # ╭──────╮
+ # │ Navi │
+ # ╰──────╯
 function __navi_wiget() {
   local -r input="${LBUFFER}"
   local output="$(navi --print --fzf-overrides '--no-select-1')"
@@ -57,17 +66,20 @@ function __navi_wiget() {
 zle -N __navi_wiget 
 bindkey '^n' __navi_wiget
 
-# Reload zsh
+ # ╭────────────╮
+ # │ Reload zsh │
+ # ╰────────────╯
 function __reload_zsh() {
   zle -I
   clear
   exec zsh <$TTY
 }
-
 zle -N __reload_zsh
 bindkey '^[R' __reload_zsh
 
-# Open GitHub in Browser
+ # ╭───────────────────────────────────╮
+ # │ Open GitHub repository in browser │
+ # ╰───────────────────────────────────╯
 function __open_in_browser() {
   zle -I
   if [[ -d "$PWD/.git" ]]; then
@@ -76,11 +88,12 @@ function __open_in_browser() {
     open "$PWD"
   fi
 }
-
 zle -N __open_in_browser
 bindkey '^[O' __open_in_browser
 
-
+ # ╭────╮
+ # │ JQ │
+ # ╰────╯
 __lbuffer_strip_trailing_pipe() {
   # Strip a trailing pipe and its surrounding whitespace.
   sed -E 's/[[:space:]]*\|[[:space:]]*$//' <<<"$LBUFFER"
@@ -113,6 +126,5 @@ __jq_explorer() {
   zle reset-prompt
   return $ret
 }
-
 zle -N __jq_explorer 
 bindkey '\ej' __jq_explorer
