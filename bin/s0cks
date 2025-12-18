@@ -30,6 +30,7 @@ s0cks() {
     "  update-dotfiles      # Update the installed dotfiles"
   )
   local dotfiles_home="${DOTFILES_HOME:-/usr/local/share/dotfiles}"
+  local wezterm_dir="${WEZTERM_HOME:-$HOME/.config/wezterm}"
 
   local show_version() {
     printf "s0cks %s\n" "$VERSION"
