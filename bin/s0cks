@@ -17,6 +17,18 @@ s0cks() {
     printf "s0cks %s\n" "$VERSION"
   }
 
+  local update_neovim() {
+    echo "updating $bold$fg[magenta]Neovim$reset_color config...."
+    pushd "$XDG_CONFIG_HOME/nvim/"
+    git pull --recurse-submodules &>/dev/null
+    if (( "$?" != 0)); then
+      echo "$fg[red] failed to pull $(git rev-parse --abbrev-ref HEAD) changes from remote: $(git remote get-url origin)"
+      return 1
+    fi
+    echo "$fg[green]$reset_color success!"
+    popd
+  }
+
   local update_dotfiles() {
     pushd "$dotfiles_home/"
     echo "updating $fg[bold]@s0cks/$fg[magenta]dotfiles$reset_color...."
@@ -61,6 +73,7 @@ s0cks() {
   case "$command" in
     version)                  show_version && return                ;;
     update-dotfiles)          update_dotfiles && return             ;;
+    update-neovim)            update_neovim && return               ;;
     *)                        opterr "$@" && return 2               ;;
   esac
 }
