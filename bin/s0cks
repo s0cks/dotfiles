@@ -28,6 +28,10 @@ local function __pull_changes() {
   return 0
 }
 
+local function __no_updates() {
+  echo "$bold$fg[yellow] $reset_color skipped, no updates."
+}
+
 s0cks() {
   local VERSION="0.0.1"
   local USAGE=(
@@ -47,14 +51,22 @@ s0cks() {
 
   local update_neovim() {
     pushd "$XDG_CONFIG_HOME/nvim/"
+    local prev="$(git log -1 --pretty='%h')"
     __updating "Neovim"
     __pull_changes "Neovim"
-    __updated "Neovim"
+
+    local crev="$(git log -1 --pretty='%h')"
+    if [[ "$prev" != "$crev" ]]; then
+      __updated "Neovim"
+    else
+      __no_updates
+    fi
     popd
   }
 
   local update_dotfiles() {
     pushd "$dotfiles_home/"
+    local prev="$(git log -1 --pretty='%h')"
     __updating "dotfiles"
     __pull_changes "dotfiles"
 
@@ -63,15 +75,28 @@ s0cks() {
       echo "$fg[red]${reset_color} failed to install dotfiles"
       return 1
     fi
-    __updated "dotfiles"
+
+    local crev="$(git log -1 --pretty='%h')"
+    if [[ "$prev" != "$crev" ]]; then
+      __updated "dotfiles"
+    else
+      __no_updates
+    fi
     popd
   }
 
   local update_wezterm() {
     pushd "$wezterm_dir/"
+    local prev="$(git log -1 --pretty='%h')"
     __updating "WezTerm"
     __pull_changes "WezTerm"
-    __updated "WezTerm"
+
+    local crev="$(git log -1 --pretty='%h')"
+    if [[ "$prev" != "$crev" ]]; then
+      __updated "WezTerm"
+    else
+      __no_updates
+    fi
     popd
   }
 
