@@ -76,3 +76,6 @@ alias cargo-ls="cargo install --list"
 alias Gl="serie"
 alias tree="lstr -a -g -G --icons"
 alias dic='echo 𓂺'
+
+# irssi
+alias irssi='irssi --home="~/.config/irssi"'
