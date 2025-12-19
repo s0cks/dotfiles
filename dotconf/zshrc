@@ -106,5 +106,3 @@ export CXX=clang++
 export LD=ld.lld
 export AR=llvm-ar
 export RANLIB=llvm-ranlib
-export LDFLAGS="$(llvm-config --ldflags)"
-export CXXFLAGS="$(llvm-config --cxxflags)"
