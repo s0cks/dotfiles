@@ -19,8 +19,8 @@
 .define restart_yabai     : yabai --restart-service && osascript -e 'display notification "" with title "Yabai Restarted"'
 
 # apps
-hyper - k     : @open("kitty")
-hyper - g     : @open("Google Chrome")
+hyper - 1     : @open("kitty")
+hyper - 2     : @open("Google Chrome")
 
 # misc
 hyper - f1 : @yabai_toggle()
