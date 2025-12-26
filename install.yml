@@ -106,7 +106,7 @@
     ~/.config/:
       glob: true
       path: conf/*
-      exclude: [ conf/ripgrep, conf/aria2, conf/git, conf/yazi, conf/zellij ]
+      exclude: [ conf/ripgrep, conf/aria2, conf/git, conf/yazi, conf/zellij, conf/irssi ] #TODO(@s0cks): need to remove conf/irssi from this list
     # install custom local zimfw modules
     ~/.zim/modules/:
       glob: true
