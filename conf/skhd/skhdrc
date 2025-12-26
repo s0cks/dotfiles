@@ -14,7 +14,15 @@
 .define show_hs_console : hs -c 'hs.openConsole()'
 .define restart_yabai : yabai --restart-service && osascript -e 'display notification "" with title "Yabai Restarted"'
 
-hyper - t : open -a Terminal
-hyper - a : @yabai_toggle()
-hyper - h : @show_hs_console()
-hyper - y : @restart_yabai()
+hyper - f1 : @yabai_toggle()
+hyper - f11 : @restart_yabai()
+hyper - f12 : @show_hs_console()
+
+# right
+hyper - l : @yabai_focus("east")
+# left
+hyper - h : @yabai_focus("west")
+# down
+hyper - j : @yabai_focus("south")
+# up
+hyper - k : @yabai_focus("north")
