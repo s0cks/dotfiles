@@ -1,57 +1,73 @@
 #!/usr/bin/env zsh
 autoload -Uz colors && colors
 
-local DOTFILES_DIR="${DOTFILES_HOME:-/usr/local/share/dotfiles}"
-local NEOVIM_DIR="${NEOVIM_HOME:-$XDG_CONFIG_HOME/nvim}"
-local WEZTERM_DIR="${WEZTERM_HOME:-$XDG_CONFIG_HOME/wezterm}"
-local HAMMERSPOON_DIR="${HAMMERSPOON_DIR:-$XDG_CONFIG_HOME/hammerspoon}"
 
-local function __done() {
-  echo "$fg[green]${reset_color} done."
-}
-
-local function __updated() {
-  local name="$1"
-  echo "$fg[green] $fg[bold]$fg[magenta]$name$reset_color updated to: $(git log -1 --pretty='%h %B')"
-}
-
-local function __updating() {
-  echo "updating $bold$fg[magenta]$1$reset_color...."
-}
-
-local function __pull_changes() {
-  local name="$1"
-  git pull --recurse-submodules &>/dev/null
-  if (( "$?" != 0 )); then
-    echo "$fg[red] failed. Can't update $name $(git rev-parse --abbrev-ref HEAD) from remote: $(git remote get-url origin)"
-    return 1
-  fi
-  return 0
-}
-
-local function __no_updates() {
-  echo "$bold$fg[yellow] $reset_color skipped, no updates."
-}
 
 s0cks() {
   local VERSION="0.0.1"
   local USAGE=(
-    "Usage: s0cks [-h|--help] [<command>]"
+    "Usage: s0cks [-h|--help] [<cmd>]"
     "General Options:"
     "  -h|--help        # Print help and usage info"
+    "  -v|--verbose     # Print more, mostly debug, info to the console while working"
     ""
-    "Commands:"
-    "  update-dotfiles      # Update the installed dotfiles"
+    "cmds:"
+    "   version         # Prints the version to the console"
+    "   update [target] # Perform an update with an optional target"
   )
   local show_version() {
     printf "s0cks %s\n" "$VERSION"
   }
+  
+  local cmd=()
+  local verbose=false
+  local update_target
+  local DOTFILES_DIR=${DOTFILES_DIR:-/usr/local/share/dotfiles}
+  local NEOVIM_DIR=${NEOVIM_HOME:-${XDG_CONFIG_HOME}/nvim}
+  local WEZTERM_DIR=${WEZTERM_HOME:-${XDG_CONFIG_HOME}/wezterm}
+  local HAMMERSPOON_DIR=${HAMMERSPOON_DIR:-${XDG_CONFIG_HOME}/hammerspoon}
+
+  local function __done() {
+    echo "$fg[green]${reset_color} done."
+  }
+
+  local function __updated() {
+    local name="$update_target"
+    local revision="$(git log -1 --pretty='%h %B')"
+    echo "$fg[green] $fg[bold]$fg[magenta]$name$reset_color updated to: $revision"
+  }
+
+  local function __pull_changes() {
+    local name="$update_target"
+    local version="$(git rev-parse --abbrev-ref HEAD)"
+    local remote="$(git remote get-url origin)"
+    git pull --recurse-submodules &>/dev/null
+    if (( "$?" != 0 )); then
+      echo "$fg[red]$reset_color failed. Can't update $name $version from remote: $remote"
+      return 1
+    fi
+    return 0
+  }
+
+  local function __no_updates() {
+    echo "$bold$fg[yellow]$reset_color skipped, no updates."
+  }
+
+  local function __updating() {
+    local name="$update_target"
+    if [[ "$verbose" == "true" ]]; then
+      echo "updating $bold$fg[magenta]$name$reset_color in $fg[cyan]$(pwd)$reset_color...."
+    else
+      echo "updating $bold$fg[magenta]$name$reset_color...."
+    fi
+  }
 
   local update_dotfiles() {
+    update_target="dotfiles"
     pushd "$DOTFILES_DIR/"
     local prev="$(git log -1 --pretty='%h')"
-    __updating "dotfiles"
-    __pull_changes "dotfiles"
+    __updating
+    __pull_changes
 
     task install &>/dev/null
     if (( "$?" != 0)); then
@@ -61,63 +77,95 @@ s0cks() {
 
     local crev="$(git log -1 --pretty='%h')"
     if [[ "$prev" != "$crev" ]]; then
-      __updated "dotfiles"
+      __updated
     else
       __no_updates
     fi
-    popd
+    popd &>/dev/null
+    return 0
   }
-
+  
   local __update_app_config() {
+    update_target="$1"
     pushd "$2"
     local prev="$(git log -1 --pretty='%h')"
-    __updating "$1"
-    __pull_changes "$1"
+    __updating
+    __pull_changes
 
     local crev="$(git log -1 --pretty='%h')"
     if [[ "$prev" != "$crev" ]]; then
-      __updated "$1"
+      __updated
     else
       __no_updates
     fi
-    popd
+    popd &>/dev/null
+    return 0
   }
-
-  local command=()
-  # local flag_verbose=false
-  # local filename=myfile
 
   opterr() {
     echo >&2 "optparsing_demo: Unknown option '$1'"
   }
 
+  show_help() {
+    printf "%s\n" $USAGE
+  }
 
   while (( $# )); do
     case $1 in
-      --)                 shift; command+=("${@[@]}"); break      ;;
-      -h|--help)          printf "%s\n" $USAGE && return          ;;
-      -v|--version)       show_version && return                  ;;
-      # -v|--verbose)       flag_verbose=true                     ;;
-      # -f|--filename)      shift; filename=$1                    ;;
-      # -f=*|--filename=*)  filename="${1#*=}"                    ;;
+      --)
+        shift;
+        cmd+=("${@[@]}");
+        break
+        ;;
+      -h|--help)          
+        show_help
+        return
+        ;;
+      -v|--verbose)
+        verbose=true
+        ;;
       -*)                 opterr $1 && return 2                   ;;
-      *)                  command+=("${@[@]}"); break             ;;
+      *)                  cmd+=("${@[@]}"); break             ;;
     esac
     shift
   done
 
-  case "$command" in
-    version)                  show_version && return                ;;
+  if (( "${#cmd[@]}" == 0)); then
+    show_help
+    return
+  fi
+
+
+  case "${cmd[1]}" in
+    version)
+      show_version
+      ;;
     update)
-      case "$@" in
-        dotfiles)           update_dotfiles                                          ;;
-        nvim|neovim)        __update_app_config "Neovim" "$NEOVIM_DIR"               ;;
-        wez|wezterm)        __update_app_config "WezTerm" "$WEZTERM_DIR"             ;;
-        hs|hammerspoon)     __update_app_config "Hammerspoon" "$HAMMERSPOON_DIR"     ;;
-        *)                  echo "invalid tool: $@" && return 2                      ;;
-      esac
-      return
+      shift cmd
+      if (( "${#cmd[@]}" == 0 )); then
+        update_dotfiles
+      else
+        case "${cmd[1]}" in
+        dotfiles)
+          update_dotfiles
+          ;;
+        nvim|neovim)
+          __update_app_config "Neovim" "$NEOVIM_DIR"
+          ;;
+        wez|wezterm)
+          __update_app_config "WezTerm" "$WEZTERM_DIR"
+          ;;
+        hs|hammerspoon)
+          __update_app_config "Hammerspoon" "$HAMMERSPOON_DIR"
+          ;;
+        *)
+          opterr "$cmd" && return 2
+          ;;
+        esac
+      fi
       ;; 
-    *)                      opterr "$@" && return 2               ;;
+    *)
+      opterr "$@" && return 2
+      ;;
   esac
 }
