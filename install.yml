@@ -1,6 +1,6 @@
-#                                  ╭──────────╮
-#                                  │ Defaults │
-#                                  ╰──────────╯
+# ╭──────────╮
+# │ Defaults │
+# ╰──────────╯
 - defaults:
     link:
       create: True
@@ -9,9 +9,9 @@
       quiet: True
       stdout: True
 
-#             ╭────────────────────────────────────────────────────╮
-#             │ Create some default directories and configurations │
-#             ╰────────────────────────────────────────────────────╯
+# ╭─────────────────────────────────╮
+# │ Create some default directories │
+# ╰─────────────────────────────────╯
 - create:
   - ~/Projects/
   - ~/.config/bitwarden-cli/
@@ -23,16 +23,14 @@
       # Install system-wide user-agent
     /usr/local/share/user-agent: ./user-agent
 
-#                       ╭─────────────────────────────────╮
-#                       │ Install system tools using mise │
-#                       ╰─────────────────────────────────╯
+# ╭─────────────────────────────────╮
+# │ Install system tools using mise │
+# ╰─────────────────────────────────╯
 - mise: {}
 
-#                  ╭──────────────────────────────────────────╮
-#                  │ Generate global git config using Jsonnet │
-#                  ╰──────────────────────────────────────────╯
-- shell:
-  - echo "$(./conf/aria2/bin/generate-rpc-secret)" > /usr/local/share/aria2/secret
+# ╭──────────────────────────╮
+# │ Generate various configs │
+# ╰──────────────────────────╯
 - jsonnet:
     # generate git config
     "~/.config/git/":
@@ -43,37 +41,54 @@
     # generate ripgrep config
     "~/.config/ripgrep/":
       source: conf/ripgrep/config.jsonnet
-    # generate aria2 config
+
+# ╭──────────────────────╮
+# │ Install aria2 config │
+# ╰──────────────────────╯
+- shell:
+  - echo "$(./conf/aria2/bin/generate-rpc-secret)" > /usr/local/share/aria2/secret
+- jsonnet:
     "~/.config/aria2/":
       source: conf/aria2/aria2.jsonnet
       vars_from_file:
         ARIA2_SECRET: /usr/local/share/aria2/secret
         ARIA2_USER_AGENT: /usr/local/share/user-agent
 
-#                      ╭──────────────────────────────────╮
-#                      │ Clone necessary git repositories │
-#                      ╰──────────────────────────────────╯
+# ╭─────────────────────────╮
+# │ Clone various git repos │
+# ╰─────────────────────────╯
 - git:
-    # install vcpkg from Microsoft GitHub
+    # ╭──────────────────╮
+    # │ @microsoft/vcpkg │
+    # ╰──────────────────╯
     /usr/local/share/vcpkg/:
       url: "https://github.com/microsoft/vcpkg.git"
       description: "@microsoft/vcpkg from GitHub"
       recursive: true
-    # install personal cheatsheet from GitHub
+    # ╭───────────────╮
+    # │ @s0cks/cheats │
+    # ╰───────────────╯
     /usr/local/share/cheats/s0cks__cheats/:
       url: "https://github.com/s0cks/cheats.git"
       description: "@s0cks/cheats from GitHub"
       recursive: true
-    # install neovim config from GitHub
+    # ╭─────────────────╮
+    # │ @s0cks/dot-nvim │
+    # ╰─────────────────╯
     ~/.config/nvim/:
       url: "https://github.com/s0cks/dot-nvim.git"
       description: "@s0cks/dot-nvim from GitHub"
       recursive: true
-    # install hammerspoon config from GitHub
+    # ╭────────────────────────╮
+    # │ @s0cks/dot-hammerspoon │
+    # ╰────────────────────────╯
     ~/.config/hammerspoon/:
       url: "https://github.com/s0cks/dot-hammerspoon.git"
       description: "@s0cks/dot-hammerspoon from GitHub"
       recursive: true
+    # ╭────────────────────╮
+    # │ @s0cks/dot-wezterm │
+    # ╰────────────────────╯
     ~/.config/wezterm/:
       url: "https://github.com/s0cks/dot-wezterm.git"
       description: "@s0cks/dot-wezterm from GitHub"
@@ -91,7 +106,7 @@
     ~/.config/:
       glob: true
       path: conf/*
-      exclude: [ conf/ripgrep, conf/aria2, conf/git, conf/yazi ]
+      exclude: [ conf/ripgrep, conf/aria2, conf/git, conf/yazi, conf/zellij ]
     # install custom local zimfw modules
     ~/.zim/modules/:
       glob: true
@@ -102,23 +117,19 @@
       path: "dotconf/*"
       prefix: '.'
 
-#                      ╭───────────────────────────────────╮
-#                      │ Install & Configure Yazi Theme(s) │
-#                      ╰───────────────────────────────────╯
-# install yazi packages using ya 
+# ╭──────╮
+# │ Yazi │
+# ╰──────╯
 - ya:
-  # starship prompt in Yazi windows
-  - Rolv-Apneseth/starship
-  # flexoki theme
+  - Rolv-Apneseth/starship   # starship prompt in Yazi windows
   - gosxrgxx/flexoki-dark
   - gosxrgxx/flexoki-light
-# create symlink for yazi theme config
 - link:
     ~/.config/yazi/theme.toml: conf/yazi/theme.toml
 
-#                      ╭──────────────────────────────────╮
-#                      │ Download & Install gh Extensions │
-#                      ╰──────────────────────────────────╯
+# ╭───────────────────────╮
+# │ GitHub CLI Extensions │
+# ╰───────────────────────╯
 - ghe:
   - dlvhdr/gh-dash
   - davidraviv/gh-clean-branches
@@ -130,6 +141,9 @@
   - HaywardMorihara/gh-tidy
   - korosuke613/gh-user-stars 
 
+# ╭──────────────────╮
+# │ Watchman Watches │
+# ╰──────────────────╯
 - watchman:
     "~/Projects":
       projects:
@@ -137,9 +151,15 @@
         pattern: "**/*.txt"
         command: "zip projects.zip"
 
-#                     ╭─────────────────────────────────────╮
-#                     │ Apply OS Specific Customizations    │
-#                     ╰─────────────────────────────────────╯
+# ╭────────╮
+# │ Zellij │
+# ╰────────╯
+- shell:
+  - command: dotbot -d . 
+
+# ╭───────────────────╮
+# │ Platform Specific │
+# ╰───────────────────╯
 - if:
     cond: 'uname | grep -Eq "Darwin"'
     unmet:

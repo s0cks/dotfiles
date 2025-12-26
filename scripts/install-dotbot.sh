@@ -17,14 +17,10 @@ DOTBOT_PLUGINS=(
   "https://github.com/s0cks/dotbot-mise.git"
   "https://github.com/s0cks/dotbot-ya.git"
   "https://github.com/s0cks/dotbot-watchman.git"
+  "https://github.com/s0cks/dotbot-tera.git"
 )
 DOTBOT_EXEC="$DOTBOT_DIR/bin/dotbot"
 DOTBOT_EXEC_WRAPPER="$INSTALL_PREFIX/bin/dotbot"
-
-if [[ -f "$DOTBOT_EXEC_WRAPPER" ]]; then
-  echo "$DOTBOT_EXEC_WRAPPE already exists, cannot install"
-  return 1
-fi
 
 local function shallow_clone_with_submodules() {
   git clone \
@@ -35,35 +31,53 @@ local function shallow_clone_with_submodules() {
     "$1"
 }
 
-# clone dotbot itself
-cd "$INSTALL_PREFIX/share/"
-shallow_clone_with_submodules "$DOTBOT_REPO"
+local function clone_dotbot_and_plugins() {
+}
 
-# clone required dotbot plugins
-mkdir -p dotbot/plugins/ && cd dotbot/plugins/
-for plugin in "${DOTBOT_PLUGINS[@]}"; do
-  shallow_clone_with_submodules "$plugin"
-done
 
-# generate executable script
-#TODO(@s0cks): this is kinda a hack, should probably figure a better solution out
+local function gen_exec_wrapper() {
+  dotbot_plugins_flags=""
+  for plugin in "$DOTBOT_PLUGIN_INSTALL_DIR/"*; do
+    dotbot_plugins_flags="$dotbot_plugins_flags -p $plugin"
+  done
 
-read -r -d '' DOTBOT_EXEC_WRAPPER_SCRIPT <<EOF
+  read -r -d '' DOTBOT_EXEC_WRAPPER_SCRIPT <<EOF
 #!/usr/bin/env sh
 $DOTBOT_EXEC \
   --verbose \
-  -p "${DOTBOT_PLUGIN_INSTALL_DIR}/dotbot-mise" \
-  -p "${DOTBOT_PLUGIN_INSTALL_DIR}/dotbot-brew" \
-  -p "${DOTBOT_PLUGIN_INSTALL_DIR}/dotbot-git" \
-  -p "${DOTBOT_PLUGIN_INSTALL_DIR}/dotbot-if" \
-  -p "${DOTBOT_PLUGIN_INSTALL_DIR}/dotbot-ya" \
-  -p "${DOTBOT_PLUGIN_INSTALL_DIR}/dotbot-jsonnet" \
-  -p "${DOTBOT_PLUGIN_INSTALL_DIR}/dotbot-gh-extension" \
-  -p "${DOTBOT_PLUGIN_INSTALL_DIR}/dotbot-includes" \
-  -p "${DOTBOT_PLUGIN_INSTALL_DIR}/dotbot-watchman" \
+  $dotbot_plugins_flags \
   --exit-on-failure \
   "\$@"
 EOF
 
-echo "$DOTBOT_EXEC_WRAPPER_SCRIPT" > "$DOTBOT_EXEC_WRAPPER"
-chmod +x "$DOTBOT_EXEC_WRAPPER"
+  echo "$DOTBOT_EXEC_WRAPPER_SCRIPT" > "$DOTBOT_EXEC_WRAPPER"
+  chmod +x "$DOTBOT_EXEC_WRAPPER"
+}
+
+
+if [[ ! -d "$DOTBOT_DIR" ]]; then
+  # clone dotbot itself
+  cd "$INSTALL_PREFIX/share/"
+  shallow_clone_with_submodules "$DOTBOT_REPO"
+  cd "$DOTBOT_DIR/"
+else
+  cd "$DOTBOT_DIR/"
+  git pull --recurse-submodules
+fi
+
+if [[ ! -d "$DOTBOT_PLUGIN_INSTALL_DIR/" ]]; then
+  mkdir -p "$DOTBOT_PLUGIN_INSTALL_DIR/" && cd "$DOTBOT_PLUGIN_INSTALL_DIR/"
+  for plugin in "${DOTBOT_PLUGINS[@]}"; do
+    shallow_clone_with_submodules "$plugin"
+  done
+else
+  cd "$DOTBOT_PLUGIN_INSTALL_DIR/"
+  for plugin in "$DOTBOT_PLUGIN_INSTALL_DIR/"*; do
+    cd "$plugin"
+    git pull --recurse-submodules
+  done
+fi
+
+if [[ ! -f "$DOTBOT_EXEC_WRAPPER" ]]; then
+  gen_exec_wrapper
+fi

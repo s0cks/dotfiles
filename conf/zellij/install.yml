@@ -1,0 +1,33 @@
+# ╭──────────╮
+# │ Defaults │
+# ╰──────────╯
+- defaults:
+    link:
+      create: True
+      relink: True
+    shell:
+      quiet: True
+      stdout: True
+
+# ╭────────────────────────────╮
+# │ Create directory structure │
+# ╰────────────────────────────╯
+- create:
+  - ~/.config/zellij/
+  - ~/.config/zellij/layouts/
+  - ~/.config/zellij/themes/
+
+# ╭─────────────────╮
+# │ Generate config │
+# ╰─────────────────╯
+- jsonnet:
+    "~/.config/zellij/config.kdl":
+      source: config.jsonnet
+
+# ╭──────────────╮
+# │ Link layouts │
+# ╰──────────────╯
+- link:
+    "~/.config/zellij/layouts/":
+      glob: true
+      path: layouts/*.kdl
