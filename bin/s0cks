@@ -4,6 +4,7 @@ autoload -Uz colors && colors
 local DOTFILES_DIR="${DOTFILES_HOME:-/usr/local/share/dotfiles}"
 local NEOVIM_DIR="${NEOVIM_HOME:-$XDG_CONFIG_HOME/nvim}"
 local WEZTERM_DIR="${WEZTERM_HOME:-$XDG_CONFIG_HOME/wezterm}"
+local HAMMERSPOON_DIR="${HAMMERSPOON_DIR:-$XDG_CONFIG_HOME/hammerspoon}"
 
 local function __done() {
   echo "$fg[green]${reset_color} done."
@@ -42,30 +43,12 @@ s0cks() {
     "Commands:"
     "  update-dotfiles      # Update the installed dotfiles"
   )
-  local dotfiles_home="${DOTFILES_HOME:-/usr/local/share/dotfiles}"
-  local wezterm_dir="${WEZTERM_HOME:-$HOME/.config/wezterm}"
-
   local show_version() {
     printf "s0cks %s\n" "$VERSION"
   }
 
-  local update_neovim() {
-    pushd "$XDG_CONFIG_HOME/nvim/"
-    local prev="$(git log -1 --pretty='%h')"
-    __updating "Neovim"
-    __pull_changes "Neovim"
-
-    local crev="$(git log -1 --pretty='%h')"
-    if [[ "$prev" != "$crev" ]]; then
-      __updated "Neovim"
-    else
-      __no_updates
-    fi
-    popd
-  }
-
   local update_dotfiles() {
-    pushd "$dotfiles_home/"
+    pushd "$DOTFILES_DIR/"
     local prev="$(git log -1 --pretty='%h')"
     __updating "dotfiles"
     __pull_changes "dotfiles"
@@ -85,15 +68,15 @@ s0cks() {
     popd
   }
 
-  local update_wezterm() {
-    pushd "$wezterm_dir/"
+  local __update_app_config() {
+    pushd "$2"
     local prev="$(git log -1 --pretty='%h')"
-    __updating "WezTerm"
-    __pull_changes "WezTerm"
+    __updating "$1"
+    __pull_changes "$1"
 
     local crev="$(git log -1 --pretty='%h')"
     if [[ "$prev" != "$crev" ]]; then
-      __updated "WezTerm"
+      __updated "$1"
     else
       __no_updates
     fi
@@ -107,6 +90,7 @@ s0cks() {
   opterr() {
     echo >&2 "optparsing_demo: Unknown option '$1'"
   }
+
 
   while (( $# )); do
     case $1 in
@@ -124,9 +108,15 @@ s0cks() {
 
   case "$command" in
     version)                  show_version && return                ;;
-    update-dotfiles)          update_dotfiles && return             ;;
-    update-neovim)            update_neovim && return               ;;
-    update-wezterm)           update_wezterm && return              ;;
+    update)
+      case "$@" in
+        dotfiles)           update_dotfiles && return                               ;;
+        nvim|neovim)        __update "Neovim" "$NEOVIM_DIR" && return               ;;
+        wez|wezterm)        __update "WezTerm" "$WEZTERM_DIR" && return             ;;
+        hs|hammerspoon)     __update "Hammerspoon" "$HAMMERSPOON_DIR" && return     ;;
+        *)                  echo "invalid tool: $@" && return 2                     ;;
+      esac
+      ;; 
     *)                        opterr "$@" && return 2               ;;
   esac
 }
