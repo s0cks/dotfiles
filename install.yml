@@ -151,11 +151,7 @@
         pattern: "**/*.txt"
         command: "zip projects.zip"
 
-# ╭────────╮
-# │ Zellij │
-# ╰────────╯
-- shell:
-  - command: dotbot -d . 
+#TODO(@s0cks): properly install zellij configuration
 
 # ╭───────────────────╮
 # │ Platform Specific │
