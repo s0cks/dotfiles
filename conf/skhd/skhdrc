@@ -10,6 +10,7 @@
 
 .define yabai_focus : yabai -m window --focus {{1}} || yabai -m display --focus {{1}}
 .define yabai_layout : yabai -m config layout {{1}}
+.define yabai_swap        : yabai -m window --swap {{1}}
 .define yabai_toggle : [[ $(yabai -m query --spaces --space | jq -r '.type') == "float" ]] && yabai -m config layout bsp || yabai -m config layout float
 .define show_hs_console : hs -c 'hs.openConsole()'
 .define restart_yabai : yabai --restart-service && osascript -e 'display notification "" with title "Yabai Restarted"'
@@ -18,11 +19,17 @@ hyper - f1 : @yabai_toggle()
 hyper - f11 : @restart_yabai()
 hyper - f12 : @show_hs_console()
 
-# right
-hyper - l : @yabai_focus("east")
-# left
-hyper - h : @yabai_focus("west")
-# down
-hyper - j : @yabai_focus("south")
-# up
-hyper - k : @yabai_focus("north")
+# yabai window focus 
+hyper - l : @yabai_focus("east")    # focus right
+hyper - h : @yabai_focus("west")    # focus left
+hyper - k : @yabai_focus("north")   # focus above
+hyper - j : @yabai_focus("south")   # focus down
+hyper - f : @yabai_focus("first")   # focus first
+hyper - m : @yabai_focus("mouse")   # focus @mouse
+
+# yabai window movement
+cmd+shift - l : @yabai_swap("east")       # swap w/ right
+cmd+shift - h : @yabai_swap("west")       # swap w/ left
+cmd+shift - j : @yabai_swap("south")      # swap w/ bottom
+cmd+shift - k : @yabai_swap("north")      # swap w/ above
+cmd+shift - f : @yabai_swap("first")      # swap w/ first
