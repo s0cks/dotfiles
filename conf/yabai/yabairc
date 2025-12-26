@@ -1,6 +1,7 @@
 yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
 sudo yabai --load-sa
 
+# config
 yabai -m config layout float
 yabai -m config focus_follows_mouse autofocus
 yabai -m config mouse_follows_focus on
@@ -13,5 +14,8 @@ yabai -m config window_shadow float
 yabai -m config active_window_opacity 1.0
 yabai -m config normal_window_opacity 0.9
 
-
+# rules
 yabai -m rule --add app="^System Preferences$" manage=off
+
+
+borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0 &
