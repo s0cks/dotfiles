@@ -8,10 +8,12 @@
   "terminal",
 ]
 
-.define yabai_focus : yabai -m window --focus {{1}} || yabai -m display --focus {{1}}
-.define yabai_layout : yabai -m config layout {{1}}
+.define yabai_focus       : yabai -m window --focus {{1}} || yabai -m display --focus {{1}}
+.define yabai_layout      : yabai -m config layout {{1}}
 .define yabai_swap        : yabai -m window --swap {{1}}
-.define yabai_toggle : [[ $(yabai -m query --spaces --space | jq -r '.type') == "float" ]] && yabai -m config layout bsp || yabai -m config layout float
+.define yabai_toggle      : [[ $(yabai -m query --spaces --space | jq -r '.type') == "float" ]] && yabai -m config layout bsp || yabai -m config layout float
+.define yabai_resize      : yabai -m window --resize {{1}}:{{2}}
+
 .define show_hs_console : hs -c 'hs.openConsole()'
 .define restart_yabai : yabai --restart-service && osascript -e 'display notification "" with title "Yabai Restarted"'
 
@@ -33,3 +35,9 @@ cmd+shift - h : @yabai_swap("west")       # swap w/ left
 cmd+shift - j : @yabai_swap("south")      # swap w/ bottom
 cmd+shift - k : @yabai_swap("north")      # swap w/ above
 cmd+shift - f : @yabai_swap("first")      # swap w/ first
+
+# yabai resize window
+ctrl+shift - l : @yabai_resize("right", 10)
+ctrl+shift - h : @yabai_resize("right", -10)
+ctrl+shift - j : @yabai_resize("bottom", 10)
+ctrl+shift - k : @yabai_resize("bottom", -10)
