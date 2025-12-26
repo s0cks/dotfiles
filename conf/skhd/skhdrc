@@ -14,7 +14,7 @@
 .define yabai_toggle      : [[ $(yabai -m query --spaces --space | jq -r '.type') == "float" ]] && yabai -m config layout bsp || yabai -m config layout float
 .define yabai_resize      : yabai -m window --resize {{1}}:{{2}}
 
-.define open              : open -a {{1}}
+.define open              : open -a '{{1}}'
 .define show_hs_console   : hs -c 'hs.openConsole()'
 .define restart_yabai     : yabai --restart-service && osascript -e 'display notification "" with title "Yabai Restarted"'
 
