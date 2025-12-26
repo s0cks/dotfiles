@@ -150,6 +150,11 @@
         path: "/"
         pattern: "**/*.txt"
         command: "zip projects.zip"
+    "~/.config/hammerspoon":
+      reload:
+        path: "/"
+        pattern: "**/*.lua"
+        command: "hs -c 'hs.reload()'"
 
 #TODO(@s0cks): properly install zellij configuration
 
