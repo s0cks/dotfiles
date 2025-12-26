@@ -11,6 +11,8 @@
 .define yabai_focus : yabai -m window --focus {{1}} || yabai -m display --focus {{1}}
 .define yabai_layout : yabai -m config layout {{1}}
 .define yabai_toggle : [[ $(yabai -m query --spaces --space | jq -r '.type') == "float" ]] && yabai -m config layout bsp || yabai -m config layout float
+.define show_hs_console : hs -c 'hs.openConsole()'
 
 hyper - t : open -a Terminal
 hyper - a : @yabai_toggle()
+hyper - h : @show_hs_console()
