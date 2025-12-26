@@ -15,4 +15,4 @@
 
 hyper - t : open -a Terminal
 hyper - a : @yabai_toggle()
-hyper - h : @show_hs_console()
+hyper - h : @show_hs_console
