@@ -111,9 +111,9 @@ s0cks() {
     update)
       case "$@" in
         dotfiles)           update_dotfiles && return                               ;;
-        nvim|neovim)        __update "Neovim" "$NEOVIM_DIR" && return               ;;
-        wez|wezterm)        __update "WezTerm" "$WEZTERM_DIR" && return             ;;
-        hs|hammerspoon)     __update "Hammerspoon" "$HAMMERSPOON_DIR" && return     ;;
+        nvim|neovim)        __update_app_config "Neovim" "$NEOVIM_DIR" && return               ;;
+        wez|wezterm)        __update_app_config "WezTerm" "$WEZTERM_DIR" && return             ;;
+        hs|hammerspoon)     __update_app_config "Hammerspoon" "$HAMMERSPOON_DIR" && return     ;;
         *)                  echo "invalid tool: $@" && return 2                     ;;
       esac
       ;; 
