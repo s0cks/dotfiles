@@ -110,13 +110,14 @@ s0cks() {
     version)                  show_version && return                ;;
     update)
       case "$@" in
-        dotfiles)           update_dotfiles && return                               ;;
-        nvim|neovim)        __update_app_config "Neovim" "$NEOVIM_DIR" && return               ;;
-        wez|wezterm)        __update_app_config "WezTerm" "$WEZTERM_DIR" && return             ;;
-        hs|hammerspoon)     __update_app_config "Hammerspoon" "$HAMMERSPOON_DIR" && return     ;;
-        *)                  echo "invalid tool: $@" && return 2                     ;;
+        dotfiles)           update_dotfiles                                          ;;
+        nvim|neovim)        __update_app_config "Neovim" "$NEOVIM_DIR"               ;;
+        wez|wezterm)        __update_app_config "WezTerm" "$WEZTERM_DIR"             ;;
+        hs|hammerspoon)     __update_app_config "Hammerspoon" "$HAMMERSPOON_DIR"     ;;
+        *)                  echo "invalid tool: $@" && return 2                      ;;
       esac
+      return
       ;; 
-    *)                        opterr "$@" && return 2               ;;
+    *)                      opterr "$@" && return 2               ;;
   esac
 }
