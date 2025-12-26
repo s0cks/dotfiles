@@ -150,11 +150,6 @@
         path: "/"
         pattern: "**/*.txt"
         command: "zip projects.zip"
-    "~/.config/skhd":
-      skhd:
-        path: "/"
-        pattern: "*"
-        command: "skhd --restart-service"
 
 #TODO(@s0cks): properly install zellij configuration
 
