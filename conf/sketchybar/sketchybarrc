@@ -3,15 +3,14 @@ BIN="$CONFIG_DIR/bin"
 
 bg="0xff100f0f"
 bg2="0xff1c1b1a"
-tx="0xffcecdc3"
-tx2="0xff878580"
+tx="0xffcecdc3" tx2="0xff878580"
 tx3="0xff575653"
 pu="0xff8B7EC8"
 re="0xffd14d41"
 
 notch_width=200
-notch_display_height=32
-height=74
+# notch_display_height=32
+height=24
 
 # ╭──────────╮
 # │ Main Bar │
@@ -21,10 +20,9 @@ bar=(
   position=top
   blur_radius=30
   height="$height"
-  notch_display_height="$notch_display_height"
   notch_width="$notch_width"
   hidden=off
-  topmost=on
+  topmost=off
   sticky=on
   font_smoothing=on
   shadow=off
@@ -49,7 +47,6 @@ default=(
 sketchybar --default "${default[@]}"
 
 apple=(
-  color="0xffff0000"
   icon="󰀵"
   icon.color="$pu"
   script="$BIN/apple.sh"
@@ -71,18 +68,12 @@ sketchybar \
 # ╭─────────────╮
 # │ Right Items │
 # ╰─────────────╯
-clock=(
-  update_freq=30
-  icon=󰥔
-  script="$BIN/clock.sh"
+status_bracket=(
+  background.color="$bg"
+  background.border_color="$bg2"
+  background.border_width=2
 )
-volume=(
-  script="$BIN/volume.sh"
-)
-sketchybar --add item clock right \
-  --set clock "${clock[@]}" \
-  --add item volume right \
-  --set volume "${volume[@]}" \
-  --subscribe volume volume_change
+sketchybar --add bracket status \
+  --set status "${status_bracket[@]}"
 
 sketchybar --update

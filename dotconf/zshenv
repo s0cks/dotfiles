@@ -98,6 +98,11 @@ export BITWARDENCLI_APPDATA_DIR="${BITWARDENCLI_HOME}"
 export NAVI_CONFIG="$XDG_CONFIG_HOME/navi/config.yaml"
 export NAVI_PATH="$XDG_DATA_HOME/navi/cheats/:/usr/local/share/cheats/"
 
+# ╭────────╮
+# │ Zellij │
+# ╰────────╯
+export ZELLIJ_SESSIONIZER_SEARCH_PATHS="$HOME/Projects"
+
 # ┌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┐
 # ╎                        Environment                        ╎
 # └╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┘

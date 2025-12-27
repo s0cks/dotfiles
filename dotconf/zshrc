@@ -99,6 +99,9 @@ fi
 #   fi
 # fi
 
+if [[ $+commands[luarocks] ]]; then
+  source <(luarocks path)
+fi
 
 #TODO(@s0cks): is this necessary?
 export PATH="$(brew --prefix llvm)/bin:$PATH"

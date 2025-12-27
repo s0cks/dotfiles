@@ -52,6 +52,7 @@ zmodule s0cks/zsh-zoxide --if '[[ \$+commands[zoxide] ]]'
 zmodule s0cks/zsh-atuin --if '[[ \$+commands[atuin] ]]'
 zmodule s0cks/zsh-mise --if '[[ \$+commands[mise] ]]'
 zmodule s0cks/zsh-cargo --if '[[ \$+commands[rust] && \$+commands[cargo] ]]'
+zmodule s0cks/zsh-zellij-sessionizer --if '[[ \$+commands[zellij] ]]'
 zmodule $ZMODULES_DIR/zsh-tmux-sessionizer/ --if '[[ \$+commands[tmux] && \$+commands[fzf] ]]' -f 'functions/tmux-sessionizer' -a 'tmux-sessionizer'
 
 #

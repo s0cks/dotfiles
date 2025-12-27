@@ -1,7 +1,12 @@
-#!/bin/sh
+#!/usr/bin/env zsh
 
-# The $NAME variable is passed from sketchybar and holds the name of
-# the item invoking this script:
-# https://felixkratz.github.io/SketchyBar/config/events#events-and-scripting
+DEFAULT_PATTERN="%a %b %d %H:%M"
+HOVER_PATTERN="%a %b %d, %Y %H:%M"
 
-sketchybar --set "$NAME" label="$(date '+%d/%m %H:%M')"
+local pattern="$DEFAULT_PATTERN"
+if [[ "$SENDER" == "mouse.entered" ]]; then
+  sketchybar --set "$NAME" label="$(date '+%a %b %d, %Y %H:%M')"
+else
+  sketchybar --set "$NAME" label="$(date '+%a %b %d %H:%M')"
+
+fi

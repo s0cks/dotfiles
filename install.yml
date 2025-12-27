@@ -155,6 +155,10 @@
         path: "/"
         pattern: "sketchybarrc"
         command: "sketchybar --reload"
+      reload-execs:
+        path: "/"
+        pattern: "bin/*"
+        command: "sketchybar --reload"
     "~/.config/yabai":
       reload_yabai:
         path: "/"
