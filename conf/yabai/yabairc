@@ -15,7 +15,7 @@ yabai -m config top_padding     $SPACE_PADDING
 yabai -m config bottom_padding  $SPACE_PADDING
 yabai -m config left_padding    $SPACE_PADDING
 yabai -m config right_padding   $SPACE_PADDING
-yabai -m config window_gap      $SPACE_GAP
+yabai -m config window_gap      8
 
 # window opacity
 yabai -m config window_opacity on

@@ -157,8 +157,7 @@
         command: "sketchybar --reload"
     "~/.config":
       reload_yabai:
-        path: "yabai/"
-        pattern: "yabairc"
+        pattern: "yabai/yabairc"
         command: "yabai --restart-service"
     "~/.config/hammerspoon":
       reload:
