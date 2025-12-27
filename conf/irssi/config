@@ -6,7 +6,7 @@ servers = (
     use_tls = "yes";
     tls_verify = "yes";
   },
-  { 
+  {
     address = "irc.undernet.org";
     chatnet = "Undernet";
     port = "6667";
@@ -237,5 +237,11 @@ statusbar = {
   };
 };
 settings = {
-  core = { real_name = "Dumpster Fire Barbie"; user_name = "laceh"; nick = "laceh"; };
+  core = {
+    real_name = "Dumpster Fire Barbie";
+    user_name = "laceh";
+    nick = "laceh";
+    quit_message = "keibai";
+  };
+  "fe-common/core" = { theme = "flexoki"; };
 };
