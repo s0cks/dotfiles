@@ -155,9 +155,10 @@
         path: "/"
         pattern: "sketchybarrc"
         command: "sketchybar --reload"
-    "~/.config":
+    "~/.config/yabai":
       reload_yabai:
-        pattern: "yabai/yabairc"
+        path: "/"
+        pattern: "yabairc"
         command: "yabai --restart-service"
     "~/.config/hammerspoon":
       reload:
