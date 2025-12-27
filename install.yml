@@ -150,6 +150,16 @@
         path: "/"
         pattern: "**/*.txt"
         command: "zip projects.zip"
+    "~/.config/sketchybar":
+      reload:
+        path: "/"
+        pattern: "sketchybarrc"
+        command: "sketchybar --reload"
+    "~/.config":
+      reload_yabai:
+        path: "yabai/"
+        pattern: "yabairc"
+        command: "yabai --restart-service"
     "~/.config/hammerspoon":
       reload:
         path: "/"
