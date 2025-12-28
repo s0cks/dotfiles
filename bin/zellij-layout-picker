@@ -17,7 +17,7 @@ zellij-layout-picker() {
   )
 
   if [[ -n "$layout" ]]; then
-    zellij --layout "$layout_dir/$layout.kdl"
+    zellij --layout "$layout_dir/$layout.kdl" attach
     return 0
   fi
   return 1
