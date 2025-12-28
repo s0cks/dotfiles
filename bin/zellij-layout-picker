@@ -10,14 +10,14 @@ zellij-layout-picker() {
 
   local layout
   layout=$(
-    find "$layout_dir" -type f -name "*.kdl" |
+    fselect filename from "$layout_dir" where is_file and extension eq "kdl" |
       fzf \
         --query "$1" \
-        --preview="/bin/cat {}"
+        --preview="/bin/cat $layout_dir/{}.kdl"
   )
 
   if [[ -n "$layout" ]]; then
-    zellij --layout "$layout"
+    zellij --layout "$layout_dir/$layout.kdl"
     return 0
   fi
   return 1
