@@ -41,6 +41,8 @@
     # generate ripgrep config
     "~/.config/ripgrep/":
       source: conf/ripgrep/config.jsonnet
+    "~/.config/yabai/":
+      source: conf/yabai/yabai.jsonnet
 
 # ╭──────────────────────╮
 # │ Install aria2 config │
@@ -106,7 +108,7 @@
     ~/.config/:
       glob: true
       path: conf/*
-      exclude: [ conf/ripgrep, conf/aria2, conf/git, conf/yazi, conf/zellij ] #TODO(@s0cks): need to remove conf/irssi from this list
+      exclude: [ conf/ripgrep, conf/aria2, conf/git, conf/yazi, conf/zellij, conf/yabai ] #TODO(@s0cks): need to remove conf/irssi from this list
     # install custom local zimfw modules
     ~/.zim/modules/:
       glob: true
