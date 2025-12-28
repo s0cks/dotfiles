@@ -39,4 +39,5 @@ marksman = [ "latest", "2025-11-30" ]
 typos = [ "latest", "1.40.0" ]
 ruff = [ "latest", "0.14.9" ]
 cocogitto = [ "latest", "6.5.0" ]
+uv = [ "latest", "0.9.18" ]
 make = { version = "4.4.1", os = [ "linux" ] }
