@@ -1,0 +1,20 @@
+#!/usr/bin/env zsh
+# vim: set ft=zsh
+
+zellij-layout-picker() {
+  local layout_dir="${ZELLIJ_LAYOUT_DIR:-$XDG_CONFIG_DIR/zellij/layouts}"
+  local layout
+
+  layout=$(
+    find "$layout_dir" -type f -name "*.kdl" |
+      fzf \
+        --query "$1" \
+        --preview="/bin/cat {}"
+  )
+
+  if [[ -n "$layout" ]]; then
+    zellij --layout "$layout"
+    return 0
+  fi
+  return 1
+}
