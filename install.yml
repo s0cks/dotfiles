@@ -181,6 +181,14 @@
         pattern: "**/*.lua"
         command: "hs -c 'hs.reload()'"
 
+# ╭─────────────────────────╮
+# │ Install weechat scripts │
+# ╰─────────────────────────╯
+- link:
+    "~/.local/share/weechat/":
+      glob: true
+      path: weechat/*
+
 #TODO(@s0cks): properly install zellij configuration
 
 # ╭───────────────────╮
