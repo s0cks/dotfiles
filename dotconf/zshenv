@@ -103,6 +103,11 @@ export NAVI_PATH="$XDG_DATA_HOME/navi/cheats/:/usr/local/share/cheats/"
 # ╰────────╯
 export ZELLIJ_SESSIONIZER_SEARCH_PATHS="$HOME/Projects"
 
+# ╭─────╮
+# │ ghq │
+# ╰─────╯
+export GHQ_ROOT="$HOME/Projects"
+
 # ┌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┐
 # ╎                        Environment                        ╎
 # └╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┘

@@ -17,6 +17,7 @@ fi
 
 # apply llvm from homebrew
 export PATH="/usr/local/opt/llvm/bin:$PATH"
+export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
 
 # apply zsh styles
 source "$HOME/.zstyles"

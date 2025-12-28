@@ -4,6 +4,7 @@ min_version = "2025.7.27"
 idiomatic_version_file_enable_tools = []
 python.default_packages_file        = "${XDG_CONFIG_HOME}/mise/.default-python-packages"
 ruby.default_packages_file          = "${XDG_CONFIG_HOME}/mise/.default-gems"
+experimental = true
 
 [env]
 NODE_ENV="dev"
@@ -39,5 +40,6 @@ marksman = [ "latest", "2025-11-30" ]
 typos = [ "latest", "1.40.0" ]
 ruff = [ "latest", "0.14.9" ]
 cocogitto = [ "latest", "6.5.0" ]
-uv = [ "latest", "0.9.18" ]
+uv = [ "latest" ]
+ghq = [ "latest" ]
 make = { version = "4.4.1", os = [ "linux" ] }
