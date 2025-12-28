@@ -42,7 +42,7 @@
     "~/.config/ripgrep/":
       source: conf/ripgrep/config.jsonnet
     "~/.config/yabai/":
-      source: conf/yabai/yabai.jsonnet
+      source: conf/yabai/yabairc.jsonnet
 
 # ╭──────────────────────╮
 # │ Install aria2 config │
