@@ -30,9 +30,6 @@ autoload colors && colors
 zstyle ':zim:zmodule' use 'degit'
 zstyle ':zim:input' double-dot-expand yes
 
-export LS_COLORS="$(vivid generate flexoki_dark)"
-export EZA_COLORS="$LS_COLORS"
-
 zstyle ':completion:*' file-list all
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/.zcompcache"

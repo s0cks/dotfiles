@@ -33,7 +33,7 @@ core:
   regular_file: {}
   reset_to_normal: {}
   directory:
-    foreground: bl
+    foreground: pu
   symlink:
     foreground: pu
   multi_hard_link: {}
@@ -58,14 +58,15 @@ core:
   missing_symlink_target:
     foreground: re
     background: re
-  setuid: {}
+  setuid:
+    background: ye
   setgid: {}
   file_with_capability: {}
   sticky_other_writable: {}
   other_writable: {}
   sticky: {}
   executable_file:
-    foreground: re
+    foreground: ma
     font-style: bold
 text:
   special:
@@ -96,7 +97,7 @@ archives:
   foreground: cy
   font-style: underline
 executable:
-  foreground: re
+  foreground: ma
   font-style: bold
 unimportant:
   foreground: tx3
