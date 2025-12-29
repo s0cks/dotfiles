@@ -1,0 +1,14 @@
+# preview markdown files using glow
+[[plugin.prepend_previewers]]
+url = "*.md"
+run = 'piper -- CLICOLOR_FORCE=1 glow -w=$w -s=dark "$1"'
+
+# preview directories using eza
+[[plugins.prepend_previewers]]
+url = "*/"
+run = 'piper -- eza -TL=3 --color=always --icons=always --group-directories-first --no-quotes "$1"'
+
+# default to using hexyl as a previewer
+[[plugin.append_previewers]]
+url = "*"
+run = 'piper -- hexyl --border=none --terminal-width=$w "$1"'

@@ -135,6 +135,7 @@
   - Rolv-Apneseth/starship   # starship prompt in Yazi windows
   - gosxrgxx/flexoki-dark
   - gosxrgxx/flexoki-light
+  - yazi-rs/plugins:piper
 - link:
     ~/.config/yazi/theme.toml: conf/yazi/theme.toml
 
