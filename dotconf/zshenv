@@ -1,3 +1,5 @@
+# vim: set ft=zsh:
+
 # ┌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┐
 # ╎                           Basic                           ╎
 # └╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┘
@@ -107,6 +109,11 @@ export ZELLIJ_SESSIONIZER_SEARCH_PATHS="$HOME/Projects"
 # │ ghq │
 # ╰─────╯
 export GHQ_ROOT="$HOME/Projects"
+
+# ╭─────╮
+# │ eza │
+# ╰─────╯
+export EZA_CONFIG_DIR="$XDG_CONFIG_HOME/eza"
 
 # ┌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┐
 # ╎                        Environment                        ╎
