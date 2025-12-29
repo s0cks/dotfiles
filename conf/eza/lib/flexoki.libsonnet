@@ -14,6 +14,7 @@
     "base100": "#E6E4D9",
     "base50": "#F2F0E5",
     "paper": "#FFFCF0",
+
     // 600 colors
     "red600": "#AF3029",
     "orange600": "#BC5215",
@@ -44,7 +45,6 @@
     "purple200": "#c4b9e0",
     "magenta200": "#f4a4c1",
   },
-
   Dark: $.Base + {
     bg: $.Base.black,
     bg2: $.Base.base950,
@@ -62,13 +62,13 @@
     bl: $.Base.blue400,
     pu: $.Base.purple400,
     ma: $.Base.magenta400,
-    re2: $.Base.red400,
-    or2: $.Base.orange400,
-    ye2: $.Base.yellow400,
-    gr2: $.Base.green400,
-    cy2: $.Base.cyan400,
-    bl2: $.Base.blue400,
-    pu2: $.Base.purple400,
-    ma2: $.Base.magenta400,
+    re2: $.Base.red600,
+    or2: $.Base.orange600,
+    ye2: $.Base.yellow600,
+    gr2: $.Base.green600,
+    cy2: $.Base.cyan600,
+    bl2: $.Base.blue600,
+    pu2: $.Base.purple600,
+    ma2: $.Base.magenta600,
   },
 }
