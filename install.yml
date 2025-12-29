@@ -186,6 +186,13 @@
         pattern: "**/*.lua"
         command: "hs -c 'hs.reload()'"
 
+# ╭──────────────────────────╮
+# │ Link eza theme correctly │
+# ╰──────────────────────────╯
+# TODO(@s0cks): clean this up later
+- link:
+    "~/.config/eza/theme.yml": "~/.config/eza/flexoki-dark.yml"
+
 # ╭─────────────────────────╮
 # │ Install weechat scripts │
 # ╰─────────────────────────╯
