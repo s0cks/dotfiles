@@ -4,23 +4,16 @@ sort_dir_first = true
 show_hidden = true
 show_symlink = false
 
-# preview markdown files using glow
 [plugin]
 prepend_previewers = [
+  # preview tar files
   { url = "*.tar*", run = 'piper --format=url -- tar tf "$1"' },
+  # preview markdown files using glow
   { url = "*.md", run = 'piper -- CLICOLOR_FORCE=1 glow -w=$w -s=dark "$1"' },
+  # preview sqlite databases
   { mime = "aapplication/sqlite3", run = 'piper -- sqlite3 "$1" ".schema --indent"'},
 ]
 append_previewers = [
+  # use hexyl as a default previewer
   { url = "*", run = 'piper -- hexyl --border=none --terminal-width=$w "$1"' },
 ]
-
-# preview directories using eza
-# [[plugin.prepend_previewers]]
-# url = "*/"
-# run = 'piper -- eza -TL=3 --color=always --icons=always --group-directories-first --no-quotes "$1"'
-
-# default to using hexyl as a previewer
-# [[plugin.append_previewers]]
-# url = "*"
-# run = 'piper -- hexyl --border=none --terminal-width=$w "$1"'
