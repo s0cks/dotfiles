@@ -45,6 +45,8 @@
       source: conf/yabai/yabairc.jsonnet
     "~/.config/bottom/":
       source: conf/bottom/bottom.jsonnet
+    "~/.config/eza/":
+      source: conf/eza/eza.jsonnet
 
 # ╭──────────────────────╮
 # │ Install aria2 config │
@@ -118,6 +120,7 @@
       - conf/zellij
       - conf/yabai
       - conf/bottom
+      - conf/eza
     # install custom local zimfw modules
     ~/.zim/modules/:
       glob: true
