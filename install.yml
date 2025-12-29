@@ -138,6 +138,7 @@
   - yazi-rs/plugins:piper
 - link:
     ~/.config/yazi/theme.toml: conf/yazi/theme.toml
+    ~/.config/yazi/yazi.toml: conf/yazi/yazi.toml
 
 # ╭───────────────────────╮
 # │ GitHub CLI Extensions │
