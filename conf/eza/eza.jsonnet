@@ -17,14 +17,14 @@ local Dimmed = { is_dimmed: true };
 
 local filekinds(p) = {
   normal: ForegroundDefault,
-  directory: Foreground(p.bl) + Bold,
+  directory: Foreground(p.pu) + Bold,
   symlink: Foreground(p.cy),
   pipe: Foreground(p.ye),
   block_device: Foreground(p.ye) + Bold,
   char_device: Foreground(p.ye) + Bold,
   socket: Foreground(p.re) + Bold,
   special: Foreground(p.ye),
-  executable: Foreground(p.gr) + Bold,
+  executable: Foreground(p.ma) + Bold,
   mount_point: Foreground(p.bl) + Bold,
 };
 
@@ -45,18 +45,18 @@ local perms(p) = {
 };
 
 local size(p) = {
-  major: Foreground(p.gr) + Bold,
-  minor: Foreground(p.gr),
-  number_byte: Foreground(p.gr) + Bold,
-  number_kilo: Foreground(p.gr) + Bold,
-  number_mega: Foreground(p.gr) + Bold,
-  number_giga: Foreground(p.gr) + Bold,
-  number_huge: Foreground(p.gr) + Bold,
-  unit_byte: Foreground(p.gr),
-  unit_kilo: Foreground(p.gr),
-  unit_mega: Foreground(p.gr),
-  unit_giga: Foreground(p.gr),
-  unit_huge: Foreground(p.gr),
+  major: Foreground(p.tx) + Bold,
+  minor: Foreground(p.tx),
+  number_byte: Foreground(p.tx) + Bold,
+  number_kilo: Foreground(p.tx) + Bold,
+  number_mega: Foreground(p.tx) + Bold,
+  number_giga: Foreground(p.tx) + Bold,
+  number_huge: Foreground(p.tx) + Bold,
+  unit_byte: Foreground(p.tx),
+  unit_kilo: Foreground(p.tx),
+  unit_mega: Foreground(p.tx),
+  unit_giga: Foreground(p.tx),
+  unit_huge: Foreground(p.tx),
 };
 
 local users(p) = {

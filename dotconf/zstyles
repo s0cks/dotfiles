@@ -7,6 +7,8 @@ setopt HIST_IGNORE_SPACE
 setopt INTERACTIVE_COMMENTS
 bindkey -v
 
+export LS_COLORS="$(vivid generate flexoki_dark)"
+
 if macos-is-light; then
   export TERM_THEME="light"
   export FZF_DEFAULT_OPTS="
@@ -39,7 +41,7 @@ zstyle ':completion:*:git-checkout:*' sort false
 # NOTE: don't use escape sequences (like '%F{red}%d%f') here, fzf-tab will ignore them
 zstyle ':completion:*:descriptions' format '[%d]'
 # set list-colors to enable filename colorizing
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 # force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
 zstyle ':completion:*' menu no
 # preview directory's content with eza when completing cd
