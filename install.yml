@@ -146,13 +146,31 @@
 # │ Yazi │
 # ╰──────╯
 - ya:
+  - yazi-rs/plugins:types
+  - yazi-rs/plugins:piper
+  - yazi-rs/plugins:vcs-files
+  - yazi-rs/plugins:chmod
+  - yazi-rs/plugins:mactag
+  - yazi-rs/plugins:full-border
+  - yazi-rs/plugins:git
   - Rolv-Apneseth/starship   # starship prompt in Yazi windows
   - gosxrgxx/flexoki-dark
   - gosxrgxx/flexoki-light
-  - yazi-rs/plugins:piper
+  - KKV9/compress
+  - h-hg/yamb
+  - Lil-Dank/lazygit
+  - atareao/convert
+  - DreamMaoMao/fg
+  - AminurAlam/yazi-plugins:spot
+  - AminurAlam/yazi-plugins:spot-video
+  - AminurAlam/yazi-plugins:spot-audio
+  - orhnk/system-clipboard
 - link:
-    ~/.config/yazi/theme.toml: conf/yazi/theme.toml
-    ~/.config/yazi/yazi.toml: conf/yazi/yazi.toml
+    ~/.config/yazi/:
+      glob: true
+      path: conf/yazi/*
+      exclude:
+      - .gitignore
 
 # ╭───────────────────────╮
 # │ GitHub CLI Extensions │
@@ -177,15 +195,6 @@
         path: "/"
         pattern: "**/*.txt"
         command: "zip projects.zip"
-    "~/.config/sketchybar":
-      reload:
-        path: "/"
-        pattern: "sketchybarrc"
-        command: "sketchybar --reload"
-      reload-execs:
-        path: "/"
-        pattern: "bin/*"
-        command: "sketchybar --reload"
     "~/.config/yabai":
       reload_yabai:
         path: "/"

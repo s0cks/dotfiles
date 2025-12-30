@@ -17,3 +17,13 @@ append_previewers = [
   # use hexyl as a default previewer
   { url = "*", run = 'piper -- hexyl --border=none --terminal-width=$w "$1"' },
 ]
+prepend_fetchers = [
+  { id = "mactag", url = "*", run = "mactag" },
+  { id = "mactag", url = "*/", run = "mactag" },
+  { id = 'git', url = '*', run = 'git' },
+  { id = 'git', url = '*/', run = 'git' },
+]
+prepend_spotters = [
+  { url = "video/*", run = "spot-video" },
+  { url = "audio/*", run = "spot-audio" },
+]

@@ -1,0 +1,126 @@
+# core
+[[mgr.prepend_keymap]]
+on    = [ "i" ]
+run   = "spot"
+desc  = "Open spotter"
+
+# mactags
+[[mgr.prepend_keymap]]
+on = [ "b", "a" ]
+run = "plugin mactag add"
+desc = "Tag selected file(s)"
+
+[[mgr.prepend_keymap]]
+on = [ "b", "r" ]
+run = "plugin mactag remove"
+desc = "Untag selected file(s)"
+
+# archives
+[[mgr.prepend_keymap]]
+on   = [ "c", "a", "a" ]
+run  = "plugin compress"
+desc = "Archive selected files"
+
+[[mgr.prepend_keymap]]
+on   = [ "c", "a", "p" ]
+run  = "plugin compress -p"
+desc = "Archive selected files (password)"
+
+[[mgr.prepend_keymap]]
+on   = [ "c", "a", "h" ]
+run  = "plugin compress -ph"
+desc = "Archive selected files (password+header)"
+
+[[mgr.prepend_keymap]]
+on   = [ "c", "a", "l" ]
+run  = "plugin compress -l"
+desc = "Archive selected files (compression level)"
+
+[[mgr.prepend_keymap]]
+on   = [ "c", "a", "u" ]
+run  = "plugin compress -phl"
+desc = "Archive selected files (password+header+level)"
+
+# bookmarks
+[[mgr.prepend_keymap]]
+on = [ "u", "a" ]
+run = "plugin yamb -- save"
+desc = "Add bookmark"
+
+[[mgr.prepend_keymap]]
+on = [ "u", "g" ]
+run = "plugin yamb -- jump_by_key"
+desc = "Jump bookmark by key"
+
+[[mgr.prepend_keymap]]
+on = [ "u", "G" ]
+run = "plugin yamb -- jump_by_fzf"
+desc = "Jump bookmark by fzf"
+
+[[mgr.prepend_keymap]]
+on = [ "u", "d" ]
+run = "plugin yamb -- delete_by_key"
+desc = "Delete bookmark by key"
+
+[[mgr.prepend_keymap]]
+on = [ "u", "D" ]
+run = "plugin yamb -- delete_by_fzf"
+desc = "Delete bookmark by fzf"
+
+[[mgr.prepend_keymap]]
+on = [ "u", "A" ]
+run = "plugin yamb -- delete_all"
+desc = "Delete all bookmarks"
+
+[[mgr.prepend_keymap]]
+on = [ "u", "r" ]
+run = "plugin yamb -- rename_by_key"
+desc = "Rename bookmark by key"
+
+[[mgr.prepend_keymap]]
+on = [ "u", "R" ]
+run = "plugin yamb -- rename_by_fzf"
+desc = "Rename bookmark by fzf"
+
+[[mgr.prepend_keymap]]
+on = [ "g", "i" ]
+run = "plugin lazygit"
+desc = "Run lazygit"
+
+# fg
+[[mgr.prepend_keymap]]
+on    = [ "f", "g" ]
+run   = "plugin fg"
+desc  = "Find file by content (fuzzy)"
+
+[[mgr.prepend_keymap]]
+on    = [ "f", "G" ]
+run   = "plugin fg -- rg"
+desc  = "Find file by content (ripgrep)"
+
+[[mgr.prepend_keymap]]
+on    = [ "f", "f" ]
+run   = "plugin fg -- fzf"
+desc  = "Find file by content"
+
+# clip-board
+[[mgr.prepend_keymap]]
+on    = [ "<C-y>" ]
+run   = "plugin system-clipboard"
+desc  = "Copy file contents using system-clipboard"
+
+# convert
+[[mgr.prepend_keymap]]
+on    = [ "c", "p" ]
+run   = "plugin convert -- --extension='png'"
+desc  = "Convert selected files to png"
+
+[[mgr.prepend_keymap]]
+on    = [ "c", "j" ]
+run   = "plugin convert -- --extension='jpg'"
+desc  = "Convert selected files to jpeg"
+
+[[msg.prepend_keymap]]
+on    = [ "c", "w" ]
+run   = "plugin convert -- --extension='webp'"
+desc  = "Convert selected files to webp"
