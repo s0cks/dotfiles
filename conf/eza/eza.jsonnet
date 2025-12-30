@@ -60,12 +60,12 @@ local size(p) = {
 };
 
 local users(p) = {
-  user_you: Foreground(p.ye) + Bold,
-  user_root: ForegroundDefault,
+  user_you: Foreground(p.pu) + Bold,
+  user_root: Foreground(p.ma),
   user_other: ForegroundDefault,
-  group_yours: Foreground(p.ye) + Bold,
+  group_yours: Foreground(p.pu) + Bold,
   group_other: ForegroundDefault,
-  group_root: ForegroundDefault,
+  group_root: Foreground(p.ma),
 };
 
 local links(p) = {
@@ -115,7 +115,7 @@ local file_type(p) = {
 {
   ["flexoki-dark.yml"]: eza.Theme({
       punctuation: Foreground(FlexokiDark.tx2) + Bold,
-      date: Foreground(FlexokiDark.cy),
+      date: Foreground(FlexokiDark.tx),
       inode: Foreground(FlexokiDark.pu),
       blocks: Foreground(FlexokiDark.cy),
       header: ForegroundDefault + Underline,
