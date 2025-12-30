@@ -32,24 +32,27 @@
 # │ Generate various configs │
 # ╰──────────────────────────╯
 - jsonnet:
-    # generate git config
-    "~/.config/git/":
-      source: conf/git/generate.jsonnet
-    # generate ssh config
-    "~/.ssh/":
-      source: dotssh/config.jsonnet
-    # generate ripgrep config
-    "~/.config/ripgrep/":
-      source: conf/ripgrep/config.jsonnet
-    "~/.config/yabai/":
-      source: conf/yabai/yabairc.jsonnet
-    "~/.config/bottom/":
-      source: conf/bottom/bottom.jsonnet
-    "~/.config/eza/":
-      source: conf/eza/eza.jsonnet
-      include_dirs:
-      - conf/eza
-      - "."
+    include_dirs:
+    - "."
+    items:
+      # generate git config
+      "~/.config/git/":
+        source: conf/git/generate.jsonnet
+      # generate ssh config
+      "~/.ssh/":
+        source: dotssh/config.jsonnet
+      # generate ripgrep config
+      "~/.config/ripgrep/":
+        source: conf/ripgrep/config.jsonnet
+      "~/.config/yabai/":
+        source: conf/yabai/yabairc.jsonnet
+      "~/.config/bottom/":
+        source: conf/bottom/bottom.jsonnet
+      "~/.config/eza/":
+        source: conf/eza/eza.jsonnet
+        include_dirs:
+        - conf/eza
+
 
 # ╭──────────────────────╮
 # │ Install aria2 config │

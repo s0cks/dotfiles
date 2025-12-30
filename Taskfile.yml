@@ -11,6 +11,15 @@ tasks:
         -d "$(pwd)" \
         -c "$(pwd)/install.yml" \
         --dry-run
+  install:verbose:
+    label: "󰚩 Install"
+    desc: "Install dotfiles using Dotbot using dry-run mode."
+    cmds: 
+    - >
+      dotbot \
+        -d "$(pwd)" \
+        -c "$(pwd)/install.yml" \
+        --verbose
   install:
     label: "󰚩 Install"
     desc: "Install dotfiles using Dotbot using dry-run mode."
