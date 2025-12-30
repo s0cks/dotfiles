@@ -27,6 +27,6 @@ local yabai = import 'lib/yabairc.libsonnet';
       yabai.WindowOpacity(0.9, 1.0),
       yabai.Comment('rules'),
       yabai.ManageRule(OFF, "^System Preferences$"),
-      yabai.Borders(borders.active_color, borders.inactive_color, borders.width),
+      yabai.Borders(borders.inactive_color, borders.active_color, borders.width),
     ]),
 }
