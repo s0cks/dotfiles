@@ -1,22 +1,19 @@
-local GenHostSection(name, hostname, user, ident) = |||
-  Host %(name)s
-    Hostname %(hostname)s
-    User %(user)s
-    PreferredAuthentications publickey
-    IdentityFile %(ident)s
-    UseKeychain yes
-||| % { name: name, hostname: hostname, user: user, ident: ident };
+local ssh = import 'lib/ssh.libsonnet';
+local hosts = import 'hosts.json';
 
-local GenHostsSection(hosts) = std.join('\n', [
-  GenHostSection(name, hosts[name].hostname, hosts[name].user, hosts[name].ident)
-  for name in std.objectFields(hosts)
-]);
-
-local GenSSHConfig() =
-  (importstr './_config') % {
-    hosts: GenHostsSection((import './hosts.json')),
-  };
+local CreateHost(name, config) = 
+  ssh.Host(config.hostname, config.user, name) +
+  (if "ident" in config then
+    ssh.HostPublicKeyIdent(config.ident)
+  else
+    {});
 
 {
-  "config": GenSSHConfig(),
+  "config": ssh.SSHConfig(
+    [ ssh.Property('AddKeysToAgent', 'yes') ] +
+    [
+      CreateHost(name, hosts[name])
+      for name in std.objectFields(hosts)
+    ]
+  )
 }
