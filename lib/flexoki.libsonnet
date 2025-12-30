@@ -73,6 +73,18 @@
     bl2: $.color("blue", 600),
     pu2: $.color("purple", 600),
     ma2: $.color("magenta", 600),
+
+    rainbow():
+      [
+        self.re,
+        self.or,
+        self.ye,
+        self.gr,
+        self.cy,
+        self.bl,
+        self.pu,
+        self.ma,
+      ],
   },
   Light: $.Base + {
     re: $.color("red", 600),
@@ -92,5 +104,17 @@
     bl2: $.color("blue", 400),
     pu2: $.color("purple", 400),
     ma2: $.color("magenta", 400),
+
+    rainbow():
+      [
+        self.re,
+        self.or,
+        self.ye,
+        self.gr,
+        self.cy,
+        self.bl,
+        self.pu,
+        self.ma,
+      ],
   },
 }
