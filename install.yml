@@ -52,6 +52,10 @@
         source: conf/eza/eza.jsonnet
         include_dirs:
         - conf/eza
+      "~/.config/cava/":
+        source: conf/cava/config.jsonnet
+        include_dirs:
+        - conf/cava
 
 
 # ╭──────────────────────╮
@@ -127,6 +131,7 @@
       - conf/yabai
       - conf/bottom
       - conf/eza
+      - conf/cava
     # install custom local zimfw modules
     ~/.zim/modules/:
       glob: true
