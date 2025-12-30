@@ -47,6 +47,9 @@
       source: conf/bottom/bottom.jsonnet
     "~/.config/eza/":
       source: conf/eza/eza.jsonnet
+      include:
+      - conf/eza
+      - "."
 
 # ╭──────────────────────╮
 # │ Install aria2 config │

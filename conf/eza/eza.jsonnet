@@ -1,9 +1,7 @@
-local eza = import 'lib/eza.libsonnet';
+local eza = import 'eza.libsonnet';
 local flexoki = import "lib/flexoki.libsonnet";
-local FlexokiDark = flexoki.Dark;
 
 local DEFAULT = "Default";
-
 local Foreground(color) = {
   foreground: color,
 };
@@ -15,7 +13,7 @@ local Bold = { is_bold: true };
 local Underline = { is_underline: true };
 local Dimmed = { is_dimmed: true };
 
-local filekinds(p) = {
+local FileKinds(p) = {
   normal: ForegroundDefault,
   directory: Foreground(p.pu) + Bold,
   symlink: Foreground(p.cy),
@@ -28,7 +26,7 @@ local filekinds(p) = {
   mount_point: Foreground(p.bl) + Bold,
 };
 
-local perms(p) = {
+local Permissions(p) = {
   user_read: Foreground(p.ye) + Bold,
   user_write: Foreground(p.re) + Bold,
   user_executable_file: Foreground(p.gr) + Bold,
@@ -44,7 +42,7 @@ local perms(p) = {
   attribute: ForegroundDefault,
 };
 
-local size(p) = {
+local FileSize(p) = {
   major: Foreground(p.tx) + Bold,
   minor: Foreground(p.tx),
   number_byte: Foreground(p.tx) + Bold,
@@ -59,7 +57,7 @@ local size(p) = {
   unit_huge: Foreground(p.tx),
 };
 
-local users(p) = {
+local Users(p) = {
   user_you: Foreground(p.pu) + Bold,
   user_root: Foreground(p.ma),
   user_other: ForegroundDefault,
@@ -68,12 +66,12 @@ local users(p) = {
   group_root: Foreground(p.ma),
 };
 
-local links(p) = {
+local Links(p) = {
   normal: Foreground(p.re) + Bold,
   multi_link_file: Foreground(p.re) + Background(p.ye),
 };
 
-local git(p) = {
+local Git(p) = {
   new: Foreground(p.gr),
   modified: Foreground(p.bl),
   deleted: Foreground(p.re),
@@ -83,14 +81,14 @@ local git(p) = {
   conflicted: Foreground(p.re),
 };
 
-local git_repo(p) = {
+local GitRepo(p) = {
   branch_main: Foreground(p.gr),
   branch_other: Foreground(p.ye),
   git_clean: Foreground(p.gr),
   git_dirty: Foreground(p.ye),
 };
 
-local security_context(p) = {
+local SecurityContext(p) = {
   colon: ForegroundDefault + Dimmed,
   user: Foreground(p.bl),
   role: Foreground(p.gr),
@@ -98,7 +96,7 @@ local security_context(p) = {
   range: Foreground(p.cy),
 };
 
-local file_type(p) = {
+local FileType(p) = {
   image: Foreground(p.pu),
   video: Foreground(p.pu) + Bold,
   music: Foreground(p.cy),
@@ -113,27 +111,32 @@ local file_type(p) = {
 };
 
 {
-  ["flexoki-dark.yml"]: eza.Theme({
-      punctuation: Foreground(FlexokiDark.tx2) + Bold,
-      date: Foreground(FlexokiDark.tx),
-      inode: Foreground(FlexokiDark.pu),
-      blocks: Foreground(FlexokiDark.cy),
-      header: ForegroundDefault + Underline,
-      octal: Foreground(FlexokiDark.pu),
-      flags: ForegroundDefault,
-      symlink_path: Foreground(FlexokiDark.cy),
-      control_char: Foreground(FlexokiDark.re),
-      broken_symlink: Foreground(FlexokiDark.re),
-      broke_path_overlay: ForegroundDefault + Underline,
-
-      filekinds: filekinds(FlexokiDark),
-      perms: perms(FlexokiDark),
-      size: size(FlexokiDark),
-      file_type: file_type(FlexokiDark),
-      users: users(FlexokiDark),
-      links: links(FlexokiDark),
-      git: git(FlexokiDark),
-      git_repo: git_repo(FlexokiDark),
-      security_context: security_context(FlexokiDark),
-    }),
+  ["flexoki-dark.yml"]:
+    eza.Theme(
+      {
+        punctuation: Foreground(flexoki.Dark.tx2) + Bold,
+        date: Foreground(flexoki.Dark.tx),
+        inode: Foreground(flexoki.Dark.pu),
+        blocks: Foreground(flexoki.Dark.cy),
+        header: ForegroundDefault + Underline,
+        octal: Foreground(flexoki.Dark.pu),
+        flags: ForegroundDefault,
+        symlink_path: Foreground(flexoki.Dark.cy),
+        control_char: Foreground(flexoki.Dark.re),
+        broken_symlink: Foreground(flexoki.Dark.re),
+        broke_path_overlay: ForegroundDefault + Underline,
+      } +
+      {
+        filekinds: FileKinds(flexoki.Dark),
+        perms: Permissions(flexoki.Dark),
+        size: FileSize(flexoki.Dark),
+        file_type: FileType(flexoki.Dark),
+        users: Users(flexoki.Dark),
+        links: Links(flexoki.Dark),
+        git: Git(flexoki.Dark),
+        git_repo: GitRepo(flexoki.Dark),
+        security_context: SecurityContext(flexoki.Dark),
+      }
+    ),
 }
+
