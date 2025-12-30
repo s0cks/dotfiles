@@ -211,8 +211,8 @@ local Comment(lines) =
       gradient: 1
     } + 
     {
-      ["gradient_color_%(idx)d" % { idx: idx }]: colors[idx]
-      for idx in std.range(0, std.min(std.length(colors), 8) - 1)
+      ["gradient_color_%(idx)d" % { idx: idx }]: "'" + colors[idx] + "'"
+      for idx in std.range(0, std.min(std.length(colors), 8))
     },
   Config(sections):
     std.lines(Comment([
