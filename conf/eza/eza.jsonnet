@@ -1,4 +1,4 @@
-local eza = import 'eza.libsonnet';
+local eza = import 'lib/eza.libsonnet';
 local flexoki = import "lib/flexoki.libsonnet";
 
 local DEFAULT = "Default";
