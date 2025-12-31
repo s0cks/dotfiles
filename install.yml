@@ -50,12 +50,8 @@
         source: conf/bottom/bottom.jsonnet
       "~/.config/eza/":
         source: conf/eza/eza.jsonnet
-        include_dirs:
-        - conf/eza
       "~/.config/cava/":
         source: conf/cava/config.jsonnet
-        include_dirs:
-        - conf/cava
 
 
 # ╭──────────────────────╮
