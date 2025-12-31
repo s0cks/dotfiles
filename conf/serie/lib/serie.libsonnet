@@ -1,4 +1,3 @@
-
 {
   IndentBy(amt, c = ' '):
     std.repeat(c, amt * 2),
