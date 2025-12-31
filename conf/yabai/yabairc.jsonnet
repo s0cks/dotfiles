@@ -22,6 +22,7 @@ local yabai = import 'lib/yabairc.libsonnet';
 {
   ["yabairc"]:
     yabai.manifest([
+      "source ./spaces.sh",
       yabai.Comment('misc'),
       yabai.Padding(win_pad, win_pad, win_pad, win_pad, win_gap),
       yabai.WindowOpacity(0.9, 1.0),

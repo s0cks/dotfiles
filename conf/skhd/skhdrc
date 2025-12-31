@@ -14,6 +14,10 @@
 .define yabai_toggle        : [[ $(yabai -m query --spaces --space | jq -r '.type') == "float" ]] && yabai -m config layout bsp || yabai -m config layout float
 .define yabai_resize        : yabai -m window --resize {{1}}:{{2}}
 .define yabai_focus_on_app  : yabai -m window $(yabai -m query --windows | jq -r '.[] | select(.app == "{{1}}").id') --focus
+.define yabai_warp          : yabai -m window --warp {{1}}
+.define yabai_move_to_space : yabai -m window --space {{1}}
+.define yabai_window_toggle : yabai -m window --toggle {{1}}
+.define yabai_focus_space   : yabai -m space --focus {{1}}
 
 .define open                : open -a '{{1}}'
 .define show_hs_console     : hs -c 'hs.openConsole()'
@@ -24,8 +28,12 @@ hyper - f1 : @yabai_toggle()
 hyper - f11 : @restart_yabai()
 hyper - f12 : @show_hs_console()
 
+# spaces
+hyper - n : @yabai_focus_space('next')
+hyper - p : @yabai_focus_space('previous')
+
 hyper - g : @yabai_focus_on_app("Google Chrome")
-hyper - t : @yabai_focus_on_app("wezterm-gui")
+hyper - t : @yabai_focus_on_app("wezterm-gui") ; @yabai_window_toggle('windowed-fullscreen') ; @yabai_warp('first')
 
 # yabai window focus 
 hyper - l : @yabai_focus("east")    # focus right

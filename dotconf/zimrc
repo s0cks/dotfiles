@@ -34,6 +34,8 @@ zmodule antonjs/zsh-gpt
 # https://github.com/Aloxaf/fzf-tab
 zmodule Aloxaf/fzf-tab
 
+zmodule olets/zsh-abbr
+
 #Forgit
 # https://github.com/wfxr/forgit
 [ -f $HOMEBREW_PREFIX/share/forgit/forgit.plugin.zsh ] && source $HOMEBREW_PREFIX/share/forgit/forgit.plugin.zsh
@@ -72,6 +74,8 @@ zmodule zdharma-continuum/fast-syntax-highlighting
 zmodule zsh-users/zsh-history-substring-search
 zmodule zsh-users/zsh-autosuggestions
 # }}} End configuration added by Zim install
+
+zmodule olets/zsh-autosuggestions-abbreviations-strategy
 
 # Bitwarden CLI
 zmodule Game4Move78/zsh-bitwarden

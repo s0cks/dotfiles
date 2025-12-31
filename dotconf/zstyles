@@ -29,7 +29,7 @@ fi
 
 autoload colors && colors
 
-zstyle ':zim:zmodule' use 'degit'
+# zstyle ':zim:zmodule' use 'degit'
 zstyle ':zim:input' double-dot-expand yes
 
 zstyle ':completion:*' file-list all
