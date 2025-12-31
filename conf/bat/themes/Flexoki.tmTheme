@@ -52,9 +52,9 @@
 				<key>findHighlightForeground</key>
 				<string>#FFFCF0</string>
 				<key>accent</key>
-				<string>#4385BE</string>
+				<string>#8B7EC8</string>
 				<key>foldMarker</key>
-				<string>#D0A215</string>
+				<string>#3AA99F</string>
 				<key>guide</key>
 				<string>#282726</string>
 				<key>activeGuide</key>
@@ -88,7 +88,7 @@
 				<key>lineDiffAdded</key>
 				<string>#879A39</string>
 				<key>lineDiffModified</key>
-				<string>#D0A215</string>
+				<string>#3AA99F</string>
 			</dict>
 		</dict>
 		<dict>
@@ -165,7 +165,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#4385BE</string>
+				<string>#8B7EC8</string>
 			</dict>
 		</dict>
 		<dict>
@@ -275,7 +275,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#4385BE</string>
+				<string>#8B7EC8</string>
 			</dict>
 		</dict>
 		<dict>
@@ -330,7 +330,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#D0A215</string>
+				<string>#CE5D97</string>
 			</dict>
 		</dict>
 		<dict>
@@ -372,7 +372,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#4385BE</string>
+				<string>#8B7EC8</string>
 			</dict>
 		</dict>
 		<dict>
@@ -416,7 +416,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#4385BE</string>
+				<string>#8B7EC8</string>
 			</dict>
 		</dict>
 		<dict>
@@ -484,7 +484,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#4385BE</string>
+				<string>#8B7EC8</string>
 			</dict>
 		</dict>
 		<dict>
@@ -517,7 +517,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#D0A215</string>
+				<string>#3AA99F</string>
 			</dict>
 		</dict>
 		<dict>
@@ -572,7 +572,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#4385BE</string>
+				<string>#8B7EC8</string>
 			</dict>
 		</dict>
 		<dict>
@@ -638,7 +638,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#D0A215</string>
+				<string>#3AA99F</string>
 			</dict>
 		</dict>
 		<dict>
@@ -671,7 +671,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#D0A215</string>
+				<string>#3AA99F</string>
 			</dict>
 		</dict>
 		<dict>
@@ -737,7 +737,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#D0A215</string>
+				<string>#3AA99F</string>
 			</dict>
 		</dict>
 		<dict>
@@ -748,7 +748,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#D0A215</string>
+				<string>#3AA99F</string>
 			</dict>
 		</dict>
 		<dict>
@@ -792,7 +792,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#D0A215</string>
+				<string>#3AA99F</string>
 			</dict>
 		</dict>
 		<dict>
@@ -891,7 +891,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#D0A215</string>
+				<string>#3AA99F</string>
 			</dict>
 		</dict>
 		<dict>
@@ -946,7 +946,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#4385BE</string>
+				<string>#8B7EC8</string>
 			</dict>
 		</dict>
 		<dict>
@@ -968,7 +968,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#4385BE</string>
+				<string>#8B7EC8</string>
 			</dict>
 		</dict>
 		<dict>
@@ -990,7 +990,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#D0A215</string>
+				<string>#3AA99F</string>
 			</dict>
 		</dict>
 		<dict>
@@ -1012,7 +1012,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#D0A215</string>
+				<string>#3AA99F</string>
 			</dict>
 		</dict>
 		<dict>

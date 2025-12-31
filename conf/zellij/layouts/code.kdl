@@ -1,4 +1,14 @@
 layout {
-  pane command="nvim"
-  pane
+  tab {
+    pane command="nvim"
+    pane size=1 borderless=true {
+        plugin location="zellij:compact-bar"
+    }
+  }
+  tab {
+    pane
+    pane size=1 borderless=true {
+        plugin location="zellij:compact-bar"
+    }
+  }
 }
