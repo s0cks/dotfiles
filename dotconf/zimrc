@@ -33,15 +33,7 @@ zmodule antonjs/zsh-gpt
 # fzf-tab completion
 # https://github.com/Aloxaf/fzf-tab
 zmodule Aloxaf/fzf-tab
-
 zmodule olets/zsh-abbr
-
-#Forgit
-# https://github.com/wfxr/forgit
-[ -f $HOMEBREW_PREFIX/share/forgit/forgit.plugin.zsh ] && source $HOMEBREW_PREFIX/share/forgit/forgit.plugin.zsh
-if [[ -f "${FORGIT_INSTALL_DIR}" ]]; then
-  export PATH="${FORGIT_INSTALL_DIR}/bin:${PATH}"
-fi
 
 # Load Custom Modules
 # TODO(@s0cks): #8 add thefuck back

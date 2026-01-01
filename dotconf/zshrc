@@ -63,21 +63,6 @@ if (( $+command[docker] )); then
   fpath=("$HOME/.docker/completions" $fpath)
 fi
 
-# start-skyrim-steam() {
-#   activate-wine-prefix Skyrim
-#   wine $WINEPREFIX/drive_c/Program\ Files\ \(x86\)/Steam/steam.exe \
-#     -noverifyfiles \
-#     -nobootstrapupdate \
-#     -skipinitialbootstrap \
-#     -norepairfiles \
-#     -overridepackageurl
-# }
-
-#
-# if (( $+commands[bison] )); then
-#   export PATH="$(brew --prefix bison)/bin:$PATH"
-# fi
-
 # set fast-zsh-highlighting theme to flexoki-dark/light based on MacOS theme
 #TODO(@s0cks): figure out how to get this in zstyles?
 if [[ $(uname) == "Darwin" ]]; then
@@ -88,22 +73,12 @@ if [[ $(uname) == "Darwin" ]]; then
   fi
 fi
 
-# if [[ -z "$ZELLIJ" ]]; then
-#   if [[ "$ZELLIJ_AUTO_ATTACH" == "true" ]]; then
-#     zellij attach -c
-#   else 
-#     zellij
-#   fi
-#
-#   if [[ "$ZELLIJ_AUTO_EXIT" == "true" ]]; then
-#     exit
-#   fi
-# fi
-
+# luarocks
 if [[ $+commands[luarocks] ]]; then
   source <(luarocks path)
 fi
 
+# llvm
 #TODO(@s0cks): is this necessary?
 export PATH="$(brew --prefix llvm)/bin:$PATH"
 export CC=clang
