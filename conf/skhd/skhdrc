@@ -41,16 +41,17 @@ hyper - h : @yabai_focus("west")    # focus left
 hyper - k : @yabai_focus("north")   # focus above
 hyper - j : @yabai_focus("south")   # focus down
 hyper - f : @yabai_focus("first")   # focus first
-hyper - m : @yabai_focus("mouse")   # focus @mouse
+cmd+ctrl+shift - b : @yabai_move_to_space("web")
+cmd+ctrl+shift - w : @yabai_move_to_space("work")
+cmd+ctrl+shift - m : @yabai_move_to_space("music")
+
 # yabai spaces
 hyper - n : @yabai_focus_space("next")
-hyper - p : @yabai_focus_space("previous")
-hyper - 1 : @yabai_focus_space("1")
-hyper - 2 : @yabai_focus_space("2")
-hyper - 3 : @yabai_focus_space("3")
-hyper - 4 : @yabai_focus_space("4")
-hyper - 5 : @yabai_focus_space("5")
-hyper - 6 : @yabai_focus_space("6")
+hyper - p : @yabai_focus_space("prev")
+hyper - c : @yabai_focus_space("chat")
+hyper - b : @yabai_focus_space("web")
+hyper - w : @yabai_focus_space("work")
+hyper - m : @yabai_focus_space("music")
 
 # yabai window movement
 cmd+shift - l : @yabai_swap("east")       # swap w/ right

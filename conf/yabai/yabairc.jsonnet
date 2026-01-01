@@ -27,29 +27,43 @@ local spaces = [
   "misc",
 ];
 
+local WebSpaceRule(app, title = null) =
+  yabai.AddSpaceRule(app, "^web", title);
+local ChatSpaceRule(app, title = null) =
+  yabai.AddSpaceRule(app, "^chat", title);
+local WorkSpaceRule(app, title = null) =
+  yabai.AddSpaceRule(app, "^work", title);
+local MusicSpaceRule(app, title = null) =
+  yabai.AddSpaceRule(app, "^music", title);
+
 {
   ["yabairc"]:
     yabai.manifest([
       yabai.Comment("cleanup spaces", true),
       [
-        yabai.DestroySpace(idx + 1)
-        for idx in std.range(0, std.length(spaces) - 1)
+        "yabai -m query --spaces | jq -r '.[].index | select(. > 1)' | while read -r space; do yabai -m space --destroy \"$space\"; done",
       ],
       yabai.Comment("setup spaces", true),
-      [ "local index" ],
       [
         yabai.Comment("create the %(space)s space" % { space: space }) +
         yabai.CreateSpace(space)
         for space in spaces
       ],
-      [ "unset index" ],
       yabai.Comment("misc", true),
       yabai.Padding(win_pad, win_pad, win_pad, win_pad, win_gap),
       // yabai.WindowOpacity(0.9, 1.0),
       yabai.Comment("rules", true),
       yabai.ManageRule(OFF, "^System Settings$"),
-      yabai.AddSpaceRule("Chrome$", "^2"),
-      yabai.AddSpaceRule("Textual", "^3"),
+      // web space
+      WebSpaceRule("Chrome$"),
+      // chat space
+      ChatSpaceRule("^Textual"),
+      ChatSpaceRule("^wezterm-gui$", "weechat"),
+      // work space
+      WorkSpaceRule("^Obsidian"),
+      WorkSpaceRule("^wezterm-gui$", "btm"),
+      // music space
+      MusicSpaceRule("^YouTube Music$"),
       // yabai.Borders(borders.inactive_color, borders.active_color, borders.width),
     ], true),
 }
