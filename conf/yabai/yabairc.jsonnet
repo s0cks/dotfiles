@@ -19,15 +19,37 @@ local win_pad = 4;
 local win_gap = win_pad * 2;
 local yabai = import 'lib/yabairc.libsonnet';
 
+local spaces = [
+  "work",
+  "web",
+  "chat",
+  "music",
+  "misc",
+];
+
 {
   ["yabairc"]:
     yabai.manifest([
-      "source ./spaces.sh",
-      yabai.Comment('misc'),
+      yabai.Comment("cleanup spaces", true),
+      [
+        yabai.DestroySpace(idx + 1)
+        for idx in std.range(0, std.length(spaces) - 1)
+      ],
+      yabai.Comment("setup spaces", true),
+      [ "local index" ],
+      [
+        yabai.Comment("create the %(space)s space" % { space: space }) +
+        yabai.CreateSpace(space)
+        for space in spaces
+      ],
+      [ "unset index" ],
+      yabai.Comment("misc", true),
       yabai.Padding(win_pad, win_pad, win_pad, win_pad, win_gap),
-      yabai.WindowOpacity(0.9, 1.0),
-      yabai.Comment('rules'),
-      yabai.ManageRule(OFF, "^System Preferences$"),
-      yabai.Borders(borders.inactive_color, borders.active_color, borders.width),
-    ]),
+      // yabai.WindowOpacity(0.9, 1.0),
+      yabai.Comment("rules", true),
+      yabai.ManageRule(OFF, "^System Settings$"),
+      yabai.AddSpaceRule("Chrome$", "^2"),
+      yabai.AddSpaceRule("Textual", "^3"),
+      // yabai.Borders(borders.inactive_color, borders.active_color, borders.width),
+    ], true),
 }

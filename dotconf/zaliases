@@ -77,5 +77,30 @@ alias Gl="serie"
 alias tree="lstr -a -g -G --icons"
 alias dic='echo 𓂺'
 
-# irssi
-alias irssi='irssi --home="~/.config/irssi"'
+# global aliases
+alias -g NE="2>/dev/null"
+alias -g NO=">/dev/null"
+alias -g NUL=">/dev/null 2>&1"
+alias -g JQ="| jq"
+alias -g CP="| cb"
+
+# suffix aliases
+alias -s json="bat" #TODO(@s0cks): should change this to a better jq browser
+alias -s txt="bat"
+alias -s md="glow"
+alias -s go="$EDITOR"
+alias -s rs="$EDITOR"
+alias -s py="$EDITOR"
+alias -s js="$EDITOR"
+alias -s ts="$EDITOR"
+alias -s java="$EDITOR"
+alias -s scala="$EDITOR"
+alias -s cc="$EDITOR"
+alias -s cpp="$EDITOR"
+alias -s cxx="$EDITOR"
+alias -s h="$EDITOR"
+alias -s hpp="$EDITOR"
+alias -s hxx="$EDITOR"
+alias -s yml="$EDITOR"
+alias -s yaml="$EDITOR"
+alias -s html="open"

@@ -16,6 +16,10 @@ export PATH="$(brew --prefix)/bin:$PATH"
 autoload -Uz colors && colors
 autoload -Uz /usr/local/share/zsh/functions/*(:t)
 
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^E' edit-command-line
+
 # apply llvm from homebrew
 export PATH="$(brew --prefix llvm)/bin:$PATH"
 export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
@@ -23,7 +27,7 @@ export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
 # apply zsh styles
 source "$HOME/.zstyles"
 
-ZSH_AUTOSUGGEST_STRATEGY=(abbreviations $ZSH_AUTOSUGGEST_STRATEGY)
+export ZSH_AUTOSUGGEST_STRATEGY=(abbreviations $ZSH_AUTOSUGGEST_STRATEGY)
 
 # ┌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┐
 # ╎                        zimfw Init                         ╎

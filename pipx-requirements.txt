@@ -1,9 +1,0 @@
-git-sweep==0.1.1
-gitlint==0.19.1
-organize-tool==3.3.0
-pre-commit==3.8.0
-pyaml==24.7.0
-tuir-continued==1.32.0
-virtualenv==20.31.2
-check-jsonschema==0.29.2
-emoji-fzf==0.10.0

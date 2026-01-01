@@ -1,8 +1,14 @@
 buku==5.1
 httpie==3.2.4
 lizard==1.19.0
-dotbot==1.24.0
-thefuck==3.32
 howdoi==2.0.20
 check-jsonschema==0.35.0 
 pyright==1.1.407
+
+git-sweep==0.1.1
+gitlint==0.19.1
+organize-tool==3.3.0
+pyaml==24.7.0
+tuir-continued==1.32.0
+virtualenv==20.31.2
+emoji-fzf==0.10.0

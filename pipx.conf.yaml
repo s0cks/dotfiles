@@ -1,5 +1,0 @@
----
-- pipx:
-    file: pipx-requirements.txt
-    stdout: false
-    stderr: true

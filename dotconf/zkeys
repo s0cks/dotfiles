@@ -128,3 +128,5 @@ __jq_explorer() {
 }
 zle -N __jq_explorer 
 bindkey '\ej' __jq_explorer
+
+bindkey ' ' magic-space

@@ -15,10 +15,12 @@ function setup_space() {
 }
 
 function cleanup_spaces() {
-  for i in $(yabai -m query --spaces | jq ".[] | select((.display == $YABAI_PRIMARY_DISPLAY) and .index > $YABAI_MAX_SPACES).index"); do
+  for i in $(yabai -m query --spaces | jq ".[] | select(.display == $YABAI_PRIMARY_DISPLAY and .index > $YABAI_MAX_SPACES).index"); do
     yabai -m space --destroy "$i"
   done
 }
+
+cleanup_spaces
 
 setup_space 1 "work"
 setup_space 2 "web"
