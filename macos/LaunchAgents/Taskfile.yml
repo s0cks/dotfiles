@@ -37,7 +37,14 @@ tasks:
     - task: jsonnet:generate
       vars:
         JSONNET_SOURCES: launch_agents.jsonnet
-        JSONNET_EXTRAS: --ext-str COMPANY=io.github.s0cks --ext-str USER_HOME="~" --ext-str ARIA2_HOME --ext-str XDG_CONFIG_HOME --ext-str HOMEBREW_BIN="$HOMEBREW_REPOSITORY/bin" --ext-str ARIA2_SECRET --ext-str ARIA2_USER_AGENT
+        JSONNET_EXTRAS: >
+          --ext-str COMPANY=io.github.s0cks \
+          --ext-str USER_HOME="~" \
+          --ext-str ARIA2_HOME \
+          --ext-str XDG_CONFIG_HOME \
+          --ext-str HOMEBREW_BIN="$HOMEBREW_REPOSITORY/bin" \
+          --ext-str ARIA2_SECRET \
+          --ext-str ARIA2_USER_AGENT
     sources:
     - templates/kitty.plist
     - launch_agents.jsonnet

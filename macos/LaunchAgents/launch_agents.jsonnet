@@ -2,6 +2,7 @@ local COMPANY = std.extVar('COMPANY');
 local USER_HOME = std.extVar('USER_HOME');
 local HOMEBREW_REPOSITORY = std.extVar('HOMEBREW_REPOSITORY');
 local XDG_CONFIG_HOME = std.extVar('XDG_CONFIG_HOME');
+local plist = import 'lib/plist.libsonnet';
 
 local GetAppLabel(name) = 
   '%(company)s.%(name)s' % {
@@ -24,113 +25,50 @@ local GetStderrPath(app) =
     app: app
   };
 
-local JoinProgramArgs(args) = 
-  std.join(" ", [
-    "<string>%(arg)s</string>\n" % { arg: arg }
-    for arg in args
-  ]);
-
-local GenProgramArguments(args) = |||
-  <key>ProgramArguments</key>
-  <array>
-  %(args)s
-  </array>
-||| % {
-  args: JoinProgramArgs(args)
-};
-
-local JoinEnvironmentVars(vars) = 
-  std.join(" ", [
-    "<key>%(key)s</key>\n<string>%(value)s</string>" % { key: field, value: vars[field] }
-    for field in std.objectFields(vars)
-  ]);
-
-local GenEnvironmentVars(vars) = |||
-  <key>EnvironmentVariables</key>
-  <dict>
-  %(vars)s
-  </dict>
-||| % {
-  vars: JoinEnvironmentVars(vars)
-};
-
-local GetKeepAlive(config) = 
-  if "keep_alive" in config then
-    config.keep_alive
-  else
-    true;
-
-local GetRunAtLoad(config) =
-  if "run_at_load" in config then
-    config.run_at_load
-  else
-    true;
-
-local GenCwd(config) = 
-  if "cwd" in config then
-    |||
-      <key>WorkingDirectory</key>
-      <string>%(cwd)s</string>
-    ||| % { cwd: config.cwd % { xdg_config_dir: XDG_CONFIG_HOME } }
-  else
-    "";
-
-
-local GenStdout(app, config) =
-  if "stdout" in config then
-    |||
-      <key>StandardOutPath</key>
-      <string>%(path)s</string>
-    ||| % { path: GetStdoutPath(app) }
-  else
-    "";
-
-local GenStderr(app, config) =
-  if "stderr" in config then
-    |||
-      <key>StandardErrPath</key>
-      <string>%(path)s</string>
-    ||| % { path: GetStderrPath(app) }
-  else
-    "";
-
-local GetArgs(config) =
-  if "args" in config then
+local GetEnvPath(extras = [], indent = 3) =
+  plist.String(std.join(':',
     [
-      value % { xdg_config_dir: XDG_CONFIG_HOME, homebrew_dir: HOMEBREW_REPOSITORY }
-      for value in config.args
-    ]
-  else
-    [];
-
-local GetEnvironmentVars(config) =
-  if "env" in config then
-    GenEnvironmentVars(config.env)
-  else
-    "";
-
-local GenPlist(app, config, args) = (importstr './_default.plist') % {
-  app: app,
-  label: GetAppLabel(app),
-  keep_alive: GetKeepAlive(config),
-  run_at_load: GetRunAtLoad(config),
-  cwd: GenCwd(config),
-  stdout: GenStdout(app, config),
-  stderr: GenStderr(app, config),
-  args: GenProgramArguments(args),
-  env: GetEnvironmentVars(config)
-};
-
-local aria2 = (import './aria2.json');
-local GenAria2Plist() = GenPlist("aria2", aria2, GetArgs(aria2));
-
-local wezterm = (import './wezterm.json');
-local GenWeztermPlist() = GenPlist("wezterm", wezterm, GetArgs(wezterm));
-
-local zellij = (import './zellij.json');
-local GenZellijPlist() = GenPlist('zellij', zellij, GetArgs(zellij));
+      '/usr/local/bin',
+      '/usr/bin',
+      '/bin',
+      '/usr/sbin',
+      '/sbin',
+      HOMEBREW_REPOSITORY + '/bin',
+    ] +
+    extras
+  ), indent);
 
 {
-  [GetPlistFilename("aria2")]: GenAria2Plist(), 
-  [GetPlistFilename("wezterm")]: GenWeztermPlist()
+  [GetPlistFilename("aria2")]: 
+    plist.manifest([
+      plist.Label(GetAppLabel('aria2c')),
+      plist.KeepAlive(),
+      plist.RunAtLoad(),
+      plist.WorkingDirectory(USER_HOME + '/Downloads'),
+      plist.StandardOutPath(GetStdoutPath('aria2c')),
+      plist.StandardErrPath(GetStderrPath('aria2c')),
+      plist.EnvironmentVariables({
+        PATH: GetEnvPath(),
+      }),
+      plist.ProgramArguments([
+        plist.String('aria2c', 3),
+        plist.String('--conf-path', 3),
+        plist.String(XDG_CONFIG_HOME + '/aria2/aria2.conf', 3),
+      ]),
+    ]),
+  [GetPlistFilename("wezterm")]: 
+    plist.manifest([
+      plist.Label(GetAppLabel('wezterm')),
+      plist.KeepAlive(),
+      plist.RunAtLoad(),
+      plist.WorkingDirectory(USER_HOME),
+      plist.StandardOutPath(GetStdoutPath('wezterm')),
+      plist.StandardErrPath(GetStderrPath('wezterm')),
+      plist.EnvironmentVariables({
+        PATH: GetEnvPath(),
+      }),
+      plist.ProgramArguments([
+        plist.String('wezterm', 3),
+      ]),
+    ]),
 }
