@@ -6,21 +6,28 @@
       stdout: True
 - shell:
   - command: echo "installing MacOS config...."
-  - command: echo "generating plists...."
-  # - command: |
-  #     jsonnet -S -m macos/LaunchAgents/generated/ macos/LaunchAgents/launch_agents.jsonnet \
-  #       --ext-str COMPANY=io.github.s0cks \
-  #       --ext-str USER_HOME="$HOME" \
-  #       --ext-str ARIA2_HOME \
-  #       --ext-str XDG_CONFIG_HOME \
-  #       --ext-str HOMEBREW_REPOSITORY
+- jsonnet:
+    include_dirs:
+    - "."
+    items:
+      "~/Library/LaunchAgents/":
+        source: macos/LaunchAgents/generate.jsonnet
+        include_dirs:
+        - "macos/LaunchAgents/"
+        vars:
+          COMPANY: io.github.s0cks
+        vars_from_env:
+        - HOME
+        - ARIA2_HOME
+        - XDG_CONFIG_HOME
+        - ARIA2_SECRET
+        - ARIA2_USER_AGENT
+        - HOMEBREW_REPOSITORY
+- shell:
   - command: echo "formatting plists....."
   - command: >
-      fselect abspath from macos/LaunchAgents/generated where is_file and extension eq "plist" | xargs -I {} xmlformat --overwrite {}
+      fselect abspath from ~/Library/LaunchAgents/ where is_file and name = "io.github.s0cks.*" and extension eq "plist" | xargs -I {} zsh -c 'echo "formatting {}"; xmlformat --overwrite {}'
 - link:
-    ~/Library/LaunchAgents/:
-      glob: true
-      path: LaunchAgents/generated/*.plist
     /usr/local/share/zsh/functions/:
       glob: true
       path: bin/*

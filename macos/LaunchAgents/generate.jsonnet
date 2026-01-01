@@ -1,6 +1,7 @@
 local COMPANY = std.extVar('COMPANY');
-local USER_HOME = std.extVar('USER_HOME');
+local USER_HOME = std.extVar('HOME');
 local HOMEBREW_REPOSITORY = std.extVar('HOMEBREW_REPOSITORY');
+local HOMEBREW_BIN = HOMEBREW_REPOSITORY + '/bin';
 local XDG_CONFIG_HOME = std.extVar('XDG_CONFIG_HOME');
 local plist = import 'lib/plist.libsonnet';
 
@@ -33,7 +34,7 @@ local GetEnvPath(extras = [], indent = 3) =
       '/bin',
       '/usr/sbin',
       '/sbin',
-      HOMEBREW_REPOSITORY + '/bin',
+      HOMEBREW_BIN,
     ] +
     extras
   ), indent);
@@ -41,19 +42,17 @@ local GetEnvPath(extras = [], indent = 3) =
 {
   [GetPlistFilename("aria2")]: 
     plist.manifest([
-      plist.Label(GetAppLabel('aria2c')),
+      plist.Label(GetAppLabel('aria2')),
       plist.KeepAlive(),
       plist.RunAtLoad(),
       plist.WorkingDirectory(USER_HOME + '/Downloads'),
-      plist.StandardOutPath(GetStdoutPath('aria2c')),
-      plist.StandardErrPath(GetStderrPath('aria2c')),
+      plist.StandardOutPath(GetStdoutPath('aria2')),
+      plist.StandardErrPath(GetStderrPath('aria2')),
       plist.EnvironmentVariables({
         PATH: GetEnvPath(),
       }),
       plist.ProgramArguments([
-        plist.String('aria2c', 3),
-        plist.String('--conf-path', 3),
-        plist.String(XDG_CONFIG_HOME + '/aria2/aria2.conf', 3),
+        plist.String(HOMEBREW_BIN + '/aria2c', 3),
       ]),
     ]),
   [GetPlistFilename("wezterm")]: 
@@ -68,7 +67,23 @@ local GetEnvPath(extras = [], indent = 3) =
         PATH: GetEnvPath(),
       }),
       plist.ProgramArguments([
-        plist.String('wezterm', 3),
+        plist.String(HOMEBREW_BIN + '/wezterm', 3),
+      ]),
+    ]),
+  [GetPlistFilename("weechat")]: 
+    plist.manifest([
+      plist.Label(GetAppLabel('weechat')),
+      plist.KeepAlive(),
+      plist.RunAtLoad(),
+      plist.StandardOutPath(GetStdoutPath('weechat')),
+      plist.StandardErrPath(GetStderrPath('weechat')),
+      plist.EnvironmentVariables({
+        PATH: GetEnvPath(),
+      }),
+      plist.ProgramArguments([
+        plist.String(HOMEBREW_BIN + '/wezterm', 3),
+        plist.String('start', 3),
+        plist.String('weechat', 3),
       ]),
     ]),
 }

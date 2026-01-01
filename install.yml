@@ -231,6 +231,6 @@
         stdout: True
     met:
     - shell:
-      - command: dotbot -d macos/ -c macos/install.yml
+      - command: dotbot -d . -c macos/install.yml
         quiet: True
         stdout: True
