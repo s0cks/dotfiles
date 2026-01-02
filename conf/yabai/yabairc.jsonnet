@@ -35,19 +35,18 @@ local WorkSpaceRule(app, title = null) =
   yabai.AddSpaceRule(app, "^work", title);
 local MusicSpaceRule(app, title = null) =
   yabai.AddSpaceRule(app, "^music", title);
+local MiscSpaceRule(app, title = null) =
+  yabai.AddSpaceRule(app, "^misc", title);
 
 {
   ["yabairc"]:
     yabai.manifest([
       yabai.Comment("cleanup spaces", true),
-      [
-        "yabai -m query --spaces | jq -r '.[].index | select(. > 1)' | while read -r space; do yabai -m space --destroy \"$space\"; done",
-      ],
       yabai.Comment("setup spaces", true),
       [
-        yabai.Comment("create the %(space)s space" % { space: space }) +
-        yabai.CreateSpace(space)
-        for space in spaces
+        yabai.Comment("create the %(space)s space" % { space: spaces[idx] }) +
+        yabai.CreateSpaceIfNotExists(idx + 1, spaces[idx])
+        for idx in std.range(0, std.length(spaces) - 1)
       ],
       yabai.Comment("misc", true),
       yabai.Padding(win_pad, win_pad, win_pad, win_pad, win_gap),
@@ -64,6 +63,8 @@ local MusicSpaceRule(app, title = null) =
       WorkSpaceRule("^wezterm-gui$", "btm"),
       // music space
       MusicSpaceRule("^YouTube Music$"),
+      // misc space
+      MiscSpaceRule("^Google Drive$"),
       // yabai.Borders(borders.inactive_color, borders.active_color, borders.width),
     ], true),
 }

@@ -80,19 +80,41 @@ alias -g CP="| cb"
 alias -s json="bat" #TODO(@s0cks): should change this to a better jq browser
 alias -s txt="bat"
 alias -s md="glow"
-alias -s go="$EDITOR"
-alias -s rs="$EDITOR"
-alias -s py="$EDITOR"
-alias -s js="$EDITOR"
-alias -s ts="$EDITOR"
-alias -s java="$EDITOR"
-alias -s scala="$EDITOR"
-alias -s cc="$EDITOR"
-alias -s cpp="$EDITOR"
-alias -s cxx="$EDITOR"
-alias -s h="$EDITOR"
-alias -s hpp="$EDITOR"
-alias -s hxx="$EDITOR"
-alias -s yml="$EDITOR"
-alias -s yaml="$EDITOR"
 alias -s html="open"
+local source_file_extensions=(
+  # go
+  "go",
+  # rust
+  "rs",
+  # python
+  "py",
+  # javascript
+  "js",
+  # typescript
+  "ts",
+  # javaa
+  "java",
+  # scala
+  "scala",
+  # c
+  "c",
+  "h",
+  # c++ units
+  "cc",
+  "cpp",
+  "cxx",
+  # c++ headers
+  "hh",
+  "hpp",
+  "hxx",
+  # yaml
+  "yml",
+  "yaml",
+)
+for item in "${source_file_extensions[@]}"; do
+  alias -s $item="$EDITOR"
+end
+
+hash -d dls="$HOME/Downloads/"
+hash -d proj="$HOME/Projects/"
+hash -d dots="/usr/local/share/dotfiles/"

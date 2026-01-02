@@ -16,9 +16,14 @@
     "yabai -m space $(yabai -m query --spaces | jq -r '[ .[] | select(.\"is-native-fullscreen\" == false) ][-1].index') --label " + label,
   CreateSpace(label = null):
     [
-      "yabai -m space --create",
+      "[[ -z $(yabai -m query --spaces --space \"%(space)s\") ]] && yabai -m space --create",
     ] +
     (if label != null then [ LabelLastSpace(label) ] else []),
+  CreateSpaceIfNotExists(idx, label):
+    [
+      "[[ -z \"$(yabai -m query --spaces --space %(space)s)\" ]] && yabai -m space --create" % { space: idx },
+      "yabai -m space %(space)s --label \"%(label)s\"" % { space: idx, label: label },
+    ],
   DestroySpace(idx):
     [
       "yabai -m space --destroy %(idx)d" % { idx: idx },

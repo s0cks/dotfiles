@@ -34,6 +34,7 @@ hyper - f11 : @restart_yabai()
 hyper - f12 : @show_hs_console()
 hyper - g : @yabai_focus_on_app("Google Chrome")
 hyper - t : @yabai_grab_and_focus("wezterm-gui")
+hyper - d : @open("Google Drive.app")
 
 # yabai windows
 hyper - l : @yabai_focus("east")    # focus right
