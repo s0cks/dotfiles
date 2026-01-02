@@ -31,3 +31,5 @@
     /usr/local/share/zsh/functions/:
       glob: true
       path: bin/*
+
+# TODO(@s0cks): install Brewfile
