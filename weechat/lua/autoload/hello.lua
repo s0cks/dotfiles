@@ -8,27 +8,38 @@ weechat.register(
   "" --- Charset
 )
 
-function rbw_get_cb(data, command, return_code, out, err)
-  weechat.print("", "data: " .. data)
-  if return_code == 0 then
-    weechat.print("", "STDOUT: " .. out)
-    weechat.print("", "STDERR: " .. err)
+local X = "X@channels.undernet.org"
+function get_password_cb(data, command, return_code, out, err)
+  if return_code ~= 0 then
+    weechat.print("", "failed to get pasword from gopass [" .. return_code .. "]: " .. err)
+    return weechat.WEECHAT_RC_ERROR
+  end
+
+  weechat.print("", "retrieved password from gopass: " .. out)
+  local buffer_ptr = weechat.buffer_search("irc", "server.undernet")
+  if buffer_ptr == "" or buffer_ptr == "0x0" then
+    weechat.print("", "failed to find buffer for undernet server")
+    return weechat.WEECHAT_RC_ERROR
   else
-    weechat.print("", "command " .. command .. " finished with return code: " .. return_code)
+    weechat.command(buffer, "/msg " .. X .. " login laceh " .. out)
+    weechat.command(buffer, "/mode laceh +x")
   end
   return weechat.WEECHAT_RC_OK
 end
 
-function on_connected_cb(signal, signal_data, extra)
-  weechat.print("", "connected to: " .. signal .. " " .. signal_data .. " " .. extra)
+function get_password()
   local command = {
-    "rbw",
-    "get",
-    "Undernet",
+    "gopass",
+    "show",
+    "-o",
+    "websites/irc.undernet.org/laceh",
   }
-  local cmd = table.concat(command, " ")
-  local hook = weechat.hook_process(cmd, 0, "rbw_get_cb", "")
+  weechat.hook_process(table.concat(command, " "), 0, "get_password_cb", "")
+end
+
+function on_connected_cb(signal, signal_data, extra)
+  get_password()
   return weechat.WEECHAT_RC_OK
 end
 
-weechat.hook_signal("irc_server_connected", "on_connected_cb", "")
+weechat.hook_signal("irc_server_connected", "on_connected_cb", "Undernet")

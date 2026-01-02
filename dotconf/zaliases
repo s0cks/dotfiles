@@ -24,20 +24,14 @@ alias npmig="npm i -g"
 alias npmR='npm run'
 
 # git
-alias gbw='git browse-web'
-
-# git + commitizen
-alias gcz='git cz'
-alias gacz='git add-all && git cz'
-alias gaczp='gacz && git push'
-
+alias Gbw='git browse-web'
 
 # neovim
 alias vi=nvimz
 alias vim=nvimz
 
 # cat
-alias cat='bat --paging=never'
+alias cat='bat --paging=never --plain'
 
 # bw
 alias bwl="bw login --passwordenv BITWARDENCLI_PASS"
@@ -47,8 +41,6 @@ alias yazi="yz"
 
 # vtop
 alias vtop="vtop --theme catppuccin-mocha-lavender"
-
-alias top="btm"
 
 # gpg
 alias gpgep="gpg -r $GPG_ID --armor --export"
