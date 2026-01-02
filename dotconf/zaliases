@@ -74,6 +74,7 @@ alias -g NE="2>/dev/null"
 alias -g NO=">/dev/null"
 alias -g NUL=">/dev/null 2>&1"
 alias -g JQ="| jq"
+alias -g GREP="| grep "
 alias -g CP="| cb"
 
 # suffix aliases
@@ -83,38 +84,39 @@ alias -s md="glow"
 alias -s html="open"
 local source_file_extensions=(
   # go
-  "go",
+  "go"
   # rust
-  "rs",
+  "rs"
   # python
-  "py",
+  "py"
   # javascript
-  "js",
+  "js"
   # typescript
-  "ts",
+  "ts"
   # javaa
-  "java",
+  "java"
   # scala
-  "scala",
+  "scala"
   # c
-  "c",
-  "h",
+  "c"
+  "h"
   # c++ units
-  "cc",
-  "cpp",
-  "cxx",
+  "cc"
+  "cpp"
+  "cxx"
   # c++ headers
-  "hh",
-  "hpp",
-  "hxx",
+  "hh"
+  "hpp"
+  "hxx"
   # yaml
-  "yml",
-  "yaml",
+  "yml"
+  "yaml"
 )
 for item in "${source_file_extensions[@]}"; do
   alias -s $item="$EDITOR"
-end
+done
 
+# hashes
 hash -d dls="$HOME/Downloads/"
 hash -d proj="$HOME/Projects/"
 hash -d dots="/usr/local/share/dotfiles/"
