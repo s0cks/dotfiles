@@ -56,6 +56,12 @@
         include_dirs:
         - conf/pik/
         source: conf/pik/config.jsonnet
+      "~/.config/ariatui/":
+        include_dirs:
+        - conf/ariatui/
+        source: conf/ariatui/config.jsonnet
+        vars_from_file:
+          ARIA2_SECRET: /usr/local/share/aria2/secret
 
 # ╭──────────────────────╮
 # │ Install aria2 config │
