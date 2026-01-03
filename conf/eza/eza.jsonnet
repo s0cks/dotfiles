@@ -15,49 +15,42 @@ local Dimmed = { is_dimmed: true };
 
 local FileKinds(p) = {
   normal: ForegroundDefault,
-  directory: Foreground(p.pu) + Bold,
+  directory: Foreground(p.bl) + Bold,
   symlink: Foreground(p.cy),
   pipe: Foreground(p.ye),
   block_device: Foreground(p.ye) + Bold,
   char_device: Foreground(p.ye) + Bold,
   socket: Foreground(p.re) + Bold,
   special: Foreground(p.ye),
-  executable: Foreground(p.ma) + Bold,
-  mount_point: Foreground(p.bl) + Bold,
+  executable: Foreground(p.gr) + Bold,
+  mount_point: Foreground(p.or) + Bold,
 };
 
 local Permissions(p) = {
-  user_read: Foreground(p.ye) + Bold,
-  user_write: Foreground(p.re) + Bold,
-  user_executable_file: Foreground(p.gr) + Bold,
-  user_executable_other: Foreground(p.gr) + Bold,
-  group_read: Foreground(p.ye),
-  group_write: Foreground(p.re),
-  group_execute: Foreground(p.gr),
-  other_read: Foreground(p.ye),
-  other_write: Foreground(p.re),
-  other_execute: Foreground(p.gr),
-  special_user_file: Foreground(p.pu),
-  special_other: Foreground(p.pu),
+  local Read = Foreground(p.gr),
+  local Write = Foreground(p.ye),
+  local Exec = Foreground(p.re),
+  local Special = Foreground(p.ma),
   attribute: ForegroundDefault,
+  // special
+  special_user_file: Special,
+  special_other: Special,
+  // user
+  user_read: Read + Bold,
+  user_write: Write + Bold,
+  user_executable_file: Exec + Bold,
+  user_executable_other: Exec + Bold,
+  // group
+  group_read: Read,
+  group_write: Write,
+  group_execute: Exec,
+  // other
+  other_read: Read,
+  other_write: Write,
+  other_execute: Exec,
 };
 
-local FileSize(p) = {
-  major: Foreground(p.tx) + Bold,
-  minor: Foreground(p.tx),
-  number_byte: Foreground(p.tx) + Bold,
-  number_kilo: Foreground(p.tx) + Bold,
-  number_mega: Foreground(p.tx) + Bold,
-  number_giga: Foreground(p.tx) + Bold,
-  number_huge: Foreground(p.tx) + Bold,
-  unit_byte: Foreground(p.tx),
-  unit_kilo: Foreground(p.tx),
-  unit_mega: Foreground(p.tx),
-  unit_giga: Foreground(p.tx),
-  unit_huge: Foreground(p.tx),
-};
-
-local ColoredFileSize(c) = 
+local FileSize(c) = 
   {
     local Fg = Foreground(c),
     local FgBold = Fg + Bold,
@@ -76,12 +69,17 @@ local ColoredFileSize(c) =
   };
 
 local Users(p) = {
-  user_you: Foreground(p.pu) + Bold,
-  user_root: Foreground(p.ma),
-  user_other: ForegroundDefault,
-  group_yours: Foreground(p.pu) + Bold,
-  group_other: ForegroundDefault,
-  group_root: Foreground(p.ma),
+  local User = Foreground(p.pu),
+  local Others = ForegroundDefault,
+  local Root = Foreground(p.ma) + Bold,
+  // users
+  user_you: User,
+  user_root: Root,
+  user_other: Others,
+  // groups
+  group_yours: User,
+  group_root: Root,
+  group_other: Others,
 };
 
 local Links(p) = {
@@ -128,33 +126,31 @@ local FileType(p) = {
   source: Foreground(p.gr) + Bold,
 };
 
-{
-  ["flexoki-dark.yml"]:
-    eza.Theme(
-      {
-        punctuation: Foreground(flexoki.Dark.tx2) + Bold,
-        date: Foreground(flexoki.Dark.tx),
-        inode: Foreground(flexoki.Dark.pu),
-        blocks: Foreground(flexoki.Dark.cy),
-        header: ForegroundDefault + Underline,
-        octal: Foreground(flexoki.Dark.pu),
-        flags: ForegroundDefault,
-        symlink_path: Foreground(flexoki.Dark.cy),
-        control_char: Foreground(flexoki.Dark.re),
-        broken_symlink: Foreground(flexoki.Dark.re),
-        broke_path_overlay: ForegroundDefault + Underline,
-      } +
-      {
-        filekinds: FileKinds(flexoki.Dark),
-        perms: Permissions(flexoki.Dark),
-        size: ColoredFileSize(flexoki.Dark.cy),
-        file_type: FileType(flexoki.Dark),
-        users: Users(flexoki.Dark),
-        links: Links(flexoki.Dark),
-        git: Git(flexoki.Dark),
-        git_repo: GitRepo(flexoki.Dark),
-        security_context: SecurityContext(flexoki.Dark),
-      }
-    ),
-}
+local Theme(p) =
+  eza.Theme({
+    punctuation: Foreground(p.tx2) + Bold,
+    date: Foreground(p.tx2),
+    inode: Foreground(p.pu),
+    blocks: Foreground(p.cy),
+    header: ForegroundDefault + Underline,
+    octal: Foreground(p.pu),
+    flags: ForegroundDefault,
+    symlink_path: Foreground(p.cy),
+    control_char: Foreground(p.re),
+    broken_symlink: Foreground(p.re),
+    broke_path_overlay: ForegroundDefault + Underline,
+    filekinds: FileKinds(p),
+    perms: Permissions(p),
+    size: FileSize(p.cy),
+    file_type: FileType(p),
+    users: Users(p),
+    links: Links(p),
+    git: Git(p),
+    git_repo: GitRepo(p),
+    security_context: SecurityContext(p),
+  });
 
+{
+  ["flexoki-dark.yml"]: Theme(flexoki.Dark),
+  ["flexoki-light.yml"]: Theme(flexoki.Light),
+}
