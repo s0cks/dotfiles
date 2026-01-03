@@ -19,6 +19,7 @@
   - /usr/local/share/zsh/functions/
   - /usr/local/share/zsh/completions/
   - ~/.config/yazi/
+  - ~/.config/aria2tui/
 - link:
       # Install system-wide user-agent
     /usr/local/share/user-agent: ./user-agent
@@ -56,10 +57,10 @@
         include_dirs:
         - conf/pik/
         source: conf/pik/config.jsonnet
-      "~/.config/ariatui/":
+      "~/.config/aria2tui/":
         include_dirs:
-        - conf/ariatui/
-        source: conf/ariatui/config.jsonnet
+        - conf/aria2tui/
+        source: conf/aria2tui/aria2tui.jsonnet
         vars_from_file:
           ARIA2_SECRET: /usr/local/share/aria2/secret
 
@@ -138,6 +139,7 @@
       - conf/eza
       - conf/cava
       - conf/pik
+      - conf/aria2tui
     # install custom local zimfw modules
     ~/.zim/modules/:
       glob: true
