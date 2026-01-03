@@ -7,7 +7,7 @@ setopt HIST_IGNORE_SPACE
 setopt INTERACTIVE_COMMENTS
 bindkey -v
 
-export LS_COLORS="$(vivid generate flexoki_dark)"
+# export LS_COLORS="$(vivid generate flexoki_dark)"
 
 if macos-is-light; then
   export TERM_THEME="light"

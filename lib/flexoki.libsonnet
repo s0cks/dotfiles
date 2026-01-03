@@ -219,6 +219,9 @@
       // utils
       rainbow: rainbow(self),
       rainbow2: rainbow2(self),
+      // misc
+      directories: self.bl,
+      executables: self.ma,
     },
   Dark:
     $.Palette +
