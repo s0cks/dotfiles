@@ -5,16 +5,15 @@ local Cpu(p) =
   {
     all_entry_color: p.pu,
     avg_entry_color: p.ma,
-    cpu_core_colors: p.rainbow(),
+    cpu_core_colors: p.rainbow,
   };
-
 
 local Memory(p) = 
   {
     ram_color: p.pu,
     cache_color: p.ye,
     swap_color: p.gr,
-    gpu_colors: p.rainbow(),
+    gpu_colors: p.rainbow,
     arc_color: p.bl,
   };
 
@@ -28,9 +27,9 @@ local Network(p) =
 
 local Battery(p) =
   {
-    high_battery_color: "#a6e3a1",
-    medium_battery_color: "#f9e2af",
-    low_battery_color: "#f38ba8",
+    high_battery_color: p.gr,
+    medium_battery_color: p.ye,
+    low_battery_color: p.re,
   };
 
 local Styles(p) =
