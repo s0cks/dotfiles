@@ -111,6 +111,9 @@ local source_file_extensions=(
   # yaml
   "yml"
   "yaml"
+  # jsonnet
+  "jsonnet"
+  "libsonnet"
 )
 for item in "${source_file_extensions[@]}"; do
   alias -s $item="$EDITOR"
