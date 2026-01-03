@@ -57,6 +57,24 @@ local FileSize(p) = {
   unit_huge: Foreground(p.tx),
 };
 
+local ColoredFileSize(c) = 
+  {
+    local Fg = Foreground(c),
+    local FgBold = Fg + Bold,
+    major: FgBold,
+    minor: Fg,
+    number_byte: FgBold,
+    number_kilo: FgBold,
+    number_mega: FgBold,
+    number_giga: FgBold,
+    number_huge: FgBold,
+    unit_byte: Fg,
+    unit_kilo: Fg,
+    unit_mega: Fg,
+    unit_giga: Fg,
+    unit_huge: Fg,
+  };
+
 local Users(p) = {
   user_you: Foreground(p.pu) + Bold,
   user_root: Foreground(p.ma),
@@ -129,7 +147,7 @@ local FileType(p) = {
       {
         filekinds: FileKinds(flexoki.Dark),
         perms: Permissions(flexoki.Dark),
-        size: FileSize(flexoki.Dark),
+        size: ColoredFileSize(flexoki.Dark.cy),
         file_type: FileType(flexoki.Dark),
         users: Users(flexoki.Dark),
         links: Links(flexoki.Dark),
