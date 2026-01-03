@@ -63,7 +63,10 @@ local GetEnvPath(extras = []) =
       plist.EnvironmentVariables({
         PATH: GetEnvPath(),
       }),
-      plist.ProgramArguments(HOMEBREW_BIN + '/wezterm'),
+      plist.ProgramArguments(HOMEBREW_BIN + '/wezterm', [
+        plist.SingleWrapString("start", 3),
+        plist.SingleWrapString("--always-new-process", 3),
+      ]),
     ]),
   [GetPlistFilename("weechat")]: 
     plist.manifest([
