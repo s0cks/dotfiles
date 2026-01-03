@@ -25,8 +25,7 @@
         - HOMEBREW_REPOSITORY
 - shell:
   - command: echo "formatting plists....."
-  - command: >
-      fselect abspath from ~/Library/LaunchAgents/ where is_file and name = "io.github.s0cks.*" and extension eq "plist" | xargs -I {} zsh -c 'echo "formatting {}"; xmlformat --overwrite {}'
+# TODO(@s0cks): need to plutil -lint plists
 - link:
     /usr/local/share/zsh/functions/:
       glob: true
