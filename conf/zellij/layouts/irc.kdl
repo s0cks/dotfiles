@@ -1,0 +1,8 @@
+session_name "irc"
+attach_to_session true
+
+layout {
+    pane split_direction="horizontal" {
+      pane name="weechat" command="weechat"
+    }
+}

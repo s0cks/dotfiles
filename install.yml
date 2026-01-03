@@ -52,7 +52,10 @@
         source: conf/eza/eza.jsonnet
       "~/.config/cava/":
         source: conf/cava/config.jsonnet
-
+      "~/Library/Application\\ Support/pik/":
+        include_dirs:
+        - conf/pik/
+        source: conf/pik/config.jsonnet
 
 # ╭──────────────────────╮
 # │ Install aria2 config │
@@ -128,6 +131,7 @@
       - conf/bottom
       - conf/eza
       - conf/cava
+      - conf/pik
     # install custom local zimfw modules
     ~/.zim/modules/:
       glob: true
