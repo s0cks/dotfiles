@@ -8,6 +8,6 @@ local flexoki = import 'lib/flexoki.libsonnet';
     "output": cava.NcursesOutput(),
     "eq": cava.Eq(),
     "smoothing": cava.Smoothing(),
-    "color": cava.Gradient(flexoki.Dark.rainbow() + [ flexoki.Dark.ma ]),
+    "color": cava.Gradient(flexoki.Dark.rainbow + [ flexoki.Dark.ma ]),
   }),
 }
