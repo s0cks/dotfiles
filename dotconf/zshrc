@@ -86,3 +86,7 @@ export CXX=clang++
 export LD=ld.lld
 export AR=llvm-ar
 export RANLIB=llvm-ranlib
+
+#TODO(@s0cks): remove this once these values are configured  properly using the theme
+unset ZLS_COLORS
+unset LS_COLORS
