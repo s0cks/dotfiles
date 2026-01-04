@@ -1,9 +1,0 @@
-#!/usr/bin/env zsh
-activate-llvm() {
-  local llvm_version="$(brew info llvm --json | jq -r '(.[] | .installed[].version)')"
-  local llvm_path="$(brew --prefix llvm)"
-  echo "activating llvm v$llvm_version in $llvm_path...."
-  export PATH="$llvm_path/bin:$PATH"
-  fpath=("$HOME/.zbin/llvm" "${fpath[@]}")
-  autoload -Uz deactivate
-}
