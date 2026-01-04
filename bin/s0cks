@@ -7,9 +7,10 @@ local USAGE=(
   "General Options:"
   "  -h|--help        # Print help and usage info"
   "  -v|--verbose     # Print more, mostly debug, info to the console while working"
+  "  --version        # Prints the version"
   ""
   "cmds:"
-  "   version         # Prints the version to the console"
+  "   version         # Prints the version"
   "   update [target] # Perform an update with an optional target"
 )
 local verbose=false
@@ -106,6 +107,14 @@ local __opterror() {
   echo >&2 "s0cks: invalid option '$1'"
 }
 
+local __invalid_command() {
+  echo >&2 "s0cks: invalid command '$1'"
+}
+
+local __invalid_update_target() {
+  echo >&2 "s0cks: invalid update target: '$1'" 
+}
+
 local cmd=()
 while (( $# )); do
   case $1 in
@@ -115,13 +124,16 @@ while (( $# )); do
       break
       ;;
     -h|--help)
-      __show_help && return
+      __show_help && return 0
       ;;
     -v|--verbose)
       verbose=true
       ;;
+    --version)
+      __show_version && return 0
+      ;;
     -*)
-      __opterr $1 && return 2
+      __opterr $1 && return 1
       ;; 
     *)
       cmd+=("${@[@]}");
@@ -132,39 +144,43 @@ while (( $# )); do
 done
 
 if (( "${#cmd[@]}" == 0)); then
-  __show_help && return
+  __show_help && return 0
 fi
 
+local __update() {
+  if (( "$#" == 0 )); then
+    __update_dotfiles
+  fi
+
+  local target="$1"
+  case "$target" in
+  dotfiles)
+    __update_dotfiles
+    ;;
+  nvim|neovim)
+    __update_app_config "Neovim" "$NEOVIM_DIR"
+    ;;
+  wez|wezterm)
+    __update_app_config "WezTerm" "$WEZTERM_DIR"
+    ;;
+  hs|hammerspoon)
+    __update_app_config "Hammerspoon" "$HAMMERSPOON_DIR"
+    ;;
+  *)
+    __invalid_update_target "$target" && return 1
+    ;;
+  esac
+}
 
 case "${cmd[1]}" in
   version)
-    __show_version
+    __show_version && return 0
     ;;
   update)
     shift cmd
-    if (( "${#cmd[@]}" == 0 )); then
-      update_dotfiles
-    else
-      case "${cmd[1]}" in
-      dotfiles)
-        __update_dotfiles
-        ;;
-      nvim|neovim)
-        __update_app_config "Neovim" "$NEOVIM_DIR"
-        ;;
-      wez|wezterm)
-        __update_app_config "WezTerm" "$WEZTERM_DIR"
-        ;;
-      hs|hammerspoon)
-        __update_app_config "Hammerspoon" "$HAMMERSPOON_DIR"
-        ;;
-      *)
-        __opterror "$cmd" && return 2
-        ;;
-      esac
-    fi
+    __update ${cmd[@]}
     ;; 
   *)
-    __opterr "$@" && return 2
+    __invalid_command ${cmd[1]} && return 1
     ;;
 esac
