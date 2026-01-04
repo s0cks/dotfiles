@@ -1,6 +1,0 @@
-#!/usr/bin/env zsh
-
-update-vcpkg() {
-  echo "updating vcpkg...."
-  (cd $VCPKG_ROOT/ && git pull)
-}

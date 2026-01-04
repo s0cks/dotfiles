@@ -27,8 +27,11 @@ alias npmR='npm run'
 alias Gbw='git browse-web'
 
 # neovim
-alias vi=nvimz
-alias vim=nvimz
+alias e="editz"
+alias edit="editz"
+alias vi="editz"
+alias vim="editz"
+alias nvim="editz"
 
 # cat
 alias cat='bat --paging=never --plain'

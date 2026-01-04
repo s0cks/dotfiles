@@ -1,9 +1,0 @@
-#!/usr/bin/env zsh
-
-o() {
-  if [ $# -eq 0 ]; then
-    open .
-  else
-    open "${@:1}"
-  fi
-}

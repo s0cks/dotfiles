@@ -1,37 +1,13 @@
 #!/usr/bin/env zsh
-conf() {
-  directories_list=($(find -L $HOME -maxdepth 1 -type d -name ".*$1*"))
-  directories_list+=($(find -L $HOME/.config -maxdepth 1 -type d -name "*$1*"))
-  directories_list+=($(find -L /etc -maxdepth 1 -type d -name "*$1*"))
-  directories=""
-  for d in $directories_list
-  {
-    directories+="(dir) "
-    directories+=$d
-    directories+="\n"
-  }
-  files_list=($(find -L $HOME -maxdepth 1 -type f -name ".*$1*"))
-  files_list+=($(find -L $HOME/.config -maxdepth 1 -type f -name "*$1*"))
-  files_list+=($(find -L /etc -maxdepth 1 -type f -name "*$1*"))
-  files=""
-  for d in $files_list
-  {
-    files+="(file) "
-    files+=$d
-    files+="\n"
-  }
-  fzf_list=$directories"\n"$files
-  fzf_result=$(echo $fzf_list | fzf --preview 'file=$(echo {} | awk '"'"'{print $2}'"'"'); [ -f $file ] && bat --color=always $file || ls --color=always $file' --border --prompt 'Please choose a file > ')
-  fzf_result=($(echo $fzf_result))
-  target=$fzf_result[2]
-  print("target: $target")
-  if [[ ! -z $target ]] {
-    if [[ -d $target ]] {
-      cd $target
-    } elif [[ -w $target ]] {
-      $EDITOR $target
-    } else {
-      sudo $EDITOR $target
-    }
-  }
-}
+
+local options=$(fselect name from $XDG_CONFIG_HOME/ depth 1 where is_dir and name != '.*')
+local selected=$(
+  echo ${(F)options} | fzf \
+    --layout=reverse \
+    --query="$1" \
+    --preview="ls -lash $XDG_CONFIG_HOME/{}/"
+)
+
+if [[ -v selected ]]; then
+  (cd "$XDG_CONFIG_HOME/$selected/" && $EDITOR)
+fi

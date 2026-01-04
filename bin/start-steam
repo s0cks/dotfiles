@@ -1,5 +1,0 @@
-#!/usr/bin/env zsh
-if [[ -f "/opt/wine/Skyrim/steam.log" ]]; then
-  rm -rf /opt/wine/Skyrim/steam.log
-fi
-wine "$WINEPREFIX/drive_c/Program Files (x86)/Steam/steam.exe" >$WINEPREFIX/steam.log 2>&1 &

@@ -1,0 +1,25 @@
+#!/usr/bin/env zsh
+
+if [[ "$#" == 0 ]]; then
+  wezterm start --always-new-process -- yazi >/dev/null 2>&1
+  return
+fi
+
+if [[ -f "$1" ]]; then
+  $EDITOR "$1"
+  return
+elif [[ -d "$1" ]]; then
+  wezterm start --always-new-process -- yazi "$1" >/dev/null 2>&1
+  return
+fi
+
+local zquery_result="$(zoxide query $1)"
+if [[ -f "$zquery_result" ]]; then
+  $EDITOR "$zquery_result"
+  return
+elif [[ -d "$zquery_result" ]]; then
+  wezterm start --always-new-process -- yazi "$zquery_result" >/dev/null 2>&1
+  return
+fi
+
+wezterm start --always-new-process -- yazi >/dev/null 2>&1
