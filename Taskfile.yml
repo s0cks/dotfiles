@@ -45,7 +45,8 @@ tasks:
     - >
       dotbot \
         -d "$(pwd)" \
-        -c "$(pwd)/install.yml"
+        -c "$(pwd)/install.yml" \
+        {{.CLI_ARGS}}
   default:
     cmds:
     - task: install

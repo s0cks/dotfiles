@@ -61,8 +61,9 @@
         include_dirs:
         - conf/aria2tui/
         source: conf/aria2tui/aria2tui.jsonnet
-        vars_from_file:
-          ARIA2_SECRET: /usr/local/share/aria2/secret
+        vars:
+          ARIA2_SECRET:
+            command: "gopass show -o tokens/aria2/rpc-token"
 
 # ╭──────────────────────╮
 # │ Install aria2 config │
@@ -72,9 +73,11 @@
 - jsonnet:
     "~/.config/aria2/":
       source: conf/aria2/aria2.jsonnet
-      vars_from_file:
-        ARIA2_SECRET: /usr/local/share/aria2/secret
-        ARIA2_USER_AGENT: /usr/local/share/user-agent
+      vars:
+        ARIA2_SECRET:
+          command: gopass show -o tokens/aria2/rpc-token
+        ARIA2_USER_AGENT:
+          file: /usr/local/share/user-agent
 
 # ╭─────────────────────────╮
 # │ Clone various git repos │
