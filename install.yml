@@ -188,6 +188,7 @@
     to: "/usr/local/bin"
     items:
     - dnaka91/otti
+    - oleiade/motus
 
 # ╭───────────────────────╮
 # │ GitHub CLI Extensions │
@@ -203,6 +204,7 @@
   - HaywardMorihara/gh-tidy
   - korosuke613/gh-user-stars 
   - yahsan2/gh-sub-issue
+  - InditexTech/gh-sherpa
 
 # ╭──────────────────╮
 # │ Watchman Watches │

@@ -1,7 +1,4 @@
 #!/usr/bin/env zsh
-
-caf() {
-  local parent_path=$(cd "$(dirname "${(%):-%x}")" ; pwd -P)
-  cat "$parent_path/coffee.txt"
-  caffeinate -dims
-}
+local parent_path=$(cd "$(dirname "${(%):-%x}")" ; pwd -P)
+cat "$parent_path/coffee.txt"
+caffeinate -dims
