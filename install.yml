@@ -44,7 +44,9 @@
         source: dotssh/config.jsonnet
       # generate ripgrep config
       "~/.config/ripgrep/":
-        source: conf/ripgrep/config.jsonnet
+        include_dirs:
+        - conf/ripgrep/
+        source: conf/ripgrep/rg.jsonnet
       "~/.config/yabai/":
         source: conf/yabai/yabairc.jsonnet
       "~/.config/bottom/":
