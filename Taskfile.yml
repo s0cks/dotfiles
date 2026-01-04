@@ -29,6 +29,15 @@ tasks:
         -d "$(pwd)" \
         -c "$(pwd)/install.yml" \
         --only {{.CLI_ARGS}}
+  install:except:
+    label: "󰚩 Install"
+    desc: "Install dotfiles using Dotbot"
+    cmds: 
+    - >
+      dotbot \
+        -d "$(pwd)" \
+        -c "$(pwd)/install.yml" \
+        --except {{.CLI_ARGS}}
   install:
     label: "󰚩 Install"
     desc: "Install dotfiles using Dotbot using dry-run mode."
