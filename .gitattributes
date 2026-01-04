@@ -2,3 +2,5 @@ Brewfile        linguist-vendored
 *.vert          linguist-vendored
 *.geom          linguist-vendored
 *.frag          linguist-vendored
+*.mjs           linguist-vendored
+*.js            linguist-vendored
