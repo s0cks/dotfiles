@@ -140,10 +140,6 @@
       - conf/cava
       - conf/pik
       - conf/aria2tui
-    # install custom local zimfw modules
-    ~/.zim/modules/:
-      glob: true
-      path: zim-modules/*
     # install various dotfiles
     ~/:
       glob: true
