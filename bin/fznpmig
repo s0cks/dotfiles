@@ -1,16 +1,13 @@
 #!/usr/bin/env zsh
+local pkg
+pkg=$(
+  npm search --no-description --json "$1" | jq '.[].name' -r | fzf \
+    --query "$1" \
+    --preview="npm info {}" \
+    --bind="ctrl-x:execute-silent(npm repo {})"
+)
 
-fznpmig() {
-  local pkg
-  pkg=$(
-    npm search --no-description --json "$1" | jq '.[].name' -r | fzf \
-      --query "$1" \
-      --preview="npm info {}" \
-      --bind="ctrl-x:execute-silent(npm repo {})"
-  )
-
-  if [[ "$pkg" != "" ]]; then
-    echo "installing: $pkg"
-    npm i -g "$pkg"
-  fi
-}
+if [[ "$pkg" != "" ]]; then
+  echo "installing: $pkg"
+  npm i -g "$pkg"
+fi

@@ -1,18 +1,16 @@
 #!/usr/bin/env zsh
-fgb() {
-  if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-    echo "Not a git repository"
-    return 1
-  fi
+if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  echo "Not a git repository"
+  return 1
+fi
 
-  git for-each-ref --format='%(refname:short)' refs/heads/ |
-    fzf \
-      --layout reverse \
-      --info inline \
-      --border \
-      --query="$1" \
-      --preview="git show-branch {}" \
-      --bind="ctrl-c:become(git checkout {})" \
-      --bind="ctrl-d:become(git branch -D {})" \
-      --bind="enter:become(git checkout {})"
-}
+git for-each-ref --format='%(refname:short)' refs/heads/ |
+  fzf \
+    --layout reverse \
+    --info inline \
+    --border \
+    --query="$1" \
+    --preview="git show-branch {}" \
+    --bind="ctrl-c:become(git checkout {})" \
+    --bind="ctrl-d:become(git branch -D {})" \
+    --bind="enter:become(git checkout {})"

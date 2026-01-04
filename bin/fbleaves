@@ -1,13 +1,11 @@
 #!/usr/bin/env zsh
-fbleaves() {
-  brew_exec=$(which brew)
-  $brew_exec leaves |
-    fzf \
-      --layout reverse \
-      --info inline \
-      --border \
-      --query="$1" \
-      --preview="$brew_exec info {}" \
-      --bind="ctrl-d:execute($brew_exec uninstall {})" \
-      --bind="ctrl-u:execute($brew_exec update {})"
-}
+brew_exec=$(which brew)
+$brew_exec leaves |
+  fzf \
+    --layout reverse \
+    --info inline \
+    --border \
+    --query="$1" \
+    --preview="$brew_exec info {}" \
+    --bind="ctrl-d:execute($brew_exec uninstall {})" \
+    --bind="ctrl-u:execute($brew_exec update {})"

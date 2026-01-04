@@ -1,4 +1,2 @@
 #!/usr/bin/env zsh
-hello-world() {
-  echo "Hello World"
-}
+echo "Hello World"
