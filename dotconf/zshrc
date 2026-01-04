@@ -96,6 +96,30 @@ gpg-export-sk() {
   gpg $args
 }
 
+fzfpath() {
+  <<<${(F)fpath} | fzf
+}
+
+fzpath() {
+  <<<${(F)path} | fzf
+}
+
+cat-fpath() {
+  <<<${(F)fpath}
+}
+
+cat-path() {
+  <<<${(F)path}
+}
+
+edit-path() {
+  local path_file=$(mktemp -p /tmp path.XXXXX)
+  echo "$(<<<${(F)path})" >> "$path_file"
+  $EDITOR "$path_file"
+  local lines=("${(f)$(<$path_file)}")
+  export PATH="${(j[:])lines}"
+}
+
 # llvm
 #TODO(@s0cks): is this necessary?
 export PATH="$(brew --prefix llvm)/bin:$PATH"
