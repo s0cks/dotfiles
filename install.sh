@@ -1,24 +1,35 @@
 #!/usr/bin/env sh
-# 1. Install homebrew
+INSTALL_PREFIX="${INSTALL_PREFIX:-/usr/local/share}"
+DOTBOT_INSTALL_DIR="$INSTALL_PREFIX/dotbot"
+DOTFILES_INSTALL_DIR="$INSTALL_PREFIX/dotfiles"
+
+# 1. Ensure Homebrew is installed
 if ! command -v brew >/dev/null 2>&1; then
+  echo "installing Homebrew..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-else
-  echo "Homebrew already installed, skipping"
 fi
 
-# 2. Install git using homebrew
-brew install git
+# 2. Install utilities
+brew install \
+  git \
+  go-task/tap/go-task
 
-# 3. Clone @s0cks/dotfiles from GitHub
-#TODO(@s0cks): make shallow clone of HEAD
-git clone https://github.com/s0cks/dotfiles.git &&
-  cd "dotfiles/" || exit
+shallow_clone() {
+  git clone \
+    --depth 1 \
+    --shallow-submodules \
+    --recurse-submodules \
+    -j8 \
+    "git@github.com:$1.git" \
+    "$2"
+}
 
-# 4. Install Brewfile
-brew bundle
+# 3. Install dotbot
+shallow_clone "s0cks/dotbot" "$DOTBOT_INSTALL_DIR/"
 
-# 4. Run install using task
-task default
-
-# TODO(@s0cks):
-# 5. generate install summary to user home directory and open it in explorer
+# 4. Clone & Install dotfiles
+shallow_clone "s0cks/dotfiles" "$DOTFILES_INSTALL_DIR/"
+export DOTBOT_HOME="$DOTBOT_INSTALL_DIR"
+export PATH="$DOTBOT_INSTALL_DIR/bin:$PATH"
+# TODO(@s0cks): use task for this?
+dotbot -d "$DOTFILES_INSTALL_DIR/" -c "$DOTFILES_INSTALL_DIR/install.yml"
