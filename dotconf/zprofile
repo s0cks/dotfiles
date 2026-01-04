@@ -15,14 +15,5 @@ export GPG_KEY="A7E49DD5"
 # ┌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┐
 # ╎                          Secrets                          ╎
 # └╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┘
-ZPROFILE_SECRETS_FILE="$HOME/.zprofile_secrets"
-decrypt_secrets() {
-  gpg --quiet --yes -d -o "${ZPROFILE_SECRETS_FILE}" "${ZPROFILE_SECRETS_FILE}.gpg"
-}
-
-decrypt_secrets
-# shellcheck source=/dev/null
-source "$ZPROFILE_SECRETS_FILE"
-rm "${ZPROFILE_SECRETS_FILE}"
-unset ZPROFILE_SECRETS_FILE
-unset decrypt_secrets
+local ZPROFILE_SECRETS_FILE="${ZPROFILE_SECRETS_FILE:-$HOME/.zprofile_secrets.gpg}"
+[[ -f "$ZPROFILE_SECRETS_FILE" ]] && source <(gpg --quiet --yes -d "$ZPROFILE_SECRETS_FILE")

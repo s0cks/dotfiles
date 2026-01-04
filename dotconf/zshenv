@@ -9,7 +9,6 @@ export TEMP="/tmp"
 export BROWSER='open'
 export EDITOR="nvim"
 export PAGER="less"
-export BAT_PAGER="less -R"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export MANROFFOPT="-c"
 export HISTFILE="$ZSH_HOME/zsh/history"
