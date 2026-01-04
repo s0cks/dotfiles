@@ -5,11 +5,15 @@
       quiet: True
       stdout: True
 - shell:
-  - command: echo "installing MacOS config...."
+  - command: echo "installing MacOS defaults...."
 - jsonnet:
     include_dirs:
     - "."
     items:
+      "macos/":
+        source: macos/defaults.jsonnet
+        include_dirs:
+        - macos/
       "~/Library/LaunchAgents/":
         source: macos/LaunchAgents/generate.jsonnet
         include_dirs:
@@ -24,7 +28,9 @@
         - ARIA2_USER_AGENT
         - HOMEBREW_REPOSITORY
 - shell:
-  - command: echo "formatting plists....."
+  - chmod +x macos/defaults.sh
+  - ./macos/defaults.sh
+
 # TODO(@s0cks): need to plutil -lint plists
 - link:
     /usr/local/share/zsh/functions/:
