@@ -225,10 +225,16 @@
 # ╭─────────────────────────╮
 # │ Install weechat scripts │
 # ╰─────────────────────────╯
-- link:
-    "~/.local/share/weechat/":
-      glob: true
-      path: weechat/*
+- git: # clone the repository form GitHub
+    # ╭────────────────────────╮
+    # │ @s0cks/weechat-scripts │
+    # ╰────────────────────────╯
+    /usr/local/share/weechat-scripts/:
+      url: "https://github.com/s0cks/weechat-scripts.git"
+      description: "@s0cks/weechat-scripts from GitHub"
+      recursive: true
+- shell: # install the scripts using the supplied dotbot manifest (install.yml)
+  - dotbot -d /usr/local/share/weechat-scripts/ -c install.yml
 
 #TODO(@s0cks): properly install zellij configuration
 
