@@ -181,6 +181,14 @@
       exclude:
       - .gitignore
 
+# ╭────────────────╮
+# │ eget Downloads │
+# ╰────────────────╯
+- eget:
+    to: "/usr/local/bin"
+    items:
+    - dnaka91/otti
+
 # ╭───────────────────────╮
 # │ GitHub CLI Extensions │
 # ╰───────────────────────╯
