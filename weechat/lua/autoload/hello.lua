@@ -44,12 +44,20 @@ function get_password_cb(data, command, return_code, out, err)
     return weechat.WEECHAT_RC_ERROR
   end
 
-  local buffer_ptr = weechat.buffer_search('irc', 'server.' .. data)
+  local server_name = nil
+  if data == UNDERNET then
+    server_name = 'undernet'
+  elseif data == CUFFLINK then
+    server_name = 'cufflink'
+  end
+  local server_buffer_name = 'server.' .. server_name
+  local buffer_ptr = weechat.buffer_search('irc', server_buffer_name)
   if buffer_ptr == '' or buffer_ptr == '0x0' then
-    weechat.print('', 'failed to find buffer for undernet server')
+    weechat.print('', 'failed to find `' .. server_buffer_name .. '` buffer')
     return weechat.WEECHAT_RC_ERROR
   end
 
+  weechat.print('', 'found password for ' .. data .. ': ' .. out)
   if data == UNDERNET then
     login2x(buffer_ptr, 'laceh', out)
     mode(buffer_ptr, 'laceh', '+x')
@@ -60,11 +68,12 @@ function get_password_cb(data, command, return_code, out, err)
 end
 
 function get_password(server)
+  weechat.print('', 'getting password from gopass for: ' .. server)
   local command = {
     'gopass',
     'show',
     '-o',
-    'websites/' .. SERVERS[server] .. '/laceh',
+    'websites/' .. server .. '/laceh',
   }
   weechat.hook_process(table.concat(command, ' '), 0, 'get_password_cb', server)
 end
@@ -73,7 +82,7 @@ function on_connected_cb(signal, signal_data, extra)
   weechat.print('', 'signal: ' .. signal)
   weechat.print('', 'signal_data: ' .. signal_data)
   weechat.print('', 'extra: ' .. extra)
-  get_password(signal_data)
+  get_password(SERVERS[extra])
   return weechat.WEECHAT_RC_OK
 end
 

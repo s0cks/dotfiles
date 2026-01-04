@@ -74,6 +74,8 @@ export HOMEBREW_NO_ENV_HINTS="true"
 export ARIA2_HOME="$USER_DATA_HOME/aria2"
 export ARIA2_USER_AGENT="$USER_AGENT"
 
+export DOTBOT_HOME="/usr/local/share/dotbot"
+
 # ┌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┐
 # ╎                           Wine                           ╎
 # └╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┘
@@ -104,6 +106,8 @@ export NAVI_PATH="$XDG_DATA_HOME/navi/cheats/:/usr/local/share/cheats/"
 # │ Zellij │
 # ╰────────╯
 export ZELLIJ_SESSIONIZER_SEARCH_PATHS="$HOME/Projects"
+
+export DOTBOT_HOME="/usr/local/share/dotbot"
 
 # ╭─────╮
 # │ ghq │
