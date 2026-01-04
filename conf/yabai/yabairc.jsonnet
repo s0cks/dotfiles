@@ -41,7 +41,6 @@ local MiscSpaceRule(app, title = null) =
 {
   ["yabairc"]:
     yabai.manifest([
-      yabai.Comment("cleanup spaces", true),
       yabai.Comment("setup spaces", true),
       [
         yabai.Comment("create the %(space)s space" % { space: spaces[idx] }) +

@@ -19,10 +19,11 @@
       "[[ -z $(yabai -m query --spaces --space \"%(space)s\") ]] && yabai -m space --create",
     ] +
     (if label != null then [ LabelLastSpace(label) ] else []),
-  CreateSpaceIfNotExists(idx, label):
+  CreateSpaceIfNotExists(idx, label, layout = 'bsp'):
     [
       "[[ -z \"$(yabai -m query --spaces --space %(space)s)\" ]] && yabai -m space --create" % { space: idx },
       "yabai -m space %(space)s --label \"%(label)s\"" % { space: idx, label: label },
+      "yabai -m space %(space)s --layout %(layout)s" % { space: idx, layout: layout },
     ],
   DestroySpace(idx):
     [
