@@ -1,0 +1,5 @@
+version: '3'
+tasks:
+  build:
+    cmds:
+    - jsonnet {{.JSONNET_INCLUDE_DIRS | default "-J ." }} -S -m {{.JSONNET_BUILD_DIR | default "." }} {{.JSONNET_SOURCE}} {{.JSONNET_EXTRAS | default "" }}

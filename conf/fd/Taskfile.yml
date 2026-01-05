@@ -1,0 +1,20 @@
+version: '3'
+includes:
+  jsonnet:
+    taskfile: ../../tasks/jsonnet.yml
+    internal: true
+tasks:
+  build:
+    desc: "Generate fd config using Jsonnet"
+    cmds:
+    - task: jsonnet:build
+      vars:
+        JSONNET_SOURCE: "fd.jsonnet"
+        JSONNET_INCLUDE_DIRS: "-J ../.. -J ."
+  clean:
+    desc: "Cleanup generated files"
+    cmds:
+    - rm -rf ignore
+  default:
+    cmds:
+    - task: build

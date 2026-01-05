@@ -1,28 +1,22 @@
 local fd = import 'lib/fd.libsonnet';
 local util = import 'lib/util.libsonnet';
 
-local Section(title, entries) =
-  [
-    util.Comment(title),
-    entries,
-  ];
-
 local VersionControl() =
-  Section('Version Control', [
+  fd.Section('Version Control', [
     '.git',
     '.svn',
     '.hg',
     '.cvs',
-  ]);
+  ], false, true);
 
 local Nodejs() =
-  Section('Node.js', [
+  fd.Section('Node.js', [
     'node_modules/',
     '.npm'
-  ]);
+  ], false, true);
 
 local Python() =
-  Section('Python', [
+  fd.Section('Python', [
     '__pycache__',
     '*.pyc',
     '*.pyo',
@@ -35,43 +29,43 @@ local Python() =
     'env/',
     'venv/',
     '.idea/',
-  ]);
+  ], false, true);
 
 local Java() =
-  Section('Java', [
+  fd.Section('Java', [
     '*.class',
     '*.jar',
     '*.war',
     '*.ear',
     'target/',
     'out/',
-  ]);
+  ], false, true);
 
 local Rust() =
-  Section('Rust', [
+  fd.Section('Rust', [
     'target/',
-  ]);
+  ], false, true);
 
 local Go() =
-  Section('Go', [
+  fd.Section('Go', [
     'vendor/',
     '*.exe',
     '*.out',
-  ]);
+  ], false, true);
 
 local Ruby() =
-  Section('Ruby', [
+  fd.Section('Ruby', [
     '.bundle',
     'vendor/bundle',
-  ]);
+  ], false, true);
 
 local PHP() =
-  Section('PHP Composer', [
+  fd.Section('PHP & Composer', [
     'vendor/',
-  ]);
+  ], false, true);
 
 local CC() =
-  Section('C/C++', [
+  fd.Section('C/C++', [
     'build/',
     'CMakeFiles/',
     '*.o',
@@ -82,62 +76,50 @@ local CC() =
     '*.dll',
     '*.exe',
     '*.out',
-  ]);
+  ], false, true);
 
 local Logs() =
-  Section('Logs', [
+  fd.Section('Logs', [
     '*.log',
     'logs/',
-  ]);
+  ], false, true);
 
 local MacOS() =
-  Section('MacOS', [
+  fd.Section('MacOS', [
     '.DS_Store',
-  ]);
+  ], false, true);
 
 local Editors() =
-  Section('Editors', [
+  fd.Section('Editors', [
     '.vscode',
     '.idea',
     '*.swp',
     '*.swo',
     '*~',
-  ]);
+  ], false, true);
 
 local Testing() =
-  Section('Testing & Coverage', [
+  fd.Section('Testing & Coverage', [
     '.coverage',
     'coverage/',
     '.nyc_output',
-  ]);
-
-local EMPTY = '';
-local Ignorefile(sections) =
-  std.lines(util.Comment([
-    "*** Do not edit ***",
-    "This file is auto-generated using Jsonnet",
-  ])) +
-  std.lines([ EMPTY ]) +
-  std.lines(std.flattenDeepArray([
-    [ section, EMPTY ],
-    for section in (if std.isArray(sections) then sections else [ sections ])
-  ]));
+  ], false, true);
 
 {
   ["ignore"]:
-    Ignorefile([
-      VersionControl(),
-      Nodejs(),
-      Python(),
-      Java(),
-      Rust(),
-      Go(),
-      Ruby(),
-      PHP(),
-      CC(),
-      Logs(),
-      MacOS(),
-      Editors(),
-      Testing(),
-    ]),
+    fd.manifest(
+      VersionControl() +
+      Nodejs() +
+      Python() +
+      Java() +
+      Rust() +
+      Go() +
+      Ruby() +
+      PHP() +
+      CC() +
+      Logs() +
+      MacOS() +
+      Editors() +
+      Testing()
+    ),
 }

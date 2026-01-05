@@ -4,8 +4,8 @@
       "%(prefix)s %(line)s" % { prefix: prefix, line: line }
       for line in (if std.isArray(lines) then lines else [ lines ])
     ],
-  WarningHeaderComment(extra = [], prefix = '#'):
-    $.Comment(
+  WarningHeaderComment(extra = [], prefix = '#', newline_before = false, newline_after = false):
+    $.WrapInOptionalNewlines($.Comment(
       [
         "*** Do not edit ***",
         "This file was auto-generated using Jsonnet",
@@ -13,7 +13,7 @@
       ] +
       extra,
       prefix
-    ),
+    ), newline_before, newline_after),
   IndentBy(amt, c = ' '):
     std.repeat(c, amt * 2),
   Indent: $.IndentBy(1),
