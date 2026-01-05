@@ -156,6 +156,13 @@
       - conf/aria2tui
       - conf/bat
       - conf/gh
+      - conf/lib/
+      - conf/*.jsonnet
+      - conf/*.libsonnet
+      - conf/*.md
+      - conf/*.json
+      - conf/*.yml
+      - conf/.*
     # install various dotfiles
     ~/:
       glob: true

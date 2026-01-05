@@ -1,0 +1,27 @@
+version: '3'
+includes:
+  jsonnet:
+    taskfile: ../tasks/jsonnet.yml
+    internal: true
+tasks:
+  build:
+    desc: "Generate various loose configs using Jsonnet"
+    cmds:
+    - task: jsonnet:build
+      vars:
+        JSONNET_SOURCE: "config.jsonnet"
+        JSONNET_INCLUDE_DIRS: "-J ../.. -J ."
+    sources:
+    - config.jsonnet
+    generates:
+    - user-agent
+  clean:
+    desc: "Cleanup generated files"
+    cmds:
+    - rm -rf {{ .GENERATED_FILES | join " " }}
+    vars:
+      GENERATED_FILES:
+      - user-agent
+  default:
+    cmds:
+    - task: build
