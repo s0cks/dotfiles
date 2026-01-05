@@ -60,6 +60,8 @@
         source: conf/eza/eza.jsonnet
       "~/.config/cava/":
         source: conf/cava/config.jsonnet
+      "~/.config/bat/":
+        source: conf/bat/bat.jsonnet
       "~/Library/Application\\ Support/pik/":
         include_dirs:
         - conf/pik/
@@ -150,6 +152,7 @@
       - conf/cava
       - conf/pik
       - conf/aria2tui
+      - conf/bat
     # install various dotfiles
     ~/:
       glob: true
