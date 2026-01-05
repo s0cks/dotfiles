@@ -1,6 +1,0 @@
-{
-  "ep": "gpg -r $GPG_ID --armor --export",
-  "epcb": "gpgep CP",
-  "lk": "gpg --list-keys --keyid-format LONG",
-  "lsk": "gpg --list-secret-keys --keyid-format LONG"
-}

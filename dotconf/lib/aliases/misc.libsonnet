@@ -1,5 +1,5 @@
 local zsh = import 'lib/zsh.libsonnet';
-
+zsh.Comment("misc aliases", true) +
 [
   zsh.Alias("organize-test", "organize sim --tags=debug --skip-tags=slow --working-dir=$HOME"),
   zsh.Alias("afk", "open /System/Library/CoreServices/ScreenSaverEngine.app"),

@@ -7,6 +7,4 @@
       $.Style(cat, name, data[name])
       for name in std.objectFields(data)
     ],
-  manifest(styles):
-    std.lines(std.flattenDeepArray(if std.isArray(styles) then styles else [ styles ])),
 }
