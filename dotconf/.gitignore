@@ -2,3 +2,9 @@ zshenv
 zaliases
 zprofile
 zimrc
+zstyle
+.zshenv
+.zaliases
+.zprofile
+.zimrc
+.zstyle

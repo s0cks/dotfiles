@@ -1,6 +1,7 @@
 local zsh = import 'lib/zsh.libsonnet';
 local env = import 'lib/env.libsonnet';
 local zimfw = import 'lib/zimfw.libsonnet';
+local zstyle = import 'lib/zstyle.libsonnet';
 
 local hashes = import 'lib/hashes.json';
 
@@ -52,6 +53,16 @@ local LoadProfileSecrets =
 {
   [".zshenv"]:
     zsh.manifest(
+      [
+        // TODO(@s0cks): clean this up:
+        "setopt HIST_IGNORE_ALL_DUPS",
+        "setopt SHARE_HISTORY",
+        "setopt HIST_VERIFY",
+        "setopt HIST_FIND_NO_DUPS",
+        "setopt HIST_IGNORE_SPACE",
+        "setopt INTERACTIVE_COMMENTS",
+        "bindkey -v",
+      ] +
       env.Core() + 
       env.Hist() +
       env.Completions() +
@@ -130,4 +141,13 @@ local LoadProfileSecrets =
         zimfw.ModuleIfCommands("Game4Move78/zsh-bitwarden", [ "bw", "rbw" ], " || "),
         zimfw.ModuleIfCommands("s0cks/zsh-vcpkg", "vcpkg"),
       ]),
+  [".zstyle"]:
+    zstyle.manifest(
+      [
+        // ':zim:zmodule': "use 'degit'",
+        zstyle.Style(":zim:input", "double-dot-expand", "yes"),
+      ] +
+      (import 'lib/zstyle/completions.libsonnet') +
+      (import 'lib/zstyle/fzf-tab.libsonnet')
+    )
 }
