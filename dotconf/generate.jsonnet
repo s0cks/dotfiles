@@ -1,5 +1,6 @@
 local zsh = import 'lib/zsh.libsonnet';
 {
+  [".hushlogin"]: "",
   [".zshenv"]: zsh.manifest(import 'lib/zshenv.libsonnet'),
   [".zaliases"]: zsh.manifest(import 'lib/zaliases.libsonnet'),
   [".zprofile"]: zsh.manifest(import 'lib/zprofile.libsonnet'),

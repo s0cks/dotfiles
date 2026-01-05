@@ -20,6 +20,7 @@ tasks:
     - .zstyles
     - .zshrc
     - .zkeys
+    - .hushlogin
   clean:
     desc: "Clean the generated files"
     cmds:
@@ -31,7 +32,8 @@ tasks:
         .zimrc \
         .zstyles \
         .zshrc \
-        .zkeys
+        .zkeys \
+        .hushlogin
   default:
     cmds:
     - task: generate
