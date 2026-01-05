@@ -6,5 +6,7 @@ zsh.GlobalAliasMap({
   "NUL": ">/dev/null 2>&1",
   "JQ": "| jq",
   "GREP": "| grep ",
-  "CP": "| cb"
+  "CP": "| cb",
+  "GP": "&& Gp",
+  "GPF": "&& Gpf",
 })
