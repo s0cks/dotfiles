@@ -4,6 +4,16 @@
       "%(prefix)s %(line)s" % { prefix: prefix, line: line }
       for line in (if std.isArray(lines) then lines else [ lines ])
     ],
+  WarningHeaderComment(extra = [], prefix = '#'):
+    $.Comment(
+      [
+        "*** Do not edit ***",
+        "This file was auto-generated using Jsonnet",
+        "  ~ @s0cks",
+      ] +
+      extra,
+      prefix
+    ),
   IndentBy(amt, c = ' '):
     std.repeat(c, amt * 2),
   Indent: $.IndentBy(1),

@@ -60,5 +60,5 @@ local Styles(p) =
   };
 
 {
-  ["bottom.toml"]: bottom.Bottom(Styles(flexoki.Dark)),
+  ["bottom.toml"]: bottom.manifest(Styles(flexoki.Dark)),
 }
