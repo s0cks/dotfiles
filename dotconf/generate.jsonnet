@@ -2,7 +2,13 @@ local zsh = import 'lib/zsh.libsonnet';
 local env = import 'lib/env.libsonnet';
 local zimfw = import 'lib/zimfw.libsonnet';
 
-local source_file_extensions = import 'source_file_extensions.json';
+local hashes = import 'lib/hashes.json';
+
+local MiscAliases = import 'lib/aliases/misc.libsonnet';
+local GpgAliases = import 'lib/aliases/gpg.libsonnet';
+local SuffixAliases = import 'lib/aliases/suffix.libsonnet';
+local GlobalAliases = zsh.GlobalAliasMap(import 'lib/aliases/global.json');
+local EditorAliases = zsh.Alias(import 'lib/aliases/editor.json', 'editz');
 
 // eza
 // local eza_params=(
@@ -19,88 +25,7 @@ local source_file_extensions = import 'source_file_extensions.json';
 // alias lx='eza -lbhHigUmuSa@'
 // alias lt='eza --tree $eza_params'
 
-local BatSuffixAlias(suffix) = zsh.SuffixAlias(suffix, "bat");
-local OpenSuffixAlias(suffix) = zsh.SuffixAlias(suffix, "open");
-local SuffixAliases =
-  [
-    BatSuffixAlias("json"), //TODO(@s0cks): should change this to a better jq browser
-    BatSuffixAlias("txt"),
-    zsh.SuffixAlias("md", "glow"),
-    OpenSuffixAlias("html"),
-  ] +
-  [
-    zsh.EditorSuffixAlias(suffix)
-    for suffix in source_file_extensions
-  ];
-local GlobalAliases =
-  [
-    zsh.GlobalAlias("NE", "2>/dev/null"),
-    zsh.GlobalAlias("NO", ">/dev/null"),
-    zsh.GlobalAlias("NUL", ">/dev/null 2>&1"),
-    zsh.GlobalAlias("JQ", "| jq"),
-    zsh.GlobalAlias("GREP", "| grep "),
-    zsh.GlobalAlias("CP", "| cb"),
-  ];
-local hashes = {
-  dots: "$USER_DATA_HOME/dotfiles",
-  dls: "$HOME/Downloads",
-  projects: "$HOME/Projects",
-  cfg: "$XDG_CONFIG_HOME",
-};
-local Hashes =
-  [
-    zsh.HashDir(name, hashes[name])
-    for name in std.objectFields(hashes)
-  ];
 
-local EditzAlias(key) = zsh.Alias(key, "editz");
-local EditorAliases =
-  [
-    EditzAlias(name)
-    for name in [
-      "e",
-      "edit",
-      "vi",
-      "vim",
-      "nvim",
-    ]
-  ];
-local GpgAliases =
-  [
-    zsh.Alias("gpgep", "gpg -r $GPG_ID --armor --export"),
-    zsh.Alias("gpglk", "gpg --list-keys --keyid-format LONG"),
-    zsh.Alias("gpglsk", "gpg --list-secret-keys --keyid-format LONG"),
-    zsh.Alias("gpgepcb", "gpgep | cb"),
-  ];
-local MiscAliases =
-  [
-    zsh.Alias("organize-test", "organize sim --tags=debug --skip-tags=slow --working-dir=$HOME"),
-    zsh.Alias("afk", "open /System/Library/CoreServices/ScreenSaverEngine.app"),
-    zsh.Alias("home", "cd ~"),
-    zsh.Alias("chrome", "open -a /Applications/Google\\ Chrome.app"),
-    zsh.Alias("drive", "open -a /Applications/Google\\ Drive.app"),
-    zsh.Alias("sheets", "open -a /Applications/Google\\ Sheets.app"),
-    zsh.Alias("task-dry", "task --dry"),
-    zsh.Alias("emoji", "emoji_fzf"),
-    zsh.Alias("tetris", "tetrs_tui"),
-    zsh.Alias("tail", "btail"),
-    zsh.Alias("neofetch", "fastfetch"),
-    zsh.Alias("port-scan", "rustscan"),
-    zsh.Alias("weather", "https -b 'wttr.in?format=3'"),
-    zsh.Alias("cpwd", "pwd | cb"),
-    zsh.Alias("npmug", "npm uninstall --global"),
-    zsh.Alias("npmig", "npm i -g"),
-    zsh.Alias("npmR", "npm run"),
-    zsh.Alias("Gbw", "git browse-web"),
-    zsh.Alias("cat", "bat --paging=never --plain"),
-    zsh.Alias("bwl", "bw login --passwordenv BITWARDENCLI_PASS"),
-    zsh.Alias("yazi", "yz"),
-    zsh.Alias("vtop", "vtop --theme catppuccin-mocha-lavender"),
-    zsh.Alias("cargo-ls", "cargo install --list"),
-    zsh.Alias("Gl", "serie"),
-    zsh.Alias("tree", "lstr -a -g -G --icons"),
-    zsh.Alias("dic", "echo 𓂺"),
-  ];
 
 local email = "tazz@tazz.cloud";
 local gpg_key = "A7E49DD5";
@@ -125,7 +50,7 @@ local LoadProfileSecrets =
   ];
 
 {
-  ["zshenv"]:
+  [".zshenv"]:
     zsh.manifest(
       env.Core() + 
       env.Hist() +
@@ -144,56 +69,65 @@ local LoadProfileSecrets =
         ], true),
       ]
     ),
-  ["zaliases"]:
+  [".zaliases"]:
     zsh.manifest(
+      zsh.Comment("misc aliases", true) +
       MiscAliases +
+      zsh.Comment("gpg Aliases", true) +
       GpgAliases +
+      zsh.Comment("editor aliases", true) +
       EditorAliases +
+      zsh.Comment("suffix aliases", true) +
       SuffixAliases +
+      zsh.Comment("global aliases", true) +
       GlobalAliases +
-      Hashes
+      zsh.Comment("hashes (directory aliases)", true) +
+      zsh.Hashes(hashes)
     ),
-  ["zprofile"]:
+  [".zprofile"]:
     zsh.manifest(
       Profile(email) +
       Gpg(gpg_id, gpg_key) +
       LoadProfileSecrets
     ),
-  ["zimrc"]:
-    zsh.manifest([
-      zimfw.Module("environment"),
-      zimfw.Module("git"),
-      zimfw.Module("input"),
-      zimfw.Module("termtitle"),
-      zimfw.Module("utility"),
-      zimfw.Module("archive"),
-      zimfw.Module("decayofmind/zsh-fast-alias-tips"),
-      zimfw.Module("fzf"),
-      zimfw.Module("git-info"),
-
-      zimfw.Module("hlissner/zsh-autopair"),
-      zimfw.Module("toku-sa-n/zsh-dot-up"),
-      zimfw.Module("antonjs/zsh-gpt"),
-      zimfw.Module("Aloxaf/fzf-tab"),
-      zimfw.Module("olets/zsh-abbr"),
-
-      zimfw.Module("s0cks/zsh-autoenv"),
-      zimfw.ModuleIfCommands("s0cks/zsh-starship", "starship"), 
-      zimfw.ModuleIfCommands("s0cks/zsh-yeoman", "yo"),
-      zimfw.ModuleIfCommands("s0cks/zsh-zoxide", "zoxide"),
-      zimfw.ModuleIfCommands("s0cks/zsh-atuin", "atuin"),
-      zimfw.ModuleIfCommands("s0cks/zsh-mise", "mise"),
-      zimfw.ModuleIfCommands("s0cks/zsh-cargo", "cargo"),
-      zimfw.ModuleIfCommands("s0cks/zsh-zellij-sessionizer", "zellij"),
-
-      zimfw.Module("zsh-users/zsh-completions", null, "src"),
-      zimfw.Module("completion"),
-      zimfw.Module("zdharma-continuum/fast-syntax-highlighting"),
-      zimfw.Module("zsh-users/zsh-history-substring-search"),
-      zimfw.Module("zsh-users/zsh-autosuggestions"),
-      zimfw.Module("olets/zsh-autosuggestions-abbreviations-strategy"),
-
-      zimfw.ModuleIfCommands("Game4Move78/zsh-bitwarden", [ "bw", "rbw" ], " || "),
-      zimfw.ModuleIfCommands("s0cks/zsh-vcpkg", "vcpkg"),
-    ]),
+  [".zimrc"]:
+    zsh.manifest(
+      zimfw.Modules([
+        "environment",
+        "git",
+        "input",
+        "termtitle",
+        "utility",
+        "archive",
+        "decayofmind/zsh-fast-alias-tips",
+        "fzf",
+        "git-info",
+        "hlissner/zsh-autopair",
+        "toku-sa-n/zsh-dot-up",
+        "antonjs/zsh-gpt",
+        "Aloxaf/fzf-tab",
+        "olets/zsh-abbr",
+        "s0cks/zsh-autoenv",
+      ]) +
+      [
+        zimfw.ModuleIfCommands("s0cks/zsh-starship", "starship"), 
+        zimfw.ModuleIfCommands("s0cks/zsh-yeoman", "yo"),
+        zimfw.ModuleIfCommands("s0cks/zsh-zoxide", "zoxide"),
+        zimfw.ModuleIfCommands("s0cks/zsh-atuin", "atuin"),
+        zimfw.ModuleIfCommands("s0cks/zsh-mise", "mise"),
+        zimfw.ModuleIfCommands("s0cks/zsh-cargo", "cargo"),
+        zimfw.ModuleIfCommands("s0cks/zsh-zellij-sessionizer", "zellij"),
+        zimfw.Module("zsh-users/zsh-completions", null, "src"),
+      ] +
+      zimfw.Modules([
+        "completion",
+        "zdharma-continuum/fast-syntax-highlighting",
+        "zsh-users/zsh-history-substring-search",
+        "zsh-users/zsh-autosuggestions",
+        "olets/zsh-autosuggestions-abbreviations-strategy",
+      ]) +
+      [
+        zimfw.ModuleIfCommands("Game4Move78/zsh-bitwarden", [ "bw", "rbw" ], " || "),
+        zimfw.ModuleIfCommands("s0cks/zsh-vcpkg", "vcpkg"),
+      ]),
 }

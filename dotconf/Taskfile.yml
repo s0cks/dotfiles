@@ -1,0 +1,29 @@
+version: '3'
+tasks:
+  generate:
+    desc: "Generate files using Jsonnet"
+    cmds:
+    - jsonnet {{.JSONNET_INCLUDES}} -S -m . {{.JSONNET_SOURCE}}
+    vars:
+      JSONNET_INCLUDES: "-J .. -J ."
+      JSONNET_SOURCE: "generate.jsonnet"
+    sources:
+    - generate.jsonnet
+    - source_file_extensions.json
+    generates:
+    - .zprofile
+    - .zaliases
+    - .zshenv
+    - .zimrc
+  clean:
+    desc: "Clean the generated files"
+    cmds:
+    - >
+      rm -rf \
+        .zprofile \
+        .zaliases \
+        .zshenv \
+        .zimrc
+  default:
+    cmds:
+    - task: generate

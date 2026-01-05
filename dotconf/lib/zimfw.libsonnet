@@ -10,9 +10,9 @@
   local CommandCond(command) =
     "\\$+commands[%(command)s]" % { command: command },
   local CombineConds(conds, op = " && ") =
-    std.join(" && ", (if std.isArray(conds) then conds else [ conds ])),
+    std.join(op, (if std.isArray(conds) then conds else [ conds ])),
   local If(cond) =
-    "--if '[[ " +
+    "'[[ " +
     cond +
     " ]]'",
   local IfCommands(commands, op = " && ") =
@@ -22,4 +22,9 @@
     ], op)),
   ModuleIfCommands(name, commands, op = " && ", fpath = null, f = null, a = null):
     $.Module(name, IfCommands(commands, op), fpath, f, a),
+  Modules(names):
+    [
+      $.Module(module)
+      for module in names
+    ],
 }

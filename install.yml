@@ -40,7 +40,7 @@
       # generate git config
       "~/.config/git/":
         source: conf/git/generate.jsonnet
-      "dotconf/":
+      "~/":
         source: dotconf/generate.jsonnet
         include_dirs:
         - dotconf/
@@ -153,14 +153,16 @@
     # install various dotfiles
     ~/:
       glob: true
-      path: "dotconf/*"
-      prefix: '.'
+      path: dotconf/*
+      prefix: "."
       exclude:
       - dotconf/lib/
       - dotconf/*.jsonnet
       - dotconf/*.libsonnet
       - dotconf/*.md
       - dotconf/*.json
+      - dotconf/*.yml
+      - dotconf/.*
 
 # ╭──────╮
 # │ Yazi │
