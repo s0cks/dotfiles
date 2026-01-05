@@ -1,5 +1,7 @@
 version: '3'
 tasks:
   build:
+    label: "Build {{.JSONNET_SOURCE}}"
+    desc: "Build {{.JSONNET_SOURCE}} using Jsonnet"
     cmds:
-    - jsonnet {{.JSONNET_INCLUDE_DIRS | default "-J ." }} -S -m {{.JSONNET_BUILD_DIR | default "." }} {{.JSONNET_SOURCE}} {{.JSONNET_EXTRAS | default "" }}
+    - jsonnet {{.JSONNET_INCLUDE_DIRS | default "-J ." }} -S -m {{.JSONNET_BUILD_DIR | default "." }} {{.JSONNET_SOURCE}} {{.JSONNET_EXTRAS | default "" }} >/dev/null

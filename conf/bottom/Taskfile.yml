@@ -1,0 +1,20 @@
+version: '3'
+includes:
+  jsonnet:
+    taskfile: ../../tasks/jsonnet.yml
+    internal: true
+tasks:
+  build:
+    label: "Build bottom config"
+    cmds:
+    - task: jsonnet:build
+      vars:
+        JSONNET_SOURCE: "bottom.jsonnet"
+        JSONNET_INCLUDE_DIRS: "-J ../.. -J ."
+  clean:
+    label: "Clean build artifacts"
+    cmds:
+    - rm -rf bottom.toml
+  default:
+    cmds:
+    - task: build
