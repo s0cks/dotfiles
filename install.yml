@@ -40,6 +40,10 @@
       # generate git config
       "~/.config/git/":
         source: conf/git/generate.jsonnet
+      "dotconf/":
+        source: dotconf/generate.jsonnet
+        include_dirs:
+        - dotconf/
       # generate ssh config
       "~/.ssh/":
         source: dotssh/config.jsonnet
@@ -152,10 +156,11 @@
       path: "dotconf/*"
       prefix: '.'
       exclude:
-      - dotconf/lib
+      - dotconf/lib/
       - dotconf/*.jsonnet
       - dotconf/*.libsonnet
       - dotconf/*.md
+      - dotconf/*.json
 
 # ╭──────╮
 # │ Yazi │
