@@ -2,51 +2,68 @@
 version: '3'
 #TODO(@s0cks): add functionality to run custom dotbot install. see scripts/install-dotbot.sh
 tasks:
-  install:dry-run:
-    label: "󰚩 Install (dry-run)"
-    desc: "Install dotfiles using Dotbot using dry-run mode."
+  dotbot:
+    internal: true
     cmds:
     - >
-      dotbot \
-        -d "$(pwd)" \
-        -c "$(pwd)/install.yml" \
-        --dry-run
+        dotbot \
+          -d {{.DOTBOT_DIRECTORY | default "$(pwd)" }} \
+          -c {{.DOTBOT_MANIFEST | default "$(pwd)/install.yml" }} \
+          {{.DOTBOT_EXTRAS}}
+
+  install:dry-run:
+    label: "󰚩 Install (dry-run)"
+    desc: "Install dotfiles using Dotbot and dry-run mode."
+    cmds:
+    - task: dotbot
+      vars:
+        DOTBOT_EXTRAS: "--dry-run {{.CLI_ARGS}}"
+  install:dry-run:only:
+    cmds:
+    - task: dotbot
+      vars:
+        DOTBOT_EXTRAS: "--dry-run --only {{.CLI_ARGS}}"
+  install:dry-run:except:
+    cmds:
+    - task: dotbot
+      vars:
+        DOTBOT_EXTRAS: "--dry-run --except {{.CLI_ARGS}}"
+
   install:verbose:
-    label: "󰚩 Install"
-    desc: "Install dotfiles using Dotbot using dry-run mode."
-    cmds: 
-    - >
-      dotbot \
-        -d "$(pwd)" \
-        -c "$(pwd)/install.yml" \
-        --verbose
-  install:only:
-    label: "󰚩 Install"
-    desc: "Install dotfiles using Dotbot"
-    cmds: 
-    - >
-      dotbot \
-        -d "$(pwd)" \
-        -c "$(pwd)/install.yml" \
-        --only {{.CLI_ARGS}}
-  install:except:
-    label: "󰚩 Install"
-    desc: "Install dotfiles using Dotbot"
-    cmds: 
-    - >
-      dotbot \
-        -d "$(pwd)" \
-        -c "$(pwd)/install.yml" \
-        --except {{.CLI_ARGS}}
+    label: "󰚩 Install (verbose)"
+    desc: "Install dotfiles using Dotbot w/ verbose logging"
+    cmds:
+    - task: dotbot
+      vars:
+        DOTBOT_EXTRAS: "--verbose {{.CLI_ARGS}}"
+  install:verbose:only:
+    cmds:
+    - task: dotbot
+      vars:
+        DOTBOT_EXTRAS: "--vebrose --only {{.CLI_ARGS}}"
+  install:verbose:except:
+    cmds:
+    - task: dotbot
+      vars:
+        DOTBOT_EXTRAS: "--verbose --except {{.CLI_ARGS}}"
+
   install:
     label: "󰚩 Install"
-    desc: "Install dotfiles using Dotbot using dry-run mode."
-    cmds: 
-    - >
-      dotbot \
-        -d "$(pwd)" \
-        -c "$(pwd)/install.yml" \
-        {{.CLI_ARGS}}
+    desc: "Install dotfiles using Dotbot"
+    cmds:
+    - task: dotbot
+      vars:
+        DOTBOT_EXTRAS: "{{.CLI_ARGS}}"
+  install:only:
+    cmds:
+    - task: dotbot
+      vars:
+        DOTBOT_EXTRAS: "--only {{.CLI_ARGS}}"
+  install:except:
+    cmds:
+    - task: dotbot
+      vars:
+        DOTBOT_EXTRAS: "--except {{.CLI_ARGS}}"
   default:
     cmds:
     - task: install
