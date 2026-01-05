@@ -1,0 +1,27 @@
+version: '3'
+includes:
+  jsonnet:
+    taskfile: ../../tasks/jsonnet.yml
+    internal: true
+tasks:
+  build:
+    desc: "Generate gh config using Jsonnet"
+    cmds:
+    - task: jsonnet:build
+      vars:
+        JSONNET_SOURCE: "gh.jsonnet"
+        JSONNET_INCLUDE_DIRS: "-J ../.. -J ."
+    sources:
+    - gh.jsonnet
+    generates:
+    - config.yml
+    - hosts.yml
+  clean:
+    desc: "Cleanup generated files"
+    cmds:
+    - rm -rf \
+        config.yml \
+        hosts.yml
+  default:
+    cmds:
+    - task: build
