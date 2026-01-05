@@ -67,13 +67,8 @@ if [[ $+commands[luarocks] ]]; then
 fi
 
 # llvm
-#TODO(@s0cks): is this necessary?
-export PATH="$(brew --prefix llvm)/bin:$PATH"
-export CC=clang
-export CXX=clang++
-export LD=ld.lld
-export AR=llvm-ar
-export RANLIB=llvm-ranlib
+#TODO(@s0cks): convert this to: s0cks tc activate ${DEFAULT_TOOLCHAIN:-homebrew-llvm}
+source "$USER_DATA_HOME/toolchains/${DEFAULT_TOOLCHAIN:-homebrew-llvm}"
 
 # set fast-zsh-highlighting theme to flexoki-dark/light based on MacOS theme
 #TODO(@s0cks): figure out how to get this in zstyles?
