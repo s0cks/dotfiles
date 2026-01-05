@@ -1,0 +1,21 @@
+[
+  "go",
+  "rs",
+  "py",
+  "js",
+  "ts",
+  "java",
+  "scala",
+  "c",
+  "h",
+  "cc",
+  "cpp",
+  "cxx",
+  "hh",
+  "hpp",
+  "hxx",
+  "yml",
+  "yaml",
+  "jsonnet",
+  "libsonnet"
+]
