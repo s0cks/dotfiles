@@ -11,13 +11,17 @@
     - "."
     items:
       "macos/":
-        source: macos/defaults.jsonnet
+        source: macos/generate.jsonnet
         include_dirs:
         - macos/
+      "/usr/local/share/toolchains/": 
+        source: macos/toolchains/generate.jsonnet
+        include_dirs:
+        - macos/toolchains/
       "~/Library/LaunchAgents/":
         source: macos/LaunchAgents/generate.jsonnet
         include_dirs:
-        - "macos/LaunchAgents/"
+        - macos/LaunchAgents/
         vars:
           COMPANY: io.github.s0cks
         vars_from_env:

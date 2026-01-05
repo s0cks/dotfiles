@@ -10,7 +10,7 @@ export EDITOR="nvim"
 export PAGER="less"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export MANROFFOPT="-c"
-export HISTFILE="$ZSH_HOME/zsh/history"
+export HISTFILE="$ZSH_HOME/history"
 export SAVEHIST=10000
 export HISTSIZE=32768
 export HISTFILESIZE="${HISTSIZE}"
@@ -116,6 +116,8 @@ export GHQ_ROOT="$HOME/Projects"
 # │ eza │
 # ╰─────╯
 export EZA_CONFIG_DIR="$XDG_CONFIG_HOME/eza"
+
+export DEFAULT_TOOLCHAIN="homebrew-llvm"
 
 # ┌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┐
 # ╎                        Environment                        ╎

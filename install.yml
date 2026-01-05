@@ -18,6 +18,7 @@
   - /usr/local/share/aria2/
   - /usr/local/share/zsh/functions/
   - /usr/local/share/zsh/completions/
+  - /usr/local/share/toolchains/
   - ~/.config/yazi/
   - ~/.config/aria2tui/
 - link:
@@ -150,6 +151,11 @@
       glob: true
       path: "dotconf/*"
       prefix: '.'
+      exclude:
+      - bin/lib/
+      - bin/*.jsonnet
+      - bin/*.libsonnet
+      - bin/*.md
 
 # ╭──────╮
 # │ Yazi │

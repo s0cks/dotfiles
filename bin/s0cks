@@ -172,6 +172,32 @@ local __update() {
   esac
 }
 
+local __toolchain() {
+  TOOLCHAINS_DIR="${TOOLCHAINS_DIR:-$USER_DATA_HOME/toolchains}"
+  DEFAULT_TOOLCHAIN="${DEFAULT_TOOLCHAIN:-default}"
+  CURRENT_TOOLCHAIN="${CURRENT_TOOLCHAIN:-$DEFAULT_TOOLCHAIN}"
+
+  if (( "$#" == 0 )); then
+    echo "current: $CURRENT_TOOLCHAIN"
+    echo "default: $DEFAULT_TOOLCHAIN"
+    return 0
+  fi
+
+  local target="$1"
+  case "$target" in
+    ls|list)
+      echo "toolchains:"
+      local toolchains=$(fselect name from "$TOOLCHAINS_DIR/" where is_file)
+      for toolchain in $toolchains[@]; do
+        echo "- $toolchain"
+      done
+      ;;
+    *)
+    __invalid_update_target "$target" && return 1
+    ;;
+  esac
+}
+
 case "${cmd[1]}" in
   version)
     __show_version && return 0
@@ -179,7 +205,11 @@ case "${cmd[1]}" in
   update)
     shift cmd
     __update ${cmd[@]}
-    ;; 
+    ;;
+  tc|toolchain)
+    shift cmd
+    __toolchain ${cmd[@]}
+    ;;
   *)
     __invalid_command ${cmd[1]} && return 1
     ;;
