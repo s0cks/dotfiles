@@ -1,8 +1,8 @@
 local zsh = import 'lib/zsh.libsonnet';
 local env = import 'lib/env.libsonnet';
+local zimfw = import 'lib/zimfw.libsonnet';
+
 local source_file_extensions = import 'source_file_extensions.json';
-
-
 
 // eza
 // local eza_params=(
@@ -158,5 +158,42 @@ local LoadProfileSecrets =
       Profile(email) +
       Gpg(gpg_id, gpg_key) +
       LoadProfileSecrets
-    )
+    ),
+  ["zimrc"]:
+    zsh.manifest([
+      zimfw.Module("environment"),
+      zimfw.Module("git"),
+      zimfw.Module("input"),
+      zimfw.Module("termtitle"),
+      zimfw.Module("utility"),
+      zimfw.Module("archive"),
+      zimfw.Module("decayofmind/zsh-fast-alias-tips"),
+      zimfw.Module("fzf"),
+      zimfw.Module("git-info"),
+
+      zimfw.Module("hlissner/zsh-autopair"),
+      zimfw.Module("toku-sa-n/zsh-dot-up"),
+      zimfw.Module("antonjs/zsh-gpt"),
+      zimfw.Module("Aloxaf/fzf-tab"),
+      zimfw.Module("olets/zsh-abbr"),
+
+      zimfw.Module("s0cks/zsh-autoenv"),
+      zimfw.ModuleIfCommands("s0cks/zsh-starship", "starship"), 
+      zimfw.ModuleIfCommands("s0cks/zsh-yeoman", "yo"),
+      zimfw.ModuleIfCommands("s0cks/zsh-zoxide", "zoxide"),
+      zimfw.ModuleIfCommands("s0cks/zsh-atuin", "atuin"),
+      zimfw.ModuleIfCommands("s0cks/zsh-mise", "mise"),
+      zimfw.ModuleIfCommands("s0cks/zsh-cargo", "cargo"),
+      zimfw.ModuleIfCommands("s0cks/zsh-zellij-sessionizer", "zellij"),
+
+      zimfw.Module("zsh-users/zsh-completions", null, "src"),
+      zimfw.Module("completion"),
+      zimfw.Module("zdharma-continuum/fast-syntax-highlighting"),
+      zimfw.Module("zsh-users/zsh-history-substring-search"),
+      zimfw.Module("zsh-users/zsh-autosuggestions"),
+      zimfw.Module("olets/zsh-autosuggestions-abbreviations-strategy"),
+
+      zimfw.ModuleIfCommands("Game4Move78/zsh-bitwarden", [ "bw", "rbw" ], " || "),
+      zimfw.ModuleIfCommands("s0cks/zsh-vcpkg", "vcpkg"),
+    ]),
 }
