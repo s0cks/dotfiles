@@ -45,7 +45,7 @@ else
 fi
 
 # apply zsh styles
-source "$HOME/.zstyle"
+source "$HOME/.zstyles"
 
 # ┌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┐
 # ╎                        zimfw Init                         ╎
