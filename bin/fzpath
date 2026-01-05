@@ -1,2 +1,4 @@
 #!/usr/bin/env zsh
-<<<${(F)path} | fzf
+<<<${(F)path} | fzf \
+  --layout=reverse
+return 0
