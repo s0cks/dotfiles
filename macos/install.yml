@@ -14,10 +14,8 @@
         source: macos/generate.jsonnet
         include_dirs:
         - macos/
-      "/usr/local/share/toolchains/": 
+      "/usr/local/share/toolchains/":
         source: macos/toolchains/generate.jsonnet
-        include_dirs:
-        - macos/toolchains/
       "~/Library/LaunchAgents/":
         source: macos/LaunchAgents/generate.jsonnet
         include_dirs:

@@ -152,10 +152,10 @@
       path: "dotconf/*"
       prefix: '.'
       exclude:
-      - bin/lib/
-      - bin/*.jsonnet
-      - bin/*.libsonnet
-      - bin/*.md
+      - dotconf/lib
+      - dotconf/*.jsonnet
+      - dotconf/*.libsonnet
+      - dotconf/*.md
 
 # ╭──────╮
 # │ Yazi │
