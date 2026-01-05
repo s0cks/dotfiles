@@ -12,7 +12,6 @@ local GenerateRpcConf(install_dir) = (importstr "./_rpc.conf") % {
 
 local GenerateHttpConf(install_dir) = (importstr "./_http.conf") % {
   install_dir: install_dir,
-  user_agent: std.extVar("ARIA2_USER_AGENT"),
 };
 
 local peer = import './peer.json';

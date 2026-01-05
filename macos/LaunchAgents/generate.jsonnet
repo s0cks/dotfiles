@@ -3,6 +3,7 @@ local USER_HOME = std.extVar('HOME');
 local HOMEBREW_REPOSITORY = std.extVar('HOMEBREW_REPOSITORY');
 local HOMEBREW_BIN = HOMEBREW_REPOSITORY + '/bin';
 local XDG_CONFIG_HOME = std.extVar('XDG_CONFIG_HOME');
+local USER_AGENT_PATH = XDG_CONFIG_HOME + "/user-agent";
 
 local plist = import 'lib/plist.libsonnet';
 
@@ -50,7 +51,9 @@ local GetEnvPath(extras = []) =
       plist.EnvironmentVariables({
         PATH: GetEnvPath(),
       }),
-      plist.ProgramArguments(HOMEBREW_BIN + '/aria2c'),
+      plist.ProgramArguments(HOMEBREW_BIN + '/aria2c', [
+        plist.SingleWrapString("--user-agent=$(cat " + USER_AGENT_PATH + ")", 3)
+      ])
     ]),
   [GetPlistFilename("wezterm")]: 
     plist.manifest([
@@ -79,10 +82,10 @@ local GetEnvPath(extras = []) =
         PATH: GetEnvPath(),
       }),
       plist.ProgramArguments(HOMEBREW_BIN + '/wezterm', [
-        plist.String('start', 3),
-        plist.String('zellij', 3),
-        plist.String("--layout", 3),
-        plist.String('irc', 3),
+        plist.SingleWrapString('start', 3),
+        plist.SingleWrapString('zellij', 3),
+        plist.SingleWrapString("--layout", 3),
+        plist.SingleWrapString('irc', 3),
       ]),
     ]),
 }

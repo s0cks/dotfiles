@@ -1,3 +1,6 @@
 [submodule "conf/vale/styles/s0cks"]
 	path = conf/vale/styles/s0cks
 	url = git@github.com:s0cks/prose.git
+[submodule "libs/flexoki.libsonnet"]
+	path = libs/flexoki.libsonnet
+	url = git@github.com:s0cks/flexoki.libsonnet.git

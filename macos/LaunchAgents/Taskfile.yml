@@ -1,0 +1,32 @@
+---
+version: '3'
+includes:
+  jsonnet:
+    taskfile: ../../tasks/jsonnet.yml
+    internal: true
+vars:
+  COMPANY: io.github.s0cks
+tasks:
+  build:
+    desc: "Build LaunchAgent plists using Jsonnet"
+    vars:
+      SOURCE_FILE: generate.jsonnet
+    cmds:
+    - task: jsonnet:build
+      vars:
+        JSONNET_SOURCE: "{{.SOURCE_FILE}}"
+        JSONNET_INCLUDE_DIRS: "-J ../../ -J ."
+        JSONNET_EXTRAS: "--ext-str COMPANY={{.COMPANY}} --ext-str HOME --ext-str HOMEBREW_REPOSITORY --ext-str XDG_CONFIG_HOME"
+    sources:
+    - "{{.SOURCE_FILE}}"
+    generates:
+    - "*.plist"
+  clean:
+    cmds:
+    - rm -rf {{.GENERATED_FILES | join " "}}
+    vars:
+      GENERATED_FILES:
+      - "*.plist"
+  default:
+    cmds:
+    - task: build

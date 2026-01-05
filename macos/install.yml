@@ -27,7 +27,6 @@
         - ARIA2_HOME
         - XDG_CONFIG_HOME
         - ARIA2_SECRET
-        - ARIA2_USER_AGENT
         - HOMEBREW_REPOSITORY
 - shell:
   - chmod +x macos/defaults.sh

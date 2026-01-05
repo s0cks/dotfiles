@@ -21,9 +21,6 @@
   - /usr/local/share/toolchains/
   - ~/.config/yazi/
   - ~/.config/aria2tui/
-- link:
-      # Install system-wide user-agent
-    /usr/local/share/user-agent: ./user-agent
 
 # ╭─────────────────────────────────╮
 # │ Install system tools using mise │
@@ -36,6 +33,7 @@
 - jsonnet:
     include_dirs:
     - "."
+    - "libs/flexoki.libsonnet/"
     items:
       # generate git config
       "~/.config/git/":
@@ -47,6 +45,8 @@
       # generate ssh config
       "~/.ssh/":
         source: dotssh/config.jsonnet
+      "~/.config/":
+        source: conf/config.jsonnet
       # generate ripgrep config
       "~/.config/ripgrep/":
         include_dirs:
@@ -87,8 +87,6 @@
       vars:
         ARIA2_SECRET:
           command: gopass show -o tokens/aria2/rpc-token
-        ARIA2_USER_AGENT:
-          file: /usr/local/share/user-agent
 
 # ╭─────────────────────────╮
 # │ Clone various git repos │
@@ -163,6 +161,7 @@
       - conf/*.json
       - conf/*.yml
       - conf/.*
+      - conf/user-agent
     # install various dotfiles
     ~/:
       glob: true
