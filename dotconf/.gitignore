@@ -1,10 +1,6 @@
-zshenv
-zaliases
-zprofile
-zimrc
-zstyles
 .zshenv
 .zaliases
 .zprofile
 .zimrc
 .zstyles
+.zshrc

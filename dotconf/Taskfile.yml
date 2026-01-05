@@ -7,15 +7,18 @@ tasks:
     vars:
       JSONNET_INCLUDES: "-J .. -J ."
       JSONNET_SOURCE: "generate.jsonnet"
-    sources:
-    - generate.jsonnet
-    - source_file_extensions.json
+    # sources:
+    # - generate.jsonnet
+    # - source_file_extensions.json
+    # - lib/**/*.libsonnet
+    # - lib/**/_*.sh
     generates:
     - .zprofile
     - .zaliases
     - .zshenv
     - .zimrc
     - .zstyles
+    - .zshrc
   clean:
     desc: "Clean the generated files"
     cmds:
@@ -25,7 +28,8 @@ tasks:
         .zaliases \
         .zshenv \
         .zimrc \
-        .zstyles
+        .zstyles \
+        .zshrc
   default:
     cmds:
     - task: generate

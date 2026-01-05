@@ -91,6 +91,21 @@
       $.HashDir(name, hashes[name])
       for name in std.objectFields(hashes)
     ],
+  Source(value):
+    [
+      "source " + value
+    ],
+  local CombineConds(conds, op = " && ") =
+    std.join(op, conds),
+  local CondWrap(cond) =
+    "[[ " + cond + " ]]",
+  local CommandExists(commands) =
+    [ 
+      "$+commands[" + command + "]"
+      for command in (if std.isArray(commands) then commands else [ commands ])
+    ],
+  SourceIfCommand(value, commands, op = " && "):
+    CondWrap(CombineConds(CommandExists(commands), op)) + " && source " + value,
   Shebang(exec = "zsh", path = "/usr/bin/env", newline_before = false, newline_after = false):
     WrapInOptionalNewlines([
       "#!" + path + " " + exec,
