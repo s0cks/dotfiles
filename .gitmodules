@@ -4,3 +4,6 @@
 [submodule "libs/flexoki.libsonnet"]
 	path = libs/flexoki.libsonnet
 	url = git@github.com:s0cks/flexoki.libsonnet.git
+[submodule "libs/plist.libsonnet"]
+	path = libs/plist.libsonnet
+	url = git@github.com:s0cks/plist.libsonnet.git

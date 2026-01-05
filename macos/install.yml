@@ -9,6 +9,8 @@
 - jsonnet:
     include_dirs:
     - "."
+    - libs/plist.libsonnet/
+    - libs/flexoki.libsonnet/
     items:
       "macos/":
         source: macos/generate.jsonnet

@@ -33,7 +33,8 @@
 - jsonnet:
     include_dirs:
     - "."
-    - "libs/flexoki.libsonnet/"
+    - libs/flexoki.libsonnet/
+    - libs/plist.libsonnet/
     items:
       # generate git config
       "~/.config/git/":
