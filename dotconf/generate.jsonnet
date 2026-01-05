@@ -6,4 +6,5 @@ local zsh = import 'lib/zsh.libsonnet';
   [".zimrc"]: zsh.manifest(import 'lib/zimrc.libsonnet'),
   [".zstyles"]: zsh.manifest(import 'lib/zstyles.libsonnet'),
   [".zshrc"]: zsh.manifest(import 'lib/zshrc.libsonnet'),
+  [".zkeys"]: zsh.manifest(import 'lib/zkeys.libsonnet'),
 }

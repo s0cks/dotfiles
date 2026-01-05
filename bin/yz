@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+local target
+if [[ "$#" == 0 ]]; then
+  target="."
+elif [[ -d "$1" ]]; then
+  target="$1"
+else
+  target="$(zoxide query $1)"
+fi
+
+yazi "$target"
+return 0

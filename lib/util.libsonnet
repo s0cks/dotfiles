@@ -7,4 +7,20 @@
   IndentBy(amt, c = ' '):
     std.repeat(c, amt * 2),
   Indent: $.IndentBy(1),
+  Quote(value):
+    '"' + value + '"',
+  SingleQuote(value):
+    "'" + value + "'",
+  local NEWLINE = [ '' ],
+  Optional(value, cond, default_value = []):
+    if cond then
+      value
+    else
+      default_value,
+  OptionalNewline(cond, default_value = []):
+    $.Optional(NEWLINE, cond, default_value),
+  WrapInOptionalNewlines(value, newline_before = false, newline_after = false):
+    $.OptionalNewline(newline_before) +
+    value +
+    $.OptionalNewline(newline_after),
 }

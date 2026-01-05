@@ -1,4 +1,5 @@
 local zsh = import 'lib/zsh.libsonnet';
+local util = import 'lib/util.libsonnet';
 
 local Core() =
   [
@@ -64,8 +65,8 @@ local Highlighters(highlighters = [ "main", "brackets", "pattern", "cursor" ]) =
 
 local Homebrew(color = true, no_env_hints = true) =
   [
-    zsh.Export("HOMEBREW_COLOR", zsh.Quote(color)),
-    zsh.Export("HOMEBREW_NO_ENV_HINTS", zsh.Quote(no_env_hints)),
+    zsh.Export("HOMEBREW_COLOR", util.Quote(color)),
+    zsh.Export("HOMEBREW_NO_ENV_HINTS", util.Quote(no_env_hints)),
   ];
 
 local Aria2(home = "$USER_DATA_HOME/aria2") =

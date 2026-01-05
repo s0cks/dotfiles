@@ -19,6 +19,7 @@ tasks:
     - .zimrc
     - .zstyles
     - .zshrc
+    - .zkeys
   clean:
     desc: "Clean the generated files"
     cmds:
@@ -29,7 +30,8 @@ tasks:
         .zshenv \
         .zimrc \
         .zstyles \
-        .zshrc
+        .zshrc \
+        .zkeys
   default:
     cmds:
     - task: generate

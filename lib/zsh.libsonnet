@@ -1,37 +1,25 @@
+local util = import 'lib/util.libsonnet';
+
 {
-  local NEWLINE = [ '' ],
-  local Optional(value, cond, default_value = []) =
-    if cond then
-      value
-    else
-      default_value,
-  local OptionalNewline(cond, default_value = []) =
-    Optional(NEWLINE, cond, default_value),
-  local WrapInOptionalNewlines(value, newline_before = false, newline_after = false) =
-    OptionalNewline(newline_before) +
-    value +
-    OptionalNewline(newline_after),
-  Quote(value):
-    '"' + value + '"',
   Array(values, quote = false):
     '(' +
       std.join(' ', [
-        (if quote then $.Quote(value) else value)
+        (if quote then util.Quote(value) else value)
         for value in (if std.isArray(values) then values else [ values ])
       ]) +
     ')',
   Comment(lines, newline_before = false, newline_after = false):
-    WrapInOptionalNewlines(
+    util.WrapInOptionalNewlines(
       [
         "# " + line
         for line in (if std.isArray(lines) then lines else [ lines ])
       ], newline_before, newline_after),
   Export(key, value, newline_before = false, newline_after = false):
-    WrapInOptionalNewlines(
+    util.WrapInOptionalNewlines(
       [
         "export " + key + "=" +
           (if std.isString(value) then
-            $.Quote(value)
+            util.Quote(value)
           else if std.isArray(value) then
             $.Array(value)
           else
@@ -45,7 +33,7 @@
   ExportPathAppend(value, newline_before = false, newline_after = false):
     $.ExportPath("$PATH:" + value, newline_before, newline_after),
   ExportFpath(values, quote = false, newline_before = false, newline_after = false):
-    WrapInOptionalNewlines(
+    util.WrapInOptionalNewlines(
       [
         "export fpath=" + $.Array(values, quote),
       ],
@@ -53,9 +41,9 @@
   ExportFpathPrepend(values, quote = false, newline_before = false, newline_after = false):
     $.ExportFpath(values + [ "${fpath[@]}" ], quote, newline_before, newline_after),
   Alias(keys, value, newline_before = false, newline_after = false, prefix = null):
-    WrapInOptionalNewlines(
+    util.WrapInOptionalNewlines(
       [
-        "alias" + (if prefix != null then " " + prefix + " " else " " ) + key + "=" + $.Quote(value),
+        "alias" + (if prefix != null then " " + prefix + " " else " " ) + key + "=" + util.Quote(value),
         for key in (if std.isArray(keys) then keys else [ keys ])
       ],
       newline_before, newline_after),
@@ -71,19 +59,19 @@
   EditorSuffixAlias(keys, newline_before = false, newline_after = false):
     $.SuffixAlias(keys, "$EDITOR", newline_before, newline_after),
   HashDir(key, value, newline_before = false, newline_after = false):
-    WrapInOptionalNewlines(
+    util.WrapInOptionalNewlines(
       [
-        "hash -d " + key + "=" + $.Quote(value),
+        "hash -d " + key + "=" + util.Quote(value),
       ],
       newline_before, newline_after),
   Local(key, value = null, newline_before = false, newline_after = false):
-    WrapInOptionalNewlines(
+    util.WrapInOptionalNewlines(
       [
-        "local " + key + (if value != null then "=" + $.Quote(value) else "")
+        "local " + key + (if value != null then "=" + util.Quote(value) else "")
       ], newline_before, newline_after),
   LocalMap(data, newline_before = false, newline_after = false):
-    WrapInOptionalNewlines([
-      "local " + name + (if name in data then "=" + $.Quote(data[name]) else "")
+    util.WrapInOptionalNewlines([
+      "local " + name + (if name in data then "=" + util.Quote(data[name]) else "")
       for name in std.objectFields(data)
     ]),
   Hashes(hashes):
@@ -106,14 +94,18 @@
     ],
   SourceIfCommand(value, commands, op = " && "):
     CondWrap(CombineConds(CommandExists(commands), op)) + " && source " + value,
+  BindKey(binding, value):
+    [
+      "bindkey " + util.SingleQuote(binding) + " " + value,
+    ],
   Shebang(exec = "zsh", path = "/usr/bin/env", newline_before = false, newline_after = false):
-    WrapInOptionalNewlines([
+    util.WrapInOptionalNewlines([
       "#!" + path + " " + exec,
     ], newline_before, newline_after),
   Header(lines, shebang = true, newline_after = false):
-    Optional($.Shebang(), shebang) +
+    util.Optional($.Shebang(), shebang) +
     $.Comment(lines) +
-    OptionalNewline(newline_after),
+    util.OptionalNewline(newline_after),
   manifest(lines):
     std.lines(std.flattenDeepArray(
       $.Header([
