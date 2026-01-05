@@ -44,7 +44,7 @@ local zsh = import 'lib/zsh.libsonnet';
     [
       zsh.Export("ZSH_COMPLETIONS_DIR", completions_dir),
     ],
-  AutoSuggest(strategy = [ "history", "completion" ],
+  AutoSuggest(strategy = [ "abbreviations", "history", "completion" ],
               buffer_max_size=20,
               manual_rebind = 1,
               use_async = 1):

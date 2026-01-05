@@ -1,0 +1,6 @@
+#!/usr/bin/env zsh
+local path_file=$(mktemp -p /tmp path.XXXXX)
+echo "$(<<<${(F)path})" >> "$path_file"
+$EDITOR "$path_file"
+local lines=("${(f)$(<$path_file)}")
+export PATH="${(j[:])lines}"

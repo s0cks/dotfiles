@@ -1,0 +1,16 @@
+#!/usr/bin/env zsh
+local KEY_ID="$1"
+local args=()
+if [[ "$#" > 1 ]]; then
+  local OUTPUT_FILE="$2"
+  args+=(
+    "--output"
+    "$OUTPUT_FILE"
+  )
+fi
+args+=(
+  "--armor"
+  "--export-secret-key"
+  "$KEY_ID"
+)
+gpg $args

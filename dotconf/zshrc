@@ -27,8 +27,6 @@ export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
 # apply zsh styles
 source "$HOME/.zstyles"
 
-export ZSH_AUTOSUGGEST_STRATEGY=(abbreviations $ZSH_AUTOSUGGEST_STRATEGY)
-
 # ┌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┐
 # ╎                        zimfw Init                         ╎
 # └╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┘
@@ -63,62 +61,10 @@ if (( $+command[docker] )); then
   fpath=("$HOME/.docker/completions" $fpath)
 fi
 
-# set fast-zsh-highlighting theme to flexoki-dark/light based on MacOS theme
-#TODO(@s0cks): figure out how to get this in zstyles?
-if [[ $(uname) == "Darwin" ]]; then
-  if macos-is-dark; then
-    fast-theme -q XDG:flexoki-dark
-  else
-    fast-theme -q XDG:flexoki-light
-  fi
-fi
-
 # luarocks
 if [[ $+commands[luarocks] ]]; then
   source <(luarocks path)
 fi
-
-gpg-export-sk() {
-  local KEY_ID="$1"
-  local args=()
-  if [[ "$#" > 1 ]]; then
-    local OUTPUT_FILE="$2"
-    args+=(
-      "--output"
-      "$OUTPUT_FILE"
-    )
-  fi
-  args+=(
-    "--armor"
-    "--export-secret-key"
-    "$KEY_ID"
-  )
-  gpg $args
-}
-
-fzfpath() {
-  <<<${(F)fpath} | fzf
-}
-
-fzpath() {
-  <<<${(F)path} | fzf
-}
-
-cat-fpath() {
-  <<<${(F)fpath}
-}
-
-cat-path() {
-  <<<${(F)path}
-}
-
-edit-path() {
-  local path_file=$(mktemp -p /tmp path.XXXXX)
-  echo "$(<<<${(F)path})" >> "$path_file"
-  $EDITOR "$path_file"
-  local lines=("${(f)$(<$path_file)}")
-  export PATH="${(j[:])lines}"
-}
 
 # llvm
 #TODO(@s0cks): is this necessary?
@@ -128,6 +74,16 @@ export CXX=clang++
 export LD=ld.lld
 export AR=llvm-ar
 export RANLIB=llvm-ranlib
+
+# set fast-zsh-highlighting theme to flexoki-dark/light based on MacOS theme
+#TODO(@s0cks): figure out how to get this in zstyles?
+if [[ $(uname) == "Darwin" ]]; then
+  if macos-is-dark; then
+    fast-theme -q XDG:flexoki-dark
+  else
+    fast-theme -q XDG:flexoki-light
+  fi
+fi
 
 #TODO(@s0cks): remove this once these values are configured  properly using the theme
 unset ZLS_COLORS
