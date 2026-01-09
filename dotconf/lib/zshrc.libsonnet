@@ -34,7 +34,7 @@ local Zeit = |||
   fi
 |||;
 
-(import 'lib/zshrc_homebrew.libsonnet') +
+(import 'lib/zshrc-homebrew.libsonnet') +
 Autoloads(false, true) +
 [
   zsh.Source("$HOME/.zstyles"),
