@@ -5,23 +5,25 @@ local gpg_key = "A7E49DD5";
 local gpg_id = "tazz@tazz.cloud";
 
 local Profile(useremail) =
-  [
-    zsh.Export("USEREMAIL", useremail),
-  ];
+  zsh.Exports({
+    USEREMAIL: useremail,
+  }, false, true);
 
 local Gpg(id, key, tty = "$(tty)") =
-  [
-    zsh.Export("GPG_ID", id),
-    zsh.Export("GPG_KEY", key),
-    zsh.Export("GPG_TTY", tty), 
-  ];
+  zsh.Exports({
+    GPG_ID: id,
+    GPG_KEY: key,
+    GPG_TTY: tty,
+  }, false, true);
 
-local LoadProfileSecrets =
-  [
-    "local ZPROFILE_SECRETS_FILE=\"${ZPROFILE_SECRETS_FILE:-$HOME/.zprofile_secrets.gpg}\"",
-    "[[ -f \"$ZPROFILE_SECRETS_FILE\" ]] && source <(gpg --quiet --yes -d \"$ZPROFILE_SECRETS_FILE\")",
-  ];
+local ProfileSecretsFragment = |||
+  local ZPROFILE_SECRETS_FILE="${ZPROFILE_SECRETS_FILE:-$HOME/.zprofile_secrets.gpg}"
+  zsecrets-reload() { source <(gpg --quiet --yes -d "$ZPROFILE_SECRETS_FILE") }
+  [[ -f "$ZPROFILE_SECRETS_FILE" ]] && zsecrets-reload()
+|||;
+
+local ProfileSecrets = std.split(ProfileSecretsFragment, "\n");
 
 Profile(email) +
 Gpg(gpg_id, gpg_key) +
-LoadProfileSecrets
+ProfileSecrets

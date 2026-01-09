@@ -26,6 +26,12 @@ local util = import 'lib/util.libsonnet';
             value)
       ],
       newline_before, newline_after),
+  Exports(data, newline_before = false, newline_after = false):
+    util.WrapInOptionalNewlines(
+      [
+        $.Export(k, data[k])
+        for k in std.objectFields(data)
+      ], newline_before, newline_after),
   ExportPath(value, newline_before = false, newline_after = false):
     $.Export("PATH", value, newline_before, newline_after),
   ExportPathPrepend(value, newline_before = false, newline_after = false):
