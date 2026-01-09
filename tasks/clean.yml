@@ -1,0 +1,7 @@
+---
+version: '3'
+tasks:
+  target:
+    desc: "Clean {{.TARGETS}}"
+    cmds:
+    - rm -rfv {{.TARGETS}}
