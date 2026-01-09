@@ -1,0 +1,28 @@
+---
+version: '3'
+includes:
+  jsonnet:
+    taskfile: ../../tasks/jsonnet.yml
+    internal: true
+  clean:
+    taskfile: ../../tasks/clean.yml
+    internal: true
+tasks:
+  build:
+    cmds:
+    - task: jsonnet:build
+      vars:
+        JSONNET_SOURCE: "koji.jsonnet"
+        JSONNET_INCLUDE_DIRS: "-J ../.. -J ."
+  clean:config:
+    cmds:
+    - task: clean:target
+      vars:
+        TARGETS: "config.toml"
+  clean:
+    parallel: true
+    cmds:
+    - task: clean:config
+  default:
+    cmds:
+    - task: build
