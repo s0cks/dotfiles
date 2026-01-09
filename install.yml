@@ -30,11 +30,13 @@
 # ╭──────────────────────────╮
 # │ Generate various configs │
 # ╰──────────────────────────╯
+#TODO(@s0cks): need to fix includes in jsonnet plugin
 - jsonnet:
     include_dirs:
     - "."
     - libs/flexoki.libsonnet/
     - libs/plist.libsonnet/
+    - conf/skhd/
     items:
       # generate git config
       "~/.config/git/":
@@ -53,8 +55,17 @@
         include_dirs:
         - conf/ripgrep/
         source: conf/ripgrep/rg.jsonnet
+      "~/.config/koji/":
+        source: conf/koji/koji.jsonnet
+        include_dirs:
+        - conf/koji/
       "~/.config/yabai/":
-        source: conf/yabai/yabairc.jsonnet
+        source: conf/yabai/yabai.jsonnet
+        include_dirs:
+        - conf/yabai/
+        vars:
+          XDG_CONFIG_HOME:
+            env: XDG_CONFIG_HOME
       "~/.config/bottom/":
         source: conf/bottom/bottom.jsonnet
       "~/.config/eza/":
@@ -65,6 +76,8 @@
         source: conf/bat/bat.jsonnet
       "~/.config/gh/":
         source: conf/gh/gh.jsonnet
+      "~/.config/skhd/":
+        source: conf/skhd/skhd.jsonnet
       "~/Library/Application\\ Support/pik/":
         include_dirs:
         - conf/pik/
@@ -163,6 +176,8 @@
       - conf/*.yml
       - conf/.*
       - conf/user-agent
+      - conf/skhd
+      - conf/koji
     # install various dotfiles
     ~/:
       glob: true

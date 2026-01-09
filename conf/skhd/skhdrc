@@ -1,51 +1,52 @@
+# *** Do not edit ***
+# This file was auto-generated using Jsonnet
+#   ~ @s0cks
+
+# Blacklist
 .blacklist [
   "VMware Fusion"
 ]
 
-.define terminal_apps [
-  "kitty",
-  "wezterm",
-  "terminal",
-]
-
-.define yabai_focus         : yabai -m window --focus {{1}} || yabai -m display --focus {{1}}
-.define yabai_layout        : yabai -m config layout {{1}}
-.define yabai_swap          : yabai -m window --swap {{1}}
-.define yabai_toggle        : [[ $(yabai -m query --spaces --space | jq -r '.type') == "float" ]] && yabai -m config layout bsp || yabai -m config layout float
-.define yabai_resize        : yabai -m window --resize {{1}}:{{2}}
-.define yabai_focus_on_app  : yabai -m window --focus $(yabai -m query --windows | jq -r '.[] | select(.app == "{{1}}").id') 
-.define yabai_warp          : yabai -m window --warp {{1}}
-.define yabai_move_to_space : yabai -m window --space {{1}}
-.define yabai_window_toggle : yabai -m window --toggle {{1}}
-.define yabai_focus_space   : yabai -m space --focus {{1}}
-
-.define yabai_grab_and_focus : \\
-  yabai -m window $(yabai -m query --windows | jq -r '.[] | select(.app == "{{1}}").id') --space 1 || \\
-  ([[ "$(yabai -m query --windows | jq -r '.[] | select(.app == "{{1}}")["is-native-fullscreen"]')" == "true" ]] && yabai -m window "$(yabai -m query --windows | jq -r '.[] | select(.app == "{{1}}").id')" --toggle native-fullscreen || return 0) || \\
+# Commands
+.define open :  open '{{1}}'
+.define test : \\
+  yabai -m window $(yabai -m query --windows | jq -r '.[] | select(.app == "{{1}}").id') --space 1  ||  \\
+  ([[ "$(yabai -m query --windows | jq -r '.[] | select(.app == "{{1}}")["is-native-fullscreen"]')" == "true" ]] && yabai -m window "$(yabai -m query --windows | jq -r '.[] | select(.app == "{{1}}").id')" --toggle native-fullscreen || return 0)  ||  \\
   yabai -m window $(yabai -m query --windows | jq -r '.[] | select(.app == "{{1}}").id') --warp first
+.define yabai_focus_on_app :  yabai -m window --focus $(yabai -m query --windows | jq -r '.[] | select(.app == "{{1}}").id') 
+.define yabai_focus_space :  yabai -m space --focus {{1}}
+.define yabai_layout :  yabai -m config layout {{1}}
+.define yabai_toggle :  [[ $(yabai -m query --spaces --space | jq -r '.type') == "float" ]] && yabai -m config layout bsp || yabai -m config layout float
+.define yabai_window_focus :  yabai -m window --focus {{1}}
+.define yabai_window_move_to_space :  yabai -m window --space {{1}}
+.define yabai_window_resize :  yabai -m window --resize {{1}}:{{2}}
+.define yabai_window_swap :  yabai -m window --swap {{1}}
+.define yabai_window_toggle :  yabai -m window --toggle {{1}}
+.define yabai_window_warp :  yabai -m window --warp {{1}}
 
-.define open                : open -a '{{1}}'
-.define show_hs_console     : hs -c 'hs.openConsole()'
-.define restart_yabai       : yabai --restart-service && osascript -e 'display notification "" with title "Yabai Restarted"'
+# Yabai Windows
+# focus
+hyper - l : @yabai_window_focus("east")
+hyper - h : @yabai_window_focus("west")
+hyper - k : @yabai_window_focus("north")
+hyper - j : @yabai_window_focus("south")
+hyper - 0x16 : @yabai_window_focus("first")
+hyper - 0x15 : @yabai_window_focus("last")
 
-# misc
-hyper - f1 : @yabai_toggle()
-hyper - f11 : @restart_yabai()
-hyper - f12 : @show_hs_console()
-hyper - g : @yabai_focus_on_app("Google Chrome")
-hyper - t : @yabai_grab_and_focus("wezterm-gui")
-hyper - d : @open("Google Drive.app")
+# swap
+cmd+shift - l : @yabai_window_swap("east")
+cmd+shift - h : @yabai_window_swap("west")
+cmd+shift - j : @yabai_window_swap("south")
+cmd+shift - k : @yabai_window_swap("north")
+cmd+shift - f : @yabai_window_swap("first")
 
-# yabai windows
-hyper - l : @yabai_focus("east")    # focus right
-hyper - h : @yabai_focus("west")    # focus left
-hyper - k : @yabai_focus("north")   # focus above
-hyper - j : @yabai_focus("south")   # focus down
-hyper - f : @yabai_focus("first")   # focus first
+# resize
+ctrl+shift - l : @yabai_window_resize("right", "10")
+ctrl+shift - h : @yabai_window_resize("right", "-10")
+ctrl+shift - j : @yabai_window_resize("bottom", "10")
+ctrl+shift - k : @yabai_window_resize("bottom", "-10")
 
-hyper - 0x2a : (wezterm start --cwd ~ --always-new-process -- yazi ~ &) && yabai -m window $(yabai -m query --windows | jq -r '.[] | select(.title | startswith("Yazi")).id') --focus
-
-# yabai spaces
+# Yabai Spaces
 hyper - n : @yabai_focus_space("next")
 hyper - p : @yabai_focus_space("prev")
 hyper - c : @yabai_focus_space("chat")
@@ -54,15 +55,8 @@ hyper - w : @yabai_focus_space("work")
 hyper - m : @yabai_focus_space("music")
 hyper - a : @yabai_focus_space("misc")
 
-# yabai window movement
-cmd+shift - l : @yabai_swap("east")       # swap w/ right
-cmd+shift - h : @yabai_swap("west")       # swap w/ left
-cmd+shift - j : @yabai_swap("south")      # swap w/ bottom
-cmd+shift - k : @yabai_swap("north")      # swap w/ above
-cmd+shift - f : @yabai_swap("first")      # swap w/ first
+# Misc
+hyper - d : @open("Google Drive.app")
+hyper - 0x2a : (wezterm start --cwd ~ --always-new-process -- yazi ~ &) && yabai -m window $(yabai -m query --windows | jq -r '.[] | select(.title | startswith("Yazi")).id') --focus)
+hyper - e : yabai -m window --close || yabai -m window --focus first
 
-# yabai resize window
-ctrl+shift - l : @yabai_resize("right",     "10")
-ctrl+shift - h : @yabai_resize("right",     "-10")
-ctrl+shift - j : @yabai_resize("bottom",    "10")
-ctrl+shift - k : @yabai_resize("bottom",    "-10")
