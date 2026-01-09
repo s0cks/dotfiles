@@ -2,17 +2,12 @@ local zsh = import 'lib/zsh.libsonnet';
 local util = import 'lib/util.libsonnet';
 local zim = import 'lib/zimfw.libsonnet';
 
-local StripLinesFromFront(fragment, n) =
-  std.split(fragment, "\n")[n:];
-local StripLinesFromBack(fragment, n) =
-  std.split(fragment, "\n")[:n];
-
 local Autoloads(newline_before = false, newline_after = false) =
   util.WrapInOptionalNewlines([
     zsh.AutoloadDir('/usr/local/share/zsh/functions'),
   ], newline_before, newline_after);
 
-
+local style = import 'lib/zshrc/style.libsonnet';
 local LoadStyleFragment(prefix = "$HOME") = |||
   if macos-is-light; then
   %(light_style)s
@@ -23,12 +18,12 @@ local LoadStyleFragment(prefix = "$HOME") = |||
   light_style:
     std.join("\n", [
       util.IndentBy(1) + line
-      for line in std.flattenDeepArray(import 'lib/zshrc-light.libsonnet')
+      for line in std.flattenDeepArray(style.LightStyle)
     ]),
   dark_style: 
     std.join("\n", [
       util.IndentBy(1) + line
-      for line in std.flattenDeepArray(import 'lib/zshrc-dark.libsonnet')
+      for line in std.flattenDeepArray(style.DarkStyle)
     ]),
 };
 local LoadStyle(prefix = "$HOME") =
@@ -45,7 +40,7 @@ local Zeit = |||
   fi
 |||;
 
-(import 'lib/zshrc-homebrew.libsonnet') +
+(import 'lib/zshrc/homebrew.libsonnet') +
 Autoloads(false, true) +
 zsh.Source([
   "$HOME/.zstyles",

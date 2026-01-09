@@ -8,6 +8,4 @@ local zsh = import 'lib/zsh.libsonnet';
   [".zstyles"]: zsh.manifest(import 'lib/zstyles.libsonnet'),
   [".zkeys"]: zsh.manifest(import 'lib/zkeys.libsonnet'),
   [".zshrc"]: zsh.manifest(import 'lib/zshrc.libsonnet'),
-  [".zshrc-light"]: zsh.manifest(import 'lib/zshrc-light.libsonnet'),
-  [".zshrc-dark"]: zsh.manifest(import 'lib/zshrc-dark.libsonnet'),
 }
