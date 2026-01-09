@@ -35,9 +35,9 @@ local util = import 'lib/util.libsonnet';
   ExportPath(value, newline_before = false, newline_after = false):
     $.Export("PATH", value, newline_before, newline_after),
   ExportPathPrepend(value, newline_before = false, newline_after = false):
-    $.ExportPath(value + ":$PATH", newline_before, newline_after),
+    $.ExportPath((if std.isArray(value) then std.join(":", value) else value) + ":$PATH", newline_before, newline_after),
   ExportPathAppend(value, newline_before = false, newline_after = false):
-    $.ExportPath("$PATH:" + value, newline_before, newline_after),
+    $.ExportPath("$PATH:" + (if std.isArray(value) then std.join(":", value) else value), newline_before, newline_after),
   ExportFpath(values, quote = false, newline_before = false, newline_after = false):
     util.WrapInOptionalNewlines(
       [

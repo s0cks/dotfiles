@@ -26,9 +26,14 @@ local LoadHomebrew() =
   util.Comment("Load Homebrew") +
   std.split(LoadHomebrewFragment, "\n");
 
+local LoadHomebrewPaths(paths, newline_before = false, newline_after = false) = 
+  util.Comment("Load Homebrew Paths") +
+  util.WrapInOptionalNewlines(paths, newline_before, newline_after);
+
 LoadHomebrew() +
-util.WrapInOptionalNewlines([
-  ExportBrewPathPrepend(),
-  ExportBrewPathPrepend("llvm"),
-  ExportBrewPathPrepend("coreutils", "/libexec/gnubin"),
-], false, true)
+LoadHomebrewPaths(
+  zsh.ExportPathPrepend([
+    util.BrewPrefixPath(),
+    util.BrewPrefixPath('llvm'),
+    util.BrewPrefixPath('coreutils', '/libexec/gnubin'),
+  ]), false, true)
