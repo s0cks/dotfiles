@@ -1,0 +1,6 @@
+#!/usr/bin/env zsh
+gopass ls --flat | fzf \
+  --query "$1" \
+  --preview "gopass show {}" \
+  --bind 'ctrl-c:become(gopass show -o {} | cb)' \
+  --bind 'enter:become(gopass show -o {} | cb)'
