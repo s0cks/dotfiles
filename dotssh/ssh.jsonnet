@@ -9,11 +9,14 @@ local CreateHost(name, config) =
     {});
 
 {
-  "config": ssh.SSHConfig(
-    [ ssh.Property('AddKeysToAgent', 'yes') ] +
-    [
-      CreateHost(name, hosts[name])
-      for name in std.objectFields(hosts)
-    ]
-  )
+  "config":
+    ssh.manifest(
+      [
+        ssh.Property('AddKeysToAgent', 'yes')
+      ],
+      [
+        CreateHost(name, hosts[name])
+        for name in std.objectFields(hosts)
+      ]
+    )
 }

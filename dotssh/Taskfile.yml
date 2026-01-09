@@ -1,0 +1,29 @@
+version: '3'
+includes:
+  jsonnet:
+    internal: true
+    taskfile: ../tasks/jsonnet.yml
+  clean:
+    interal: true
+    taskfile: ../tasks/clean.yml
+tasks:
+  build:
+    desc: "Generate ssh config using Jsonnet"
+    cmds:
+    - task: jsonnet:build
+      vars:
+        JSONNET_INCLUDES: "-J .. -J ."
+        JSONNET_SOURCE: "ssh.jsonnet"
+  clean:config:
+    desc: "Clean ssh config"
+    cmds:
+    - task: clean:target
+      vars:
+        TARGETS: config
+  clean:
+    parallel: true
+    cmds:
+    - task: clean:config
+  default:
+    cmds:
+    - task: build
