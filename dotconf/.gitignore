@@ -4,6 +4,7 @@
 .zimrc
 .zstyles
 .zshrc
+.zshrc-*
 .zkeys
 .hushlogin
 hushlogin
