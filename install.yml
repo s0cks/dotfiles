@@ -59,6 +59,13 @@
         source: conf/koji/koji.jsonnet
         include_dirs:
         - conf/koji/
+      "~/.config/mise/":
+        source: conf/mise/mise.jsonnet
+        include_dirs:
+        - conf/mise/
+        vars:
+          XDG_CONFIG_HOME:
+            env: XDG_CONFIG_HOME
       "~/.config/yabai/":
         source: conf/yabai/yabai.jsonnet
         include_dirs:
@@ -178,6 +185,7 @@
       - conf/user-agent
       - conf/skhd
       - conf/koji
+      - conf/mise
     # install various dotfiles
     ~/:
       glob: true
