@@ -1,5 +1,6 @@
 local zsh = import 'lib/zsh.libsonnet';
 local util = import 'lib/util.libsonnet';
+local zim = import 'lib/zimfw.libsonnet';
 
 local StripLinesFromFront(fragment, n) =
   std.split(fragment, "\n")[n:];
@@ -11,14 +12,6 @@ local Autoloads(newline_before = false, newline_after = false) =
     zsh.AutoloadDir('/usr/local/share/zsh/functions'),
   ], newline_before, newline_after);
 
-local LoadZimFragment = |||
-  ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
-  source "${ZIM_HOME}/init.zsh"
-  zmodload -F zsh/terminfo +p:terminfo
-|||;
-local LoadZim() = 
-  util.Comment("Load zim") +
-  std.split(LoadZimFragment, "\n");
 
 local LoadStyleFragment(prefix = "$HOME") = |||
   if macos-is-light; then
@@ -46,15 +39,16 @@ Autoloads(false, true) +
 [
   zsh.Source("$HOME/.zstyles"),
 ] +
-LoadZim() +
+zim.LoadZim() +
 [
-  zsh.Source("<(pay-respects zsh)"),
-  zsh.SourceIfCommand("<(luarocks path)", "luarocks"),
-  zsh.Source("$HOME/.zsh_custom/fz.sh"), //TODO(@s0cks): wtf is this?
-  zsh.Source("$HOME/.zkeys"),
-  zsh.Source("$HOME/.zaliases"),
-  //TODO(@s0cks): convert this to: s0cks tc activate ${DEFAULT_TOOLCHAIN:-homebrew-llvm}
-  zsh.Source("$USER_DATA_HOME/toolchains/${DEFAULT_TOOLCHAIN:-homebrew-llvm}"),
+  zsh.Source([
+    "<(luarocks path)",
+    "<(pay-respects zsh)",
+    "$HOME/.zsh_custom/fz.sh", // TODO(@s0cks): wtf is this?
+    "$HOME/.zkeys",
+    "$HOME/.zaliases",
+    "$USER_DATA_HOME/toolchains/${DEFAULT_TOOLCHAIN:-homebrew-llvm}", // TODO(@s0cks): convert this to: s0cks tc activate ${DEFAULT_TOOLCHAIN:-homebrew-llvm}
+  ]),
 ] +
 LoadStyle() +
 [

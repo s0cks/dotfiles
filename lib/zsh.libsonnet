@@ -85,9 +85,10 @@ local util = import 'lib/util.libsonnet';
       $.HashDir(name, hashes[name])
       for name in std.objectFields(hashes)
     ],
-  Source(value):
+  Source(sources):
     [
-      "source " + value
+      "source " + source
+      for source in (if std.isArray(sources) then sources else [ sources ])
     ],
   local CombineConds(conds, op = " && ") =
     std.join(op, conds),

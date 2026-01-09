@@ -1,3 +1,5 @@
+local util = import 'lib/util.libsonnet';
+
 {
   Module(name, cond = null, fpath = null, f = null, a = null):
     [
@@ -27,4 +29,14 @@
       $.Module(module)
       for module in names
     ],
+  local LoadZimFragment = |||
+    ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
+    source "${ZIM_HOME}/init.zsh"
+    zmodload -F zsh/terminfo +p:terminfo
+  |||,
+  LoadZim(newline_before = false, newline_after = false):
+    util.WrapInOptionalNewlines(
+      util.Comment("Load zim") +
+      std.split(LoadZimFragment, "\n"),
+      newline_before, newline_after),
 }
