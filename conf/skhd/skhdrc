@@ -43,6 +43,8 @@ hyper - k : @yabai_focus("north")   # focus above
 hyper - j : @yabai_focus("south")   # focus down
 hyper - f : @yabai_focus("first")   # focus first
 
+hyper - 0x2a : (wezterm start --cwd ~ --always-new-process -- yazi ~ &) && yabai -m window $(yabai -m query --windows | jq -r '.[] | select(.title | startswith("Yazi")).id') --focus
+
 # yabai spaces
 hyper - n : @yabai_focus_space("next")
 hyper - p : @yabai_focus_space("prev")
@@ -51,11 +53,6 @@ hyper - b : @yabai_focus_space("web")
 hyper - w : @yabai_focus_space("work")
 hyper - m : @yabai_focus_space("music")
 hyper - a : @yabai_focus_space("misc")
-cmd+shift - c : @yabai_move_to_space("chat") ; @yabai_focus("first")
-cmd+shift - w : @yabai_move_to_space("work") ; @yabai_focus("first")
-cmd+shift - b : @yabai_move_to_space("web") ; @yabai_focus("first")
-cmd+shift - m : @yabai_move_to_space("music") ; @yabai_focus("first")
-cmd+shift - a : @yabai_move_to_space("misc") ; @yabai_focus("first")
 
 # yabai window movement
 cmd+shift - l : @yabai_swap("east")       # swap w/ right

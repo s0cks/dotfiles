@@ -1,19 +1,12 @@
 {
-  Comment(lines, prefix = '#'):
-    [
-      "%(prefix)s %(line)s" % { prefix: prefix, line: line }
-      for line in (if std.isArray(lines) then lines else [ lines ])
-    ],
   WarningHeaderComment(extra = [], prefix = '#', newline_before = false, newline_after = false):
-    $.WrapInOptionalNewlines($.Comment(
-      [
+    $.Comment([
         "*** Do not edit ***",
         "This file was auto-generated using Jsonnet",
         "  ~ @s0cks",
       ] +
       extra,
-      prefix
-    ), newline_before, newline_after),
+      prefix, newline_before, newline_after),
   IndentBy(amt, c = ' '):
     std.repeat(c, amt * 2),
   Indent: $.IndentBy(1),
@@ -33,4 +26,9 @@
     $.OptionalNewline(newline_before) +
     value +
     $.OptionalNewline(newline_after),
+  Comment(lines, prefix = '#', newline_before = false, newline_after = false):
+    $.WrapInOptionalNewlines([
+      "%(prefix)s %(line)s" % { prefix: prefix, line: line }
+      for line in (if std.isArray(lines) then lines else [ lines ])
+    ], newline_before, newline_after),
 }

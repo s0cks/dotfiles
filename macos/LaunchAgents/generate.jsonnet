@@ -83,9 +83,7 @@ local GetEnvPath(extras = []) =
       }),
       plist.ProgramArguments(HOMEBREW_BIN + '/wezterm', [
         plist.SingleWrapString('start', 3),
-        plist.SingleWrapString('zellij', 3),
-        plist.SingleWrapString("--layout", 3),
-        plist.SingleWrapString('irc', 3),
+        plist.SingleWrapString("weechat", 3),
       ]),
     ]),
 }
