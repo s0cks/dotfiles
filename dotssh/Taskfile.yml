@@ -12,7 +12,7 @@ tasks:
     cmds:
     - task: jsonnet:build
       vars:
-        JSONNET_INCLUDES: "-J .. -J ."
+        JSONNET_INCLUDES: "-J .. -J . -J ../libs/ssh.libsonnet/"
         JSONNET_SOURCE: "ssh.jsonnet"
   clean:config:
     desc: "Clean ssh config"

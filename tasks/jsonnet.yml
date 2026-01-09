@@ -5,7 +5,11 @@ tasks:
     desc: "Build {{.JSONNET_SOURCE}} using Jsonnet"
     cmds:
     - > 
-      jsonnet {{.JSONNET_INCLUDE_DIRS | default "-J ." }} \
+      jsonnet -J . \
+              -J ../libs/flexoki.libsonnet/ \
+              -J ../libs/ssh.libsonnet/ \
+              -J ../libs/plist.libsonnet/ {{ if .JSONNET_INCLUDE_DIRS }} \
+              {{ .JSONNET_INCLUDE_DIRS | default "" }}{{ end }} \
               -S \
               -m {{.JSONNET_BUILD_DIR | default "." }} \
               {{.JSONNET_SOURCE}} {{ if .JSONNET_EXTRAS }}{{ .JSONNET_EXTRAS }}{{ end }} {{ if .CLI_ARGS }}{{ .CLI_ARGS }}{{ end }}

@@ -38,6 +38,7 @@
     - "."
     - libs/flexoki.libsonnet/
     - libs/plist.libsonnet/
+    - libs/ssh.libsonnet/
     - conf/skhd/
     items:
       # generate git config

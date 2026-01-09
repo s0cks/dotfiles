@@ -7,3 +7,6 @@
 [submodule "libs/plist.libsonnet"]
 	path = libs/plist.libsonnet
 	url = git@github.com:s0cks/plist.libsonnet.git
+[submodule "libs/ssh.libsonnet"]
+	path = libs/ssh.libsonnet
+	url = git@github.com:s0cks/ssh.libsonnet.git
