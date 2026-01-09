@@ -36,29 +36,21 @@ local Zeit = |||
 
 (import 'lib/zshrc-homebrew.libsonnet') +
 Autoloads(false, true) +
-[
-  zsh.Source("$HOME/.zstyles"),
-] +
+zsh.Source([
+  "$HOME/.zstyles",
+]) +
 zim.LoadZim() +
-[
-  zsh.Source([
-    "<(luarocks path)",
-    "<(pay-respects zsh)",
-    "$HOME/.zsh_custom/fz.sh", // TODO(@s0cks): wtf is this?
-    "$HOME/.zkeys",
-    "$HOME/.zaliases",
-    "$USER_DATA_HOME/toolchains/${DEFAULT_TOOLCHAIN:-homebrew-llvm}", // TODO(@s0cks): convert this to: s0cks tc activate ${DEFAULT_TOOLCHAIN:-homebrew-llvm}
-  ]),
-] +
+zsh.Source([
+  "<(luarocks path)",
+  "<(pay-respects zsh)",
+  "$HOME/.zsh_custom/fz.sh", // TODO(@s0cks): wtf is this?
+  "$HOME/.zkeys",
+  "$HOME/.zaliases",
+  "$USER_DATA_HOME/toolchains/${DEFAULT_TOOLCHAIN:-homebrew-llvm}", // TODO(@s0cks): convert this to: s0cks tc activate ${DEFAULT_TOOLCHAIN:-homebrew-llvm}
+]) +
 LoadStyle() +
+//TODO(@s0cks): remove this once these values are configured  properly using the theme
 [
-  //TODO(@s0cks): remove this once these values are configured  properly using the theme
   "unset ZLS_COLORS",
   "unset LS_COLORS",
 ]
-
-// #TODO(@s0cks): is this necessary?
-// if (( $+command[docker] )); then
-//   fpath=("$HOME/.docker/completions" $fpath)
-// fi
-//
