@@ -27,4 +27,5 @@ zsh.Comment("misc aliases", true) +
   zsh.Alias("Gl", "serie"),
   zsh.Alias("tree", "lstr -a -g -G --icons"),
   zsh.Alias("dic", "echo 𓂺"),
+  zsh.Alias("gdu", "gdu-go"),
 ]
