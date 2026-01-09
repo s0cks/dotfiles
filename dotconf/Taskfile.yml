@@ -32,8 +32,11 @@ tasks:
         .zimrc \
         .zstyles \
         .zshrc \
+        .zshrc-light \
+        .zshrc-dark \
         .zkeys \
-        .hushlogin
+        .hushlogin \
+        hushlogin
   default:
     cmds:
     - task: generate

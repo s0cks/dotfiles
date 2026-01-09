@@ -42,6 +42,13 @@ local CreateAndBindNewWidgetFromTemplate(binding, name, template, newline_before
 
 local BindMagicSpaceWidget = BindWidget(" ", "magic-space");
 
+local EditCommandLine(newline_before = false, newline_after = false) =
+  util.WrapInOptionalNewlines([
+    "autoload -Uz edit-command-line",
+    "zle -N edit-command-line",
+    "bindkey '^E' edit-command-line",
+  ], newline_before, newline_after);
+
 [
 	"for key ('^[[A' '^K' ${terminfo[kcuu1]}); bindkey ${key} history-substring-search-up",
 	"for key ('^[[B' '^J' ${terminfo[kcud1]}); bindkey ${key} history-substring-search-down",
@@ -52,6 +59,7 @@ local BindMagicSpaceWidget = BindWidget(" ", "magic-space");
   "",
 ] +
 BindMagicSpaceWidget +
+EditCommandLine(true) +
 BindNewWidget("^\\", "yz", true) +
 CreateAndBindNewWidgetForCommand("^]", "lazygit", true) +
 CreateAndBindNewWidgetForCommand("^[", "nvim", true) +

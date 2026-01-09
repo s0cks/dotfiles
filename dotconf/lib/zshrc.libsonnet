@@ -1,49 +1,52 @@
 local zsh = import 'lib/zsh.libsonnet';
+local util = import 'lib/util.libsonnet';
 
 local StripLinesFromFront(fragment, n) =
   std.split(fragment, "\n")[n:];
 local StripLinesFromBack(fragment, n) =
   std.split(fragment, "\n")[:n];
 
-local ConfigHomebrew =
-  StripLinesFromFront((importstr 'lib/_homebrew.sh'), 1) +
-  [
-    zsh.ExportPathPrepend("$(brew --prefix)/bin"),
-    zsh.ExportPathPrepend("$(brew --prefix llvm)/bin"),
-    zsh.ExportPathPrepend("$(brew --prefix coreutils)/libexec/gnubin"),
-    ' ',
-  ];
-local Autoloads = 
-  [
-    "autoload -Uz colors && colors",
-    "autoload -Uz /usr/local/share/zsh/functions/*(:t)",
-    ' ',
-  ];
-local EditCommandLine = 
-  [
-    "autoload -Uz edit-command-line",
-    "zle -N edit-command-line",
-    "bindkey '^E' edit-command-line",
-    ' ',
-  ];
+local Autoloads(newline_before = false, newline_after = false) =
+  util.WrapInOptionalNewlines([
+    zsh.AutoloadDir('/usr/local/share/zsh/functions'),
+  ], newline_before, newline_after);
 
-ConfigHomebrew +
-Autoloads +
-EditCommandLine +
+local LoadZimFragment = |||
+  ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
+  source "${ZIM_HOME}/init.zsh"
+  zmodload -F zsh/terminfo +p:terminfo
+|||;
+local LoadZim() = 
+  util.Comment("Load zim") +
+  std.split(LoadZimFragment, "\n");
+
+local LoadStyleFragment(prefix = "$HOME") = |||
+  if macos-is-light; then
+    source "%(prefix)s/.zshrc-light"
+  else
+    source "%(prefix)s/.zshrc-dark"
+  fi
+||| % { prefix: prefix };
+local LoadStyle(prefix = "$HOME") =
+  util.Comment("Load style") +
+  std.split(LoadStyleFragment(prefix), "\n");
+
+(import 'lib/zshrc_homebrew.libsonnet') +
+Autoloads(false, true) +
 [
   zsh.Source("$HOME/.zstyles"),
 ] +
-StripLinesFromFront((importstr "lib/_load-zim.sh"), 1) +
+LoadZim() +
 [
+  zsh.Source("<(pay-respects zsh)"),
+  zsh.SourceIfCommand("<(luarocks path)", "luarocks"),
   zsh.Source("$HOME/.zsh_custom/fz.sh"), //TODO(@s0cks): wtf is this?
   zsh.Source("$HOME/.zkeys"),
   zsh.Source("$HOME/.zaliases"),
-  zsh.Source("<(pay-respects zsh)"),
   //TODO(@s0cks): convert this to: s0cks tc activate ${DEFAULT_TOOLCHAIN:-homebrew-llvm}
   zsh.Source("$USER_DATA_HOME/toolchains/${DEFAULT_TOOLCHAIN:-homebrew-llvm}"),
-  zsh.SourceIfCommand("<(luarocks path)", "luarocks"),
 ] +
-StripLinesFromFront((importstr 'lib/_styles.sh'), 1) +
+LoadStyle() +
 [
   //TODO(@s0cks): remove this once these values are configured  properly using the theme
   "unset ZLS_COLORS",
