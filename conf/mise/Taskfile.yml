@@ -1,0 +1,44 @@
+---
+version: '3'
+includes:
+  jsonnet:
+    internal: true
+    taskfile: ../../tasks/jsonnet.yml
+tasks:
+  build:
+    label: "Build mise config using Jsonnet"
+    cmds:
+    - task: jsonnet:build
+      vars:
+        JSONNET_SOURCE: "mise.jsonnet"
+        JSONNET_INCLUDE_DIRS: "-J ../.. -J ."
+        JSONNET_EXTRAS: --ext-str XDG_CONFIG_HOME
+  clean:target:
+    internal: true
+    cmds:
+    - rm -rfv {{.TARGETS}}
+  clean:default-python-packages:
+    cmds:
+    - task: clean:target
+      vars:
+        TARGETS: .default-python-packages
+  clean:default-gems:
+    cmds:
+    - task: clean:target
+      vars:
+        TARGETS: .default-gems
+  clean:config:
+    cmds:
+    - task: clean:target
+      vars:
+        TARGETS: config.toml
+  clean:
+    desc: "Clean generated build files"
+    parallel: true
+    cmds:
+    - task: clean:default-python-packages
+    - task: clean:default-gems
+    - task: clean:config
+  default:
+    cmds:
+    - task: build

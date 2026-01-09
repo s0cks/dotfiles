@@ -59,6 +59,10 @@
         source: conf/koji/koji.jsonnet
         include_dirs:
         - conf/koji/
+      "~/.config/navi/":
+        source: conf/navi/navi.jsonnet
+        include_dirs:
+        - conf/navi/
       "~/.config/mise/":
         source: conf/mise/mise.jsonnet
         include_dirs:
@@ -186,6 +190,7 @@
       - conf/skhd
       - conf/koji
       - conf/mise
+      - conf/navi
     # install various dotfiles
     ~/:
       glob: true
