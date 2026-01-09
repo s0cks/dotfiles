@@ -15,11 +15,22 @@ local Autoloads(newline_before = false, newline_after = false) =
 
 local LoadStyleFragment(prefix = "$HOME") = |||
   if macos-is-light; then
-    source "%(prefix)s/.zshrc-light"
+  %(light_style)s
   else
-    source "%(prefix)s/.zshrc-dark"
+  %(dark_style)s
   fi
-||| % { prefix: prefix };
+||| % {
+  light_style:
+    std.join("\n", [
+      util.IndentBy(1) + line
+      for line in std.flattenDeepArray(import 'lib/zshrc-light.libsonnet')
+    ]),
+  dark_style: 
+    std.join("\n", [
+      util.IndentBy(1) + line
+      for line in std.flattenDeepArray(import 'lib/zshrc-dark.libsonnet')
+    ]),
+};
 local LoadStyle(prefix = "$HOME") =
   util.Comment("Load style") +
   std.split(LoadStyleFragment(prefix), "\n");
