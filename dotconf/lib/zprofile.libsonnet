@@ -17,9 +17,9 @@ local Gpg(id, key, tty = "$(tty)") =
   }, false, true);
 
 local ProfileSecretsFragment = |||
-  local ZPROFILE_SECRETS_FILE="${ZPROFILE_SECRETS_FILE:-$HOME/.zprofile_secrets.gpg}"
-  zsecrets-reload() { source <(gpg --quiet --yes -d "$ZPROFILE_SECRETS_FILE") }
-  [[ -f "$ZPROFILE_SECRETS_FILE" ]] && zsecrets-reload()
+  ZPROFILE_SECRETS_FILE="${ZPROFILE_SECRETS_FILE:-$HOME/.zprofile_secrets.gpg}"
+  zsecrets-reload() { eval "$(gpg --quiet --yes -d $ZPROFILE_SECRETS_FILE)" }
+  [[ -f "$ZPROFILE_SECRETS_FILE" ]] && zsecrets-reload
 |||;
 
 local ProfileSecrets = std.split(ProfileSecretsFragment, "\n");
