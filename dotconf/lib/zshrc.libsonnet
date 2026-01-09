@@ -31,6 +31,16 @@ local LoadStyle(prefix = "$HOME") =
   util.Comment("Load style") +
   std.split(LoadStyleFragment(prefix), "\n");
 
+//TODO(@s0cks): remove
+local Zeit = |||
+  if [[ $+command[zeit] ]]; then
+    ZEIT_COMPLETIONS_FILE="${ZSH_COMPLETIONS_DIR:-$USER_DATA_HOME/zsh/completions/_zeit}"
+    if [[ ! -f "$ZEIT_COMPLETIONS_FILE" ]]; then
+      zeit completion zsh > "$ZSH_COMPLETIONS_FILE"
+    fi
+  fi
+|||;
+
 (import 'lib/zshrc_homebrew.libsonnet') +
 Autoloads(false, true) +
 [

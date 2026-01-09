@@ -1,4 +1,9 @@
 {
+  BrewPrefixPath(prefix = null, path = "/bin"):
+    "$(brew %(prefix)s)%(path)s" % {
+      prefix: "--prefix" + (if prefix != null then " " + prefix else ""),
+      path: path,
+    },
   WarningHeaderComment(extra = [], prefix = '#', newline_before = false, newline_after = false):
     $.Comment([
         "*** Do not edit ***",

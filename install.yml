@@ -18,7 +18,6 @@
   - /usr/local/share/aria2/
   - /usr/local/share/zsh/functions/
   - /usr/local/share/zsh/completions/
-  - /usr/local/share/toolchains/
   - ~/.config/yazi/
   - ~/.config/aria2tui/
 
@@ -155,6 +154,22 @@
       url: "https://github.com/s0cks/dot-wezterm.git"
       description: "@s0cks/dot-wezterm from GitHub"
       recursive: true
+
+# ╭────────────────────╮
+# │ Install Toolchains │
+# ╰────────────────────╯
+- shell:
+  - echo "installing toolchains...."
+- create:
+  - /usr/local/share/toolchains/
+- jsonnet:
+    include_dirs:
+    - "."
+    items:
+      "/usr/local/share/toolchains/":
+        source: toolchains/toolchains.jsonnet
+        include_dirs:
+        - toolchains/
 
 #                           ╭─────────────────────────╮
 #                           │ Create various symlinks │

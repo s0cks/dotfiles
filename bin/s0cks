@@ -192,6 +192,9 @@ local __toolchain() {
         echo "- $toolchain"
       done
       ;;
+    zsh)
+      echo "$(/usr/bin/cat $TOOLCHAINS_DIR/$2)"
+      ;;
     *)
     __invalid_update_target "$target" && return 1
     ;;

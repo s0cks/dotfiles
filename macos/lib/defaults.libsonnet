@@ -1,3 +1,4 @@
+local util = import 'lib/util.libsonnet';
 {
   local DefaultsEntry(mode, app, key, value, type) =
     "defaults %(mode)s %(app)s %(key)s -%(type)s %(value)s" % {
@@ -10,13 +11,22 @@
   local Quote(value) = '"' + value + '"',
   WriteDefaultsEntry(app, key, value, type):
     DefaultsEntry('write', app, key, value, type),
-  WriteDefaults(app, key, value):
+  //TODO(@s0cks): change to WriteDefault
+  WriteDefaults(app, key, value, newline_before = false, newline_after = false, comment = false):
     if (std.isString(value)) then
       $.WriteDefaultsEntry(app, key, Quote(value), "string")
     else if (std.isBoolean(value)) then
       $.WriteDefaultsEntry(app, key, value, "bool")
     else
       $.WriteDefaultsEntry(app, key, Quote(value), "string"),
+  //TODO(@s0cks): change to WriteDefaults
+  WriteDefaultsMap(app, data, newline_before = false, newline_after = false, comment = true):
+    util.WrapInOptionalNewlines(
+      (if comment then util.Comment(app + " defaults") else []) +
+      [
+        $.WriteDefaults(app, name, data[name])
+        for name in std.objectFields(data)
+      ], newline_before, newline_after),
   local NEWLINE = [ '' ],
   local Optional(value, cond, default_value = []) =
     if cond then

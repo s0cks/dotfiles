@@ -27,6 +27,7 @@ local Core() =
     zsh.Export("DOTBOT_HOME", "$USER_DATA_HOME/dotbot"),
     zsh.Export("GHQ_ROOT", "$HOME/Projects"),
     zsh.Export("EZA_CONFIG_DIR", "$XDG_CONFIG_HOME/eza"),
+    zsh.Export("USER_TOOLCHAINS_HOME", "$USER_DATA_HOME/toolchains"),
   ];
 
 local Hist(savehist = 10000,
