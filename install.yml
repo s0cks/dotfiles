@@ -49,7 +49,7 @@
         - dotconf/
       # generate ssh config
       "~/.ssh/":
-        source: dotssh/config.jsonnet
+        source: dotssh/ssh.jsonnet
       "~/.config/":
         source: conf/config.jsonnet
       # generate ripgrep config
