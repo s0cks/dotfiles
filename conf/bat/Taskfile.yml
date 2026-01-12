@@ -9,6 +9,8 @@ includes:
     internal: true
 tasks:
   build:
+    deps:
+    - clean
     cmds:
     - task: jsonnet:build
       vars:
@@ -23,6 +25,11 @@ tasks:
     parallel: true
     cmds:
     - task: clean:config
+  install:
+    deps:
+    - build
+    cmds:
+    - ./bin/install
   default:
     cmds:
     - task: build

@@ -1,6 +1,8 @@
 local zsh = import 'lib/zsh.libsonnet';
 local util = import 'lib/util.libsonnet';
 local zim = import 'lib/zimfw.libsonnet';
+local OS = std.extVar("OS");
+local commands = import 'lib/commands.libsonnet';
 
 local Autoloads(newline_before = false, newline_after = false) =
   util.WrapInOptionalNewlines([
@@ -40,23 +42,43 @@ local Zeit = |||
   fi
 |||;
 
-(import 'lib/zshrc/homebrew.libsonnet') +
+local OSXConfig() = 
+  zsh.Source([
+    "<(luarocks path)",
+    "<(pay-respects zsh)",
+    "$HOME/.zsh_custom/fz.sh", // TODO(@s0cks): wtf is this?
+    "$HOME/.zkeys",
+    "$HOME/.zaliases",
+    // "$USER_DATA_HOME/toolchains/${DEFAULT_TOOLCHAIN:-homebrew-llvm}", // TODO(@s0cks): convert this to: s0cks tc activate ${DEFAULT_TOOLCHAIN:-homebrew-llvm}
+  ]) +
+  LoadStyle();
+
+local LoadStarshipFragment = 'eval "$(starship init zsh)"';
+local LoadStarship() = 
+  zsh.Comment("Load Starship", true) +
+  std.split(LoadStarshipFragment, "\n");
+
+local LoadMiseFragment = 'eval "$(mise activate zsh)"';
+local LoadMise =
+  zsh.Comment("Load mise", true) +
+  std.split(LoadMiseFragment, "\n");
+
+(if OS == "OSX" then (import 'lib/zshrc/homebrew.libsonnet') else []) +
 Autoloads(false, true) +
 zsh.Source([
   "$HOME/.zstyles",
 ]) +
 zim.LoadZim() +
 zsh.Source([
-  "<(luarocks path)",
-  "<(pay-respects zsh)",
-  "$HOME/.zsh_custom/fz.sh", // TODO(@s0cks): wtf is this?
   "$HOME/.zkeys",
   "$HOME/.zaliases",
-  "$USER_DATA_HOME/toolchains/${DEFAULT_TOOLCHAIN:-homebrew-llvm}", // TODO(@s0cks): convert this to: s0cks tc activate ${DEFAULT_TOOLCHAIN:-homebrew-llvm}
 ]) +
-LoadStyle() +
+(if commands.hasStarship then LoadStarship() else []) +
+(if commands.hasMise then LoadMise else []) +
+(if OS == "OSX" then OSXConfig() else []) +
 //TODO(@s0cks): remove this once these values are configured  properly using the theme
 [
+  '',
   "unset ZLS_COLORS",
   "unset LS_COLORS",
 ]

@@ -8,12 +8,15 @@ includes:
     taskfile: ../tasks/clean.yml
 tasks:
   build:
+    deps:
+    - clean
     desc: "Generate ssh config using Jsonnet"
     cmds:
     - task: jsonnet:build
       vars:
-        JSONNET_INCLUDES: "-J .. -J . -J ../libs/ssh.libsonnet/"
         JSONNET_SOURCE: "ssh.jsonnet"
+        JSONNET_INCLUDES: "-J .. -J . -J ../libs/ssh.libsonnet/"
+        JSONNET_EXTRAS: "--ext-str GH_ID_RSA=id_rsa"
   clean:config:
     desc: "Clean ssh config"
     cmds:
@@ -24,6 +27,11 @@ tasks:
     parallel: true
     cmds:
     - task: clean:config
+  install:
+    deps:
+    - build
+    cmds:
+    - ./bin/install
   default:
     cmds:
     - task: build

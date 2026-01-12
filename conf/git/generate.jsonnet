@@ -1,3 +1,5 @@
+local GPG_EXEC = std.extVar("GPG_EXEC");
+
 local GenerateGitConfig() =
   (importstr './templates/config') % { };
 
@@ -7,7 +9,6 @@ local GenBasicUserConfig(name, email) =
     email: email,
   };
 
-local GPG_EXEC = "/opt/homebrew/bin/gpg";
 local GenSignedUserConfig(name, email, key) =
   (importstr './templates/signed.user.gitconfig') % {
     name: name,

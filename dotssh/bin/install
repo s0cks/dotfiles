@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+SSH_CONFIG_DIR="${SSH_CONFIG_DIR:-$HOME/.ssh/}"
+if [[ ! -f config ]]; then
+  echo ""
+  echo "ssh config not found."
+  echo ""
+  echo "Please generate the config:"
+  echo "      task # executes: task build"
+  echo "  or: "
+  echo "      task build"
+  return 1
+fi
+
+[[ ! -d "$SSH_CONFIG_DIR/" ]] && mkdir -p "$SSH_CONFIG_DIR"
+mv -fv config "$SSH_CONFIG_DIR/"

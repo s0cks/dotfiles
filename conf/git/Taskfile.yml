@@ -2,23 +2,41 @@
 version: '3'
 includes:
   jsonnet:
-    taskfile: ../../taskfiles/jsonnet.yml
+    taskfile: ../../tasks/jsonnet.yml
     internal: true
 tasks:
-  generate:
+  build:
     label: "Generate git config"
     desc: "Generate git configuration using Jsonnet"
-    dir: "{{.TASKFILE_DIR}}"
+    deps:
+    - clean
     cmds:
-    - task: jsonnet:generate
+    - task: jsonnet:build
       vars:
-        JSONNET_SOURCES: generate.jsonnet
+        JSONNET_SOURCE: generate.jsonnet
+        JSONNET_EXTRAS: --ext-str GPG_EXEC=$()
     sources:
     - generate.jsonnet
     generates:
-    - generated/config
-    - generated/tazz.gitconfig
+    - config
+    - s0cks.gitconfig
+    - tazz.gitconfig
   clean:
-    dir: "{{.TASKFILE_DIR}}/generated/"
     cmds:
-    - rm -rf *
+    - rm -rfv config *.gitconfig
+  install:
+    cmds:
+    - task: jsonnet:build
+      vars:
+        JSONNET_SOURCE: generate.jsonnet
+        JSONNET_EXTRAS: --ext-str GPG_EXEC=$(which gpg)
+        JSONNET_BUILD_DIR: "$XDG_CONFIG_HOME/git"
+    sources:
+    - generate.jsonnet
+    generates:
+    - config
+    - s0cks.gitconfig
+    - tazz.gitconfig
+  default:
+    cmds:
+    - task: build

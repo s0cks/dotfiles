@@ -62,7 +62,6 @@ local Tools() =
       ruff: [ "latest", "0.14.9" ],
       cocogitto: [ "latest", "6.5.0" ],
       uv: [ "latest" ],
-      ghq: [ "latest" ],
       make: {
         version: "4.4.1",
         os: [ "linux" ],

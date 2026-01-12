@@ -30,7 +30,11 @@ local util = import 'lib/util.libsonnet';
       for module in names
     ],
   local LoadZimFragment = |||
-    ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
+    ZIM_HOME="${ZDOTDIR:-${HOME}}/.zim"
+    # Install missing modules and update ${ZIM_HOME}/init.zsh if missing or outdated.
+    if [[ ! "${ZIM_HOME}/init.zsh" -nt "${ZIM_CONFIG_FILE:-${ZDOTDIR:-${HOME}}/.zimrc}" ]]; then
+      source /usr/share/zimfw/zimfw.zsh init
+    fi
     source "${ZIM_HOME}/init.zsh"
     zmodload -F zsh/terminfo +p:terminfo
   |||,

@@ -1,0 +1,35 @@
+#!/usr/bin/env zsh
+echo "installing bat config...."
+BAT_CONFIG_DIR="${BAT_CONFIG_DIR:-$XDG_CONFIG_HOME/bat}"
+
+if [[ ! $+command[task] ]]; then
+  echo "cannot install bat config"
+  echo "task is not installed"
+  return 1
+fi
+
+if [[ ! -f config ]]; then
+  echo ""
+  echo "bat config not found."
+  echo ""
+  echo "Please generate the config:"
+  echo "      task # executes: task build"
+  echo "  or: "
+  echo "      task build"
+  return 1
+fi
+
+__failed_to_build_bat_cache() {
+  echo "failed to build bat cache"
+  return 1
+}
+
+[[ ! -d "$BAT_CONFIG_DIR/" ]] && mkdir -p "$BAT_CONFIG_DIR/"
+
+cp -rv themes/ config "$BAT_CONFIG_DIR/"
+
+# build bat cache
+echo "building bat cache...."
+bat cache --build >/dev/null || __failed_to_build_config
+
+echo "finished!"

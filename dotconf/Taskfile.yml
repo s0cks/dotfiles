@@ -1,17 +1,14 @@
 version: '3'
 tasks:
   generate:
-    desc: "Generate files using Jsonnet"
+    internal: true
     cmds:
-    - jsonnet {{.JSONNET_INCLUDES}} -S -m . {{.JSONNET_SOURCE}}
+    - jsonnet {{.JSONNET_INCLUDES}} -S -m {{.JSONNET_BUILD_DIR}} {{.JSONNET_SOURCE}} {{.JSONNET_EXTRAS}}
     vars:
       JSONNET_INCLUDES: "-J .. -J ."
+      JSONNET_BUILD_DIR: "."
       JSONNET_SOURCE: "generate.jsonnet"
-    # sources:
-    # - generate.jsonnet
-    # - source_file_extensions.json
-    # - lib/**/*.libsonnet
-    # - lib/**/_*.sh
+      JSONNET_EXTRAS: "--ext-str OS=$(uname)"
     generates:
     - .zprofile
     - .zaliases
@@ -21,8 +18,8 @@ tasks:
     - .zshrc
     - .zkeys
     - .hushlogin
-  clean:
-    desc: "Clean the generated files"
+  clean-generated:
+    internal: true
     cmds:
     - >
       rm -rf \
@@ -32,11 +29,42 @@ tasks:
         .zimrc \
         .zstyles \
         .zshrc \
-        .zshrc-light \
-        .zshrc-dark \
         .zkeys \
         .hushlogin \
         hushlogin
-  default:
+  copy-generated:
+    internal: true
+    cmds:
+    - >
+      cp \
+        .zprofile \
+        .zaliases \
+        .zshenv \
+        .zimrc \
+        .zstyles \
+        .zshrc \
+        .zkeys \
+        .hushlogin \
+        {{.TARGET_DIR}}
+  build:
     cmds:
     - task: generate
+      dir: .
+  install:
+    cmds:
+    - task: generate
+      dir: .
+    - task: copy-generated
+      dir: .
+      vars:
+        TARGET_DIR: ~/
+  install:clean:
+    cmds:
+    - task: clean-generated
+  clean:
+    cmds:
+    - task: clean-generated
+      dir: .
+  default:
+    cmds:
+    - task: build
